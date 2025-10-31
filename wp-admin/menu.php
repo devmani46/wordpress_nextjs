@@ -205,7 +205,7 @@ if ( ! is_multisite() && current_user_can( 'update_themes' ) ) {
 	);
 }
 	/* translators: %s: Number of available theme updates. */
-	$submenu['themes.php'][5] = array( sprintf( __( 'Themes %s' ), $count ), $appearance_cap, 'themes.php' );
+	 $submenu['themes.php'][5] = array( sprintf( __( 'Themes %s' ), $count ), $appearance_cap, 'themes.php' );
 	// Removed: Themes submenu
 
 if ( wp_is_block_theme() ) {

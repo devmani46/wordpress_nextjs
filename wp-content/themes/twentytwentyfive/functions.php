@@ -118,7 +118,119 @@ if ( ! function_exists( 'twentytwentyfive_pattern_categories' ) ) :
 endif;
 add_action( 'init', 'twentytwentyfive_pattern_categories' );
 
-// Registers block binding sources.
+// Register Team Custom Post Type
+function register_team_post_type() {
+    $labels = array(
+        'name'                  => _x( 'Team', 'Post type general name', 'twentytwentyfive' ),
+        'singular_name'         => _x( 'Team Member', 'Post type singular name', 'twentytwentyfive' ),
+        'menu_name'             => _x( 'Team', 'Admin Menu text', 'twentytwentyfive' ),
+        'name_admin_bar'        => _x( 'Team Member', 'Add New on Toolbar', 'twentytwentyfive' ),
+        'add_new'               => __( 'Add New', 'twentytwentyfive' ),
+        'add_new_item'          => __( 'Add New Team Member', 'twentytwentyfive' ),
+        'new_item'              => __( 'New Team Member', 'twentytwentyfive' ),
+        'edit_item'             => __( 'Edit Team Member', 'twentytwentyfive' ),
+        'view_item'             => __( 'View Team Member', 'twentytwentyfive' ),
+        'all_items'             => __( 'All Team Members', 'twentytwentyfive' ),
+        'search_items'          => __( 'Search Team Members', 'twentytwentyfive' ),
+        'parent_item_colon'     => __( 'Parent Team Members:', 'twentytwentyfive' ),
+        'not_found'             => __( 'No team members found.', 'twentytwentyfive' ),
+        'not_found_in_trash'    => __( 'No team members found in Trash.', 'twentytwentyfive' ),
+        'featured_image'        => _x( 'Team Member Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'twentytwentyfive' ),
+        'set_featured_image'    => _x( 'Set team member image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'twentytwentyfive' ),
+        'remove_featured_image' => _x( 'Remove team member image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'twentytwentyfive' ),
+        'use_featured_image'    => _x( 'Use as team member image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'twentytwentyfive' ),
+        'archives'              => _x( 'Team member archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'twentytwentyfive' ),
+        'insert_into_item'      => _x( 'Insert into team member', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'twentytwentyfive' ),
+        'uploaded_to_this_item' => _x( 'Uploaded to this team member', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'twentytwentyfive' ),
+        'filter_items_list'     => _x( 'Filter team members list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'twentytwentyfive' ),
+        'items_list_navigation' => _x( 'Team members list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'twentytwentyfive' ),
+        'items_list'            => _x( 'Team members list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'twentytwentyfive' ),
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'team' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
+        'menu_icon'          => 'dashicons-groups',
+    );
+
+    register_post_type( 'team', $args );
+}
+add_action( 'init', 'register_team_post_type' );
+
+// Register Team Category Taxonomy
+function register_team_category_taxonomy() {
+    $labels = array(
+        'name'              => _x( 'Team Categories', 'taxonomy general name', 'twentytwentyfive' ),
+        'singular_name'     => _x( 'Team Category', 'taxonomy singular name', 'twentytwentyfive' ),
+        'search_items'      => __( 'Search Team Categories', 'twentytwentyfive' ),
+        'all_items'         => __( 'All Team Categories', 'twentytwentyfive' ),
+        'parent_item'       => __( 'Parent Team Category', 'twentytwentyfive' ),
+        'parent_item_colon' => __( 'Parent Team Category:', 'twentytwentyfive' ),
+        'edit_item'         => __( 'Edit Team Category', 'twentytwentyfive' ),
+        'update_item'       => __( 'Update Team Category', 'twentytwentyfive' ),
+        'add_new_item'      => __( 'Add New Team Category', 'twentytwentyfive' ),
+        'new_item_name'     => __( 'New Team Category Name', 'twentytwentyfive' ),
+        'menu_name'         => __( 'Team Category', 'twentytwentyfive' ),
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'team-category' ),
+    );
+
+    register_taxonomy( 'team_category', array( 'team' ), $args );
+}
+add_action( 'init', 'register_team_category_taxonomy' );
+
+// Register Team Type Taxonomy
+function register_team_type_taxonomy() {
+    $labels = array(
+        'name'              => _x( 'Team Types', 'taxonomy general name', 'twentytwentyfive' ),
+        'singular_name'     => _x( 'Team Type', 'taxonomy singular name', 'twentytwentyfive' ),
+        'search_items'      => __( 'Search Team Types', 'twentytwentyfive' ),
+        'all_items'         => __( 'All Team Types', 'twentytwentyfive' ),
+        'parent_item'       => __( 'Parent Team Type', 'twentytwentyfive' ),
+        'parent_item_colon' => __( 'Parent Team Type:', 'twentytwentyfive' ),
+        'edit_item'         => __( 'Edit Team Type', 'twentytwentyfive' ),
+        'update_item'       => __( 'Update Team Type', 'twentytwentyfive' ),
+        'add_new_item'      => __( 'Add New Team Type', 'twentytwentyfive' ),
+        'new_item_name'     => __( 'New Team Type Name', 'twentytwentyfive' ),
+        'menu_name'         => __( 'Team Type', 'twentytwentyfive' ),
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'team-type' ),
+    );
+
+    register_taxonomy( 'team_type', array( 'team' ), $args );
+}
+add_action( 'init', 'register_team_type_taxonomy' );
+
+// Add default terms for team_type
+function add_default_team_types() {
+    if ( ! term_exists( 'employee', 'team_type' ) ) {
+        wp_insert_term( 'Employee', 'team_type', array( 'slug' => 'employee' ) );
+    }
+    if ( ! term_exists( 'staff', 'team_type' ) ) {
 if ( ! function_exists( 'twentytwentyfive_register_block_bindings' ) ) :
 	/**
 	 * Registers the post format block binding source.
@@ -272,5 +384,7 @@ function add_default_team_types() {
     }
 }
 add_action( 'init', 'add_default_team_types' );
-
-
+        wp_insert_term( 'Staff', 'team_type', array( 'slug' => 'staff' ) );
+    }
+}
+add_action( 'init', 'add_default_team_types' );
