@@ -5,6 +5,7 @@ function nrna_enqueue_assets() {
     wp_enqueue_style('nrna-faq', get_template_directory_uri() . '/assets/css/faq.css', [], wp_get_theme()->get('Version'));
     wp_enqueue_style('nrna-notice', get_template_directory_uri() . '/assets/css/notice.css', [], wp_get_theme()->get('Version'));
     wp_enqueue_style('nrna-activities', get_template_directory_uri() . '/assets/css/activities.css', [], wp_get_theme()->get('Version'));
+    wp_enqueue_style('nrna-projects', get_template_directory_uri() . '/assets/css/projects.css', [], wp_get_theme()->get('Version'));
     wp_enqueue_script('nrna-main', get_template_directory_uri() . '/assets/js/main.js', [], false, true);
 }
 add_action('wp_enqueue_scripts', 'nrna_enqueue_assets');

@@ -6,9 +6,23 @@
 // Load includes
 $inc = get_template_directory() . '/inc/';
 
-require_once $inc . 'custom-post-types.php';
-require_once $inc . 'meta-fields.php';
 require_once $inc . 'enqueue-scripts.php';
+
+// Load projects includes
+require_once $inc . 'projects/custom-post-type.php';
+require_once $inc . 'projects/meta-boxes.php';
+
+// Load faqs includes
+require_once $inc . 'faqs/custom-post-type.php';
+require_once $inc . 'faqs/meta-boxes.php';
+
+// Load notices includes
+require_once $inc . 'notices/custom-post-type.php';
+require_once $inc . 'notices/meta-boxes.php';
+
+// Load activities includes
+require_once $inc . 'activities/custom-post-type.php';
+require_once $inc . 'activities/meta-boxes.php';
 
 // Theme setup
 function nrna_theme_setup() {
