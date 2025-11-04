@@ -1,0 +1,87 @@
+/* Activities Styles */
+
+.activities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.activity-item {
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.activity-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.activity-header h2 {
+    color: #333;
+}
+
+.activity-header p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.activity-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.activity-content {
+    line-height: 1.6;
+    color: #555;
+}
+
+.photos-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.photo-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.photo-item img:hover {
+    transform: scale(1.05);
+}
+
+.activity-related-notices h3 {
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.activity-related-notices ul {
+    padding-left: 1rem;
+}
+
+.activity-related-notices li {
+    margin-bottom: 0.5rem;
+}
+
+.activity-related-notices a {
+    transition: color 0.3s ease;
+}
+
+.activity-related-notices a:hover {
+    color: #007cba;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .activity-item {
+        padding: 1rem;
+    }
+
+    .photos-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
