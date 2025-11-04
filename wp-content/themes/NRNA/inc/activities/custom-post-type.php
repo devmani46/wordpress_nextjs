@@ -19,7 +19,7 @@ function nrna_register_activities_cpt() {
         'labels'             => $labels,
         'public'             => true,
         'show_in_rest'       => true,
-        'supports'           => ['title', 'editor', 'thumbnail'],
+        'supports'           => ['title', 'thumbnail'],
         'menu_icon'          => 'dashicons-calendar-alt',
         'menu_position'      => 22,
         'has_archive'        => true,

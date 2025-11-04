@@ -10,6 +10,14 @@ function nrna_add_projects_meta_boxes() {
         'high'
     );
     add_meta_box(
+        'project_description_box',
+        __('Project Description', 'nrna'),
+        'nrna_render_project_description_meta_box',
+        'projects',
+        'normal',
+        'high'
+    );
+    add_meta_box(
         'project_objective_box',
         __('Project Objective', 'nrna'),
         'nrna_render_project_objective_meta_box',
@@ -119,6 +127,9 @@ function nrna_render_project_locations_meta_box($post) {
 function nrna_save_projects_meta_boxes($post_id) {
     if (array_key_exists('project_subtitle', $_POST)) {
         update_post_meta($post_id, 'project_subtitle', sanitize_text_field($_POST['project_subtitle']));
+    }
+    if (array_key_exists('project_description', $_POST)) {
+        update_post_meta($post_id, 'project_description', wp_kses_post($_POST['project_description']));
     }
     if (array_key_exists('project_objective', $_POST)) {
         update_post_meta($post_id, 'project_objective', wp_kses_post($_POST['project_objective']));

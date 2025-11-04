@@ -2,6 +2,14 @@
 // Add Activities meta boxes
 function nrna_add_activities_meta_boxes() {
     add_meta_box(
+        'activities_description_box',
+        __('Activity Description', 'nrna'),
+        'nrna_render_activities_description_meta_box',
+        'activities',
+        'normal',
+        'high'
+    );
+    add_meta_box(
         'activities_related_activities_box',
         __('Related Activities', 'nrna'),
         'nrna_render_activities_related_activities_meta_box',
@@ -19,6 +27,19 @@ function nrna_add_activities_meta_boxes() {
     );
 }
 add_action('add_meta_boxes', 'nrna_add_activities_meta_boxes');
+
+// Render Activity Description meta box
+function nrna_render_activities_description_meta_box($post) {
+    $description = get_post_meta($post->ID, 'activity_description', true);
+    echo '<label for="activity_description" style="display:block; font-weight:bold; margin-bottom:8px;">Description:</label>';
+    wp_editor($description, 'activity_description', [
+        'textarea_name' => 'activity_description',
+        'media_buttons' => false,
+        'textarea_rows' => 8,
+        'teeny' => true,
+        'quicktags' => false,
+    ]);
+}
 
 // Render Related Activities meta box
 function nrna_render_activities_related_activities_meta_box($post) {
@@ -124,6 +145,9 @@ function nrna_render_activities_photos_meta_box($post) {
 
 // Save Activities meta
 function nrna_save_activities_meta_boxes($post_id) {
+    if (array_key_exists('activity_description', $_POST)) {
+        update_post_meta($post_id, 'activity_description', wp_kses_post($_POST['activity_description']));
+    }
     // Save related activities
     if (array_key_exists('activity_related_activities', $_POST)) {
         $related = array_map('intval', $_POST['activity_related_activities']);

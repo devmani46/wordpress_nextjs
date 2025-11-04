@@ -19,7 +19,7 @@ function nrna_register_projects_cpt() {
         'labels'             => $labels,
         'public'             => true,
         'show_in_rest'       => true,
-        'supports'           => ['title', 'editor', 'thumbnail'],
+        'supports'           => ['title', 'thumbnail'],
         'menu_icon'          => 'dashicons-portfolio',
         'menu_position'      => 23,
         'has_archive'        => true,
