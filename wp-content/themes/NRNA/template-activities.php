@@ -42,15 +42,17 @@ $query_activities = new WP_Query($args_activities);
               <div class="activity-photos mb-4">
                 <h3 class="text-lg font-semibold mb-2">Activity Photos:</h3>
                 <div class="photos-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <?php foreach ($activity_photos as $photo) : ?>
+                  <?php foreach ($activity_photos as $image_id) : ?>
                     <div class="photo-item">
-                      <img src="<?php echo esc_url(wp_get_attachment_image_url($photo['image_id'], 'medium')); ?>" alt="<?php echo esc_attr($photo['title']); ?>" class="w-full h-auto rounded">
-                      <?php if (!empty($photo['title'])) : ?>
-                        <p class="text-sm text-gray-600 mt-1"><?php echo esc_html($photo['title']); ?></p>
-                      <?php endif; ?>
+                      <img src="<?php echo esc_url(wp_get_attachment_image_url($image_id, 'medium')); ?>" alt="" style="max-width: 200px; max-height: 200px; object-fit: cover;" class="rounded">
                     </div>
                   <?php endforeach; ?>
                 </div>
+              </div>
+            <?php else : ?>
+              <div class="activity-photos mb-4">
+                <h3 class="text-lg font-semibold mb-2">Activity Photos:</h3>
+                <p>No photos</p>
               </div>
             <?php endif; ?>
 

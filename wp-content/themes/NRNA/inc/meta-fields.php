@@ -183,16 +183,13 @@ function nrna_render_activities_photos_meta_box($post) {
     }
 
     echo '<div id="activity-photos-container">';
-    echo '<p class="description">Add photos for this activity. Each photo can have a title.</p>';
+    echo '<p class="description">Add photos for this activity.</p>';
 
     if (!empty($photos)) {
-        foreach ($photos as $index => $photo) {
+        foreach ($photos as $index => $image_id) {
             echo '<div class="photo-item" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd;">';
-            echo '<label>Photo Title:</label><br>';
-            echo '<input type="text" name="activity_photos[' . $index . '][title]" value="' . esc_attr($photo['title'] ?? '') . '" style="width: 100%; margin-bottom: 5px;" />';
-            echo '<label>Image:</label><br>';
-            echo '<input type="hidden" name="activity_photos[' . $index . '][image_id]" value="' . esc_attr($photo['image_id'] ?? '') . '" />';
-            echo '<img src="' . esc_url(wp_get_attachment_image_url($photo['image_id'] ?? '', 'medium')) . '" style="max-width: 150px; max-height: 150px; margin-bottom: 5px;" />';
+            echo '<input type="hidden" name="activity_photos[]" value="' . esc_attr($image_id) . '" />';
+            echo '<img src="' . esc_url(wp_get_attachment_image_url($image_id, 'medium')) . '" style="max-width: 150px; max-height: 150px; margin-bottom: 5px;" />';
             echo '<button type="button" class="upload-image-button button" data-index="' . $index . '">Change Image</button>';
             echo '<button type="button" class="remove-photo-button button" style="margin-left: 5px;">Remove</button>';
             echo '</div>';
@@ -211,10 +208,7 @@ function nrna_render_activities_photos_meta_box($post) {
 
         $('#add-photo-button').on('click', function() {
             var html = '<div class="photo-item" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd;">' +
-                '<label>Photo Title:</label><br>' +
-                '<input type="text" name="activity_photos[' + photoIndex + '][title]" style="width: 100%; margin-bottom: 5px;" />' +
-                '<label>Image:</label><br>' +
-                '<input type="hidden" name="activity_photos[' + photoIndex + '][image_id]" />' +
+                '<input type="hidden" name="activity_photos[]" />' +
                 '<img src="" style="max-width: 150px; max-height: 150px; margin-bottom: 5px; display: none;" />' +
                 '<button type="button" class="upload-image-button button" data-index="' + photoIndex + '">Upload Image</button>' +
                 '<button type="button" class="remove-photo-button button" style="margin-left: 5px;">Remove</button>' +
@@ -280,12 +274,9 @@ add_action('admin_menu', 'nrna_remove_activities_meta_boxes');
 function nrna_save_activities_photos_meta_box($post_id) {
     if (array_key_exists('activity_photos', $_POST)) {
         $photos = [];
-        foreach ($_POST['activity_photos'] as $photo) {
-            if (!empty($photo['image_id'])) {
-                $photos[] = [
-                    'title' => sanitize_text_field($photo['title'] ?? ''),
-                    'image_id' => intval($photo['image_id']),
-                ];
+        foreach ($_POST['activity_photos'] as $image_id) {
+            if (!empty($image_id)) {
+                $photos[] = intval($image_id);
             }
         }
         update_post_meta($post_id, 'activity_photos', $photos);
@@ -308,10 +299,10 @@ function nrna_populate_activities_photos_column($column, $post_id) {
         $photos = get_post_meta($post_id, 'activity_photos', true);
         if (!empty($photos) && is_array($photos)) {
             echo '<div style="display: flex; flex-wrap: wrap; gap: 5px;">';
-            foreach ($photos as $photo) {
-                $image_url = wp_get_attachment_image_url($photo['image_id'], 'thumbnail');
+            foreach ($photos as $image_id) {
+                $image_url = wp_get_attachment_image_url($image_id, 'thumbnail');
                 if ($image_url) {
-                    echo '<img src="' . esc_url($image_url) . '" style="width: 50px; height: 50px; object-fit: cover; border: 1px solid #ddd;" title="' . esc_attr($photo['title'] ?? '') . '" />';
+                    echo '<img src="' . esc_url($image_url) . '" style="width: 50px; height: 50px; object-fit: cover; border: 1px solid #ddd;" />';
                 }
             }
             echo '</div>';
