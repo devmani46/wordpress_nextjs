@@ -17,7 +17,7 @@ function nrna_register_notice_cpt() {
     $args = [
         'labels'             => $labels,
         'public'             => true,
-        'show_in_rest'       => false,
+        'show_in_rest'       => true,
         'supports'           => ['title', 'editor', 'thumbnail'],
         'menu_icon'          => 'dashicons-megaphone',
         'menu_position'      => 21,

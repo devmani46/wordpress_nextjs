@@ -13,7 +13,7 @@ function nrna_register_faq_cpt() {
     $args = [
         'labels'             => $labels,
         'public'             => true,
-        'show_in_rest'       => false,
+        'show_in_rest'       => true,
         'supports'           => ['title'],
         'menu_icon'          => 'dashicons-editor-help',
         'menu_position'      => 20,
