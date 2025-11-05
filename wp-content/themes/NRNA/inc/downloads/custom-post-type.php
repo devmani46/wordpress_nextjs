@@ -48,14 +48,30 @@ function nrna_register_download_category_taxonomy() {
     ];
 
     $args = [
-        'hierarchical'      => true,
-        'labels'            => $labels,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => ['slug' => 'download-category'],
+        'hierarchical'          => true,  
+        'labels'                => $labels,
+        'show_ui'               => true,  
+        'show_admin_column'     => true,
+        'query_var'             => true,
+        'rewrite'               => ['slug' => 'download-category'],
+        'show_in_rest'          => true,  
+        'show_in_quick_edit'    => true,
     ];
 
     register_taxonomy('download_category', ['downloads'], $args);
 }
 add_action('init', 'nrna_register_download_category_taxonomy');
+
+// Ensure the taxonomy meta box appears in Downloads edit screen
+function nrna_add_download_category_metabox_back() {
+    add_meta_box(
+        'download_categorydiv',
+        __('Download Categories', 'nrna'),
+        'post_categories_meta_box',
+        'downloads',
+        'side',
+        'default',
+        ['taxonomy' => 'download_category']
+    );
+}
+add_action('add_meta_boxes_downloads', 'nrna_add_download_category_metabox_back');

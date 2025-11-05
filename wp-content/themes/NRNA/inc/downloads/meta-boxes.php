@@ -38,7 +38,6 @@ function nrna_render_download_files_meta_box($post) {
     echo '</div>';
     echo '<button type="button" id="add-file-button" class="button">Add File</button>';
 
-    // Enqueue media scripts
     wp_enqueue_media();
     ?>
     <script>
@@ -65,9 +64,7 @@ function nrna_render_download_files_meta_box($post) {
 
             var mediaUploader = wp.media({
                 title: 'Choose File',
-                button: {
-                    text: 'Choose File'
-                },
+                button: { text: 'Choose File' },
                 multiple: false
             });
 
