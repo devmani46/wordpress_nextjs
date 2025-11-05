@@ -75,9 +75,6 @@ get_header(); ?>
                 <div class="feature">
                     <h3><?php echo esc_html($feature['title'] ?? ''); ?></h3>
                     <p><?php echo wp_kses_post($feature['description'] ?? ''); ?></p>
-                    <?php if ($feature['image']) : ?>
-                        <img src="<?php echo esc_url(wp_get_attachment_image_url($feature['image'], 'full')); ?>" alt="">
-                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </div>
