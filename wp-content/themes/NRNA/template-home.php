@@ -65,10 +65,27 @@ get_header(); ?>
     <?php
     $why_title = get_post_meta(get_the_ID(), 'why_title', true);
     $why_description = get_post_meta(get_the_ID(), 'why_description', true);
+    $why_cta_link = get_post_meta(get_the_ID(), 'why_cta_link', true);
+    $why_cta_title = get_post_meta(get_the_ID(), 'why_cta_title', true);
+    $why_images = get_post_meta(get_the_ID(), 'why_images', true);
     $why_features = get_post_meta(get_the_ID(), 'why_features', true);
+    $why_video_link = get_post_meta(get_the_ID(), 'why_video_link', true);
+    $why_years = get_post_meta(get_the_ID(), 'why_years_of_services', true);
     ?>
     <h2><?php echo esc_html($why_title); ?></h2>
+    <?php if ($why_cta_link && $why_cta_title) : ?>
+        <a href="<?php echo esc_url($why_cta_link); ?>"><?php echo esc_html($why_cta_title); ?></a>
+    <?php endif; ?>
     <p><?php echo wp_kses_post($why_description); ?></p>
+    <?php if (is_array($why_images) && count($why_images) > 0) : ?>
+        <div class="why-images">
+            <?php foreach ($why_images as $image_id) : ?>
+                <?php if ($image_id) : ?>
+                    <img src="<?php echo esc_url(wp_get_attachment_image_url($image_id, 'full')); ?>" alt="">
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
     <?php if (is_array($why_features)) : ?>
         <div class="features">
             <?php foreach ($why_features as $feature) : ?>
@@ -78,6 +95,12 @@ get_header(); ?>
                 </div>
             <?php endforeach; ?>
         </div>
+    <?php endif; ?>
+    <?php if ($why_video_link) : ?>
+        <a href="<?php echo esc_url($why_video_link); ?>" class="play-video">Play Video</a>
+    <?php endif; ?>
+    <?php if ($why_years) : ?>
+        <p class="years-of-service"><?php echo esc_html($why_years); ?> Years of Services</p>
     <?php endif; ?>
 </section>
 
@@ -152,18 +175,13 @@ get_header(); ?>
     <?php
     $journey_title = get_post_meta(get_the_ID(), 'journey_title', true);
     $journey_description = get_post_meta(get_the_ID(), 'journey_description', true);
-    $journey_image = get_post_meta(get_the_ID(), 'journey_image', true);
-    $journey_button_text = get_post_meta(get_the_ID(), 'journey_button_text', true);
-    $journey_button_link = get_post_meta(get_the_ID(), 'journey_button_link', true);
+    $journey_cta_link = get_post_meta(get_the_ID(), 'journey_cta_link', true);
+    $journey_cta_title = get_post_meta(get_the_ID(), 'journey_cta_title', true);
     ?>
     <h2><?php echo esc_html($journey_title); ?></h2>
     <p><?php echo wp_kses_post($journey_description); ?></p>
-    <?php if ($journey_image) : ?>
-        <img src="<?php echo esc_url(wp_get_attachment_image_url($journey_image, 'full')); ?>" alt="">
+    <?php if ($journey_cta_title && $journey_cta_link) : ?>
+        <a href="<?php echo esc_url($journey_cta_link); ?>"><?php echo esc_html($journey_cta_title); ?></a>
     <?php endif; ?>
-    <?php if ($journey_button_text && $journey_button_link) : ?>
-        <a href="<?php echo esc_url($journey_button_link); ?>"><?php echo esc_html($journey_button_text); ?></a>
-    <?php endif; ?>
-</section>
 
 <?php get_footer(); ?>
