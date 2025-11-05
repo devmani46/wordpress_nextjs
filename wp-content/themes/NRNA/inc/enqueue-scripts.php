@@ -14,6 +14,9 @@ add_action('wp_enqueue_scripts', 'nrna_enqueue_assets');
 function nrna_enqueue_admin_assets($hook) {
     if ($hook == 'post.php' || $hook == 'post-new.php') {
         wp_enqueue_script('jquery');
+        wp_enqueue_media();
+        wp_enqueue_script('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.js', [], false, true);
+        wp_enqueue_style('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.css', [], false);
     }
 }
 add_action('admin_enqueue_scripts', 'nrna_enqueue_admin_assets');

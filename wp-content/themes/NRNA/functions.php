@@ -8,6 +8,9 @@ $inc = get_template_directory() . '/inc/';
 
 require_once $inc . 'enqueue-scripts.php';
 
+// Load home meta box
+require_once $inc . 'home-meta-box.php';
+
 // Load projects includes
 require_once $inc . 'projects/custom-post-type.php';
 require_once $inc . 'projects/meta-boxes.php';
