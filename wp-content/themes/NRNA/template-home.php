@@ -42,13 +42,22 @@ get_header(); ?>
 <section class="about-us">
     <?php
     $about_title = get_post_meta(get_the_ID(), 'about_title', true);
-    $about_description = get_post_meta(get_the_ID(), 'about_description', true);
     $about_image = get_post_meta(get_the_ID(), 'about_image', true);
+    $about_stats = get_post_meta(get_the_ID(), 'about_stats', true);
     ?>
     <h2><?php echo esc_html($about_title); ?></h2>
-    <p><?php echo wp_kses_post($about_description); ?></p>
     <?php if ($about_image) : ?>
         <img src="<?php echo esc_url(wp_get_attachment_image_url($about_image, 'full')); ?>" alt="">
+    <?php endif; ?>
+    <?php if (is_array($about_stats)) : ?>
+        <div class="stats">
+            <?php foreach ($about_stats as $stat) : ?>
+                <div class="stat">
+                    <h3><?php echo esc_html($stat['title'] ?? ''); ?></h3>
+                    <p><?php echo wp_kses_post($stat['description'] ?? ''); ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
     <?php endif; ?>
 </section>
 
@@ -79,42 +88,41 @@ get_header(); ?>
     <?php
     $involved_title = get_post_meta(get_the_ID(), 'involved_title', true);
     $involved_description = get_post_meta(get_the_ID(), 'involved_description', true);
-    $involved_button_text = get_post_meta(get_the_ID(), 'involved_button_text', true);
-    $involved_button_link = get_post_meta(get_the_ID(), 'involved_button_link', true);
+    $involved_actions = get_post_meta(get_the_ID(), 'involved_actions', true);
     ?>
     <h2><?php echo esc_html($involved_title); ?></h2>
     <p><?php echo wp_kses_post($involved_description); ?></p>
-    <?php if ($involved_button_text && $involved_button_link) : ?>
-        <a href="<?php echo esc_url($involved_button_link); ?>"><?php echo esc_html($involved_button_text); ?></a>
+    <?php if (is_array($involved_actions)) : ?>
+        <div class="actions">
+            <?php foreach ($involved_actions as $action) : ?>
+                <div class="action">
+                    <h3><?php echo esc_html($action['title'] ?? ''); ?></h3>
+                    <p><?php echo wp_kses_post($action['description'] ?? ''); ?></p>
+                    <?php if ($action['cta_title'] && $action['cta_link']) : ?>
+                        <a href="<?php echo esc_url($action['cta_link']); ?>"><?php echo esc_html($action['cta_title']); ?></a>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
     <?php endif; ?>
 </section>
 
 <section class="stay-updated">
     <?php
-    $updated_title = get_post_meta(get_the_ID(), 'updated_title', true);
-    $updated_description = get_post_meta(get_the_ID(), 'updated_description', true);
-    $updated_button_text = get_post_meta(get_the_ID(), 'updated_button_text', true);
-    $updated_button_link = get_post_meta(get_the_ID(), 'updated_button_link', true);
+    $stay_updated_title = get_post_meta(get_the_ID(), 'stay_updated_title', true);
+    $stay_updated_description = get_post_meta(get_the_ID(), 'stay_updated_description', true);
     ?>
-    <h2><?php echo esc_html($updated_title); ?></h2>
-    <p><?php echo wp_kses_post($updated_description); ?></p>
-    <?php if ($updated_button_text && $updated_button_link) : ?>
-        <a href="<?php echo esc_url($updated_button_link); ?>"><?php echo esc_html($updated_button_text); ?></a>
-    <?php endif; ?>
+    <h2><?php echo esc_html($stay_updated_title); ?></h2>
+    <p><?php echo wp_kses_post($stay_updated_description); ?></p>
 </section>
 
 <section class="latest-news">
     <?php
-    $news_title = get_post_meta(get_the_ID(), 'news_title', true);
-    $news_description = get_post_meta(get_the_ID(), 'news_description', true);
-    $news_button_text = get_post_meta(get_the_ID(), 'news_button_text', true);
-    $news_button_link = get_post_meta(get_the_ID(), 'news_button_link', true);
+    $latest_news_title = get_post_meta(get_the_ID(), 'latest_news_title', true);
+    $latest_news_description = get_post_meta(get_the_ID(), 'latest_news_description', true);
     ?>
-    <h2><?php echo esc_html($news_title); ?></h2>
-    <p><?php echo wp_kses_post($news_description); ?></p>
-    <?php if ($news_button_text && $news_button_link) : ?>
-        <a href="<?php echo esc_url($news_button_link); ?>"><?php echo esc_html($news_button_text); ?></a>
-    <?php endif; ?>
+    <h2><?php echo esc_html($latest_news_title); ?></h2>
+    <p><?php echo wp_kses_post($latest_news_description); ?></p>
 </section>
 
 <section class="our-initiatives">
