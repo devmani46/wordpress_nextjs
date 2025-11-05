@@ -24,6 +24,10 @@ require_once $inc . 'notices/meta-boxes.php';
 require_once $inc . 'activities/custom-post-type.php';
 require_once $inc . 'activities/meta-boxes.php';
 
+// Load downloads includes
+require_once $inc . 'downloads/custom-post-type.php';
+require_once $inc . 'downloads/meta-boxes.php';
+
 // Theme setup
 function nrna_theme_setup() {
     add_theme_support('title-tag');
