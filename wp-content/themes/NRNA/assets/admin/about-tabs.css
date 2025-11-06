@@ -39,46 +39,15 @@
     display: block;
 }
 
-.repeater-item {
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
-    background: #f9f9f9;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.repeater-item p {
+.tab-pane p {
     margin: 15px 0;
-    flex-direction: column;
 }
 
-.repeater-item label {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 8px;
-    color: #23282d;
+.repeater-item {
+    margin-bottom: 20px;
 }
 
-.repeater-item input[type="text"],
-.repeater-item input[type="url"],
-.repeater-item textarea {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    line-height: 1.4;
-}
 
-.repeater-item textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-.repeater-item .image-preview {
-    margin-top: 8px;
-    border-radius: 4px;
-}
 
 .image-preview {
     max-width: 100px !important;
