@@ -1,4 +1,4 @@
-x`<?php
+<?php
 /**
  * Template Name: Home Page
  */
