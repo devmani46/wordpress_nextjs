@@ -381,3 +381,54 @@ function nrna_save_home_meta_box($post_id) {
 }
 add_action('save_post', 'nrna_save_home_meta_box');
 
+function nrna_prepare_page_rest_response($response, $post, $request) {
+    if ($post->post_type !== 'page') {
+        return $response;
+    }
+
+    $data = $response->get_data();
+
+    // Single image fields
+    $single_image_fields = ['about_image'];
+    foreach ($single_image_fields as $field) {
+        $image_id = get_post_meta($post->ID, $field, true);
+        if ($image_id) {
+            $data[$field . '_url'] = wp_get_attachment_image_url($image_id, 'full');
+        }
+    }
+
+    // Array fields with images
+    $array_image_fields = [
+        'slider_items' => 'image',
+        'why_images' => null, // why_images is array of IDs directly
+    ];
+
+    foreach ($array_image_fields as $field => $subfield) {
+        $items = get_post_meta($post->ID, $field, true);
+        if (is_array($items)) {
+            if ($subfield) {
+                // For objects with image subfield
+                foreach ($items as &$item) {
+                    if (isset($item[$subfield]) && $item[$subfield]) {
+                        $item[$subfield . '_url'] = wp_get_attachment_image_url($item[$subfield], 'full');
+                    }
+                }
+            } else {
+                // For array of IDs
+                $urls = [];
+                foreach ($items as $id) {
+                    if ($id) {
+                        $urls[] = wp_get_attachment_image_url($id, 'full');
+                    }
+                }
+                $data[$field . '_urls'] = $urls;
+            }
+            $data[$field] = $items;
+        }
+    }
+
+    $response->set_data($data);
+    return $response;
+}
+add_filter('rest_prepare_page', 'nrna_prepare_page_rest_response', 10, 3);
+
