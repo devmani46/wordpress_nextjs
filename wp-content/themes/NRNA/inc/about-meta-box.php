@@ -269,11 +269,20 @@ function nrna_save_about_meta_box($post_id) {
 add_action('save_post', 'nrna_save_about_meta_box');
 
 function nrna_prepare_about_page_rest_response($response, $post, $request) {
-    if ($post->post_type !== 'page') {
+    if ($post->post_type !== 'page' || get_page_template_slug($post->ID) !== 'template-about.php') {
         return $response;
     }
 
     $data = $response->get_data();
+
+    // Filter meta fields to only include about-related fields (include about_ prefixed)
+    $filtered_meta = [];
+    foreach ($data['meta'] as $key => $value) {
+        if (strpos($key, 'about_') === 0) {
+            $filtered_meta[$key] = $value;
+        }
+    }
+    $data['meta'] = $filtered_meta;
 
     // Single image fields
     $single_image_fields = ['about_vision_image', 'about_goals_image', 'about_certificate_image', 'about_message_image', 'about_team_image'];

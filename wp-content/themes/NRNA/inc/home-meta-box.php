@@ -382,11 +382,20 @@ function nrna_save_home_meta_box($post_id) {
 add_action('save_post', 'nrna_save_home_meta_box');
 
 function nrna_prepare_page_rest_response($response, $post, $request) {
-    if ($post->post_type !== 'page') {
+    if ($post->post_type !== 'page' || get_page_template_slug($post->ID) !== 'template-home.php') {
         return $response;
     }
 
     $data = $response->get_data();
+
+    // Filter meta fields to only include home-related fields (exclude about_ prefixed)
+    $filtered_meta = [];
+    foreach ($data['meta'] as $key => $value) {
+        if (strpos($key, 'about_') !== 0) {
+            $filtered_meta[$key] = $value;
+        }
+    }
+    $data['meta'] = $filtered_meta;
 
     // Single image fields
     $single_image_fields = ['about_image'];
