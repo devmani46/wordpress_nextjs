@@ -39,6 +39,7 @@ function nrna_register_about_meta_fields() {
             'properties' => [
                 'title' => ['type' => 'string'],
                 'image' => ['type' => 'integer'],
+                'description' => ['type' => 'string'],
             ],
         ],
         'show_in_rest' => true,
@@ -118,6 +119,7 @@ function nrna_render_about_meta_box($post) {
             <?php foreach ($slider_items as $index => $item): ?>
                 <div class="repeater-item">
                     <p><label>Title:</label><br><input type="text" name="about_slider_items[<?php echo $index; ?>][title]" value="<?php echo esc_attr($item['title'] ?? ''); ?>" class="wide-input"></p>
+                    <p><label>Description:</label><br><textarea name="about_slider_items[<?php echo $index; ?>][description]" rows="3" class="wide-textarea"><?php echo esc_textarea($item['description'] ?? ''); ?></textarea></p>
                     <p><label>Image:</label><br>
                     <input type="hidden" name="about_slider_items[<?php echo $index; ?>][image]" value="<?php echo esc_attr($item['image'] ?? ''); ?>" class="image-id">
                     <img src="<?php echo ($item['image'] ?? '') ? esc_url(wp_get_attachment_image_url($item['image'], 'medium')) : ''; ?>" class="image-preview <?php echo ($item['image'] ?? '') ? 'has-image' : ''; ?>">
@@ -264,6 +266,7 @@ function nrna_save_about_meta_box($post_id) {
         foreach ((array)$data as $item) {
             $clean = [];
             if (isset($item['title'])) $clean['title'] = sanitize_text_field($item['title']);
+            if (isset($item['description'])) $clean['description'] = wp_kses_post($item['description']);
             if (isset($item['image'])) $clean['image'] = intval($item['image']);
             if (!empty($clean)) $sanitized[] = $clean;
         }

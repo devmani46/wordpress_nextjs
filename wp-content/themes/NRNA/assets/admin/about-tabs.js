@@ -65,24 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (repeater === 'about_slider_items') {
                 fieldsHTML = `
                     <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
-                    <p><label>Image:</label><br>
-                    <input type="hidden" name="${repeater}[${itemCount}][image]" class="image-id">
-                    <img src="" class="image-preview">
-                    <button type="button" class="upload-image button">Upload Image</button></p>
-                `;
-            } else {
-                // Fallback for other repeaters if added later
-                fieldsHTML = `
-                    <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
                     <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
                     <p><label>Image:</label><br>
                     <input type="hidden" name="${repeater}[${itemCount}][image]" class="image-id">
                     <img src="" class="image-preview">
                     <button type="button" class="upload-image button">Upload Image</button></p>
-                    <p><label>Button Text:</label><br><input type="text" name="${repeater}[${itemCount}][button_text]" class="wide-input"></p>
-                    <p><label>Button Link:</label><br><input type="url" name="${repeater}[${itemCount}][button_link]" class="wide-input"></p>
                 `;
-            }
+            } 
 
             newItem.innerHTML = fieldsHTML + '<button type="button" class="remove-item button">Remove</button>';
             container.appendChild(newItem);
