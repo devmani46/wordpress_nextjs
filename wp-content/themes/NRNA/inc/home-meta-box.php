@@ -1,4 +1,103 @@
 <?php
+function nrna_register_home_meta_fields() {
+    $fields = [
+        'hero_title' => ['type' => 'string'],
+        'hero_description' => ['type' => 'string'],
+        'hero_cta_link' => ['type' => 'string'],
+        'hero_cta_title' => ['type' => 'string'],
+        'about_title' => ['type' => 'string'],
+        'about_image' => ['type' => 'integer'],
+        'why_title' => ['type' => 'string'],
+        'why_description' => ['type' => 'string'],
+        'why_cta_link' => ['type' => 'string'],
+        'why_cta_title' => ['type' => 'string'],
+        'why_video_link' => ['type' => 'string'],
+        'why_years_of_services' => ['type' => 'integer'],
+        'involved_title' => ['type' => 'string'],
+        'involved_description' => ['type' => 'string'],
+        'stay_updated_title' => ['type' => 'string'],
+        'stay_updated_description' => ['type' => 'string'],
+        'latest_news_title' => ['type' => 'string'],
+        'latest_news_description' => ['type' => 'string'],
+        'our_initiatives_title' => ['type' => 'string'],
+        'our_initiatives_description' => ['type' => 'string'],
+        'journey_title' => ['type' => 'string'],
+        'journey_description' => ['type' => 'string'],
+        'journey_cta_link' => ['type' => 'string'],
+        'journey_cta_title' => ['type' => 'string'],
+    ];
+
+    foreach ($fields as $key => $args) {
+        register_post_meta('page', $key, array_merge($args, [
+            'show_in_rest' => true,
+            'single' => true,
+        ]));
+    }
+
+    // Array fields
+    register_post_meta('page', 'slider_items', [
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'title' => ['type' => 'string'],
+                'image' => ['type' => 'integer'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    register_post_meta('page', 'about_stats', [
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'title' => ['type' => 'string'],
+                'description' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    register_post_meta('page', 'why_images', [
+        'type' => 'array',
+        'items' => ['type' => 'integer'],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    register_post_meta('page', 'why_features', [
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'title' => ['type' => 'string'],
+                'description' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    register_post_meta('page', 'involved_actions', [
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'title' => ['type' => 'string'],
+                'description' => ['type' => 'string'],
+                'cta_link' => ['type' => 'string'],
+                'cta_title' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+}
+add_action('init', 'nrna_register_home_meta_fields');
+
 function nrna_add_home_meta_box() {
     global $post;
     if ($post && get_page_template_slug($post->ID) === 'template-home.php') {
