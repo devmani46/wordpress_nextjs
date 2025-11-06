@@ -48,15 +48,7 @@ function nrna_register_about_meta_fields() {
 }
 add_action('init', 'nrna_register_about_meta_fields');
 
-function nrna_enqueue_about_admin_scripts($hook) {
-    if ($hook == 'post.php' || $hook == 'post-new.php') {
-        if (isset($_GET['post_type']) && $_GET['post_type'] == 'page' || isset($GLOBALS['post']) && $GLOBALS['post']->post_type == 'page') {
-            wp_enqueue_script('about-tabs-js', get_template_directory_uri() . '/assets/admin/about-tabs.js', array('jquery'), '1.0', true);
-            wp_enqueue_style('about-tabs-css', get_template_directory_uri() . '/assets/admin/about-tabs.css', array(), '1.0');
-        }
-    }
-}
-add_action('admin_enqueue_scripts', 'nrna_enqueue_about_admin_scripts');
+
 
 function nrna_add_about_meta_box() {
     add_meta_box(

@@ -15,8 +15,15 @@ function nrna_enqueue_admin_assets($hook) {
     if ($hook == 'post.php' || $hook == 'post-new.php') {
         wp_enqueue_script('jquery');
         wp_enqueue_media();
-        wp_enqueue_script('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.js', [], false, true);
-        wp_enqueue_style('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.css', [], false);
+
+        global $post;
+        if ($post && get_page_template_slug($post->ID) === 'template-home.php') {
+            wp_enqueue_script('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.js', [], false, true);
+            wp_enqueue_style('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.css', [], false);
+        } elseif ($post && get_page_template_slug($post->ID) === 'template-about.php') {
+            wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], false, true);
+            wp_enqueue_style('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.css', [], false);
+        }
     }
 }
 add_action('admin_enqueue_scripts', 'nrna_enqueue_admin_assets');

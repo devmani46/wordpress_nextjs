@@ -26,6 +26,21 @@ document.addEventListener('DOMContentLoaded', function() {
         showTab(tabButtons[0].getAttribute('data-tab'));
     }
 
+    // Function to reindex repeater items
+    function reindexRepeater(container) {
+        const items = container.querySelectorAll('.repeater-item');
+        const repeater = container.getAttribute('data-repeater');
+        items.forEach((item, index) => {
+            const titleInput = item.querySelector('input[name*="[title]"]');
+            const descTextarea = item.querySelector('textarea[name*="[description]"]');
+            const imageInput = item.querySelector('input[name*="[image]"]');
+
+            if (titleInput) titleInput.name = `${repeater}[${index}][title]`;
+            if (descTextarea) descTextarea.name = `${repeater}[${index}][description]`;
+            if (imageInput) imageInput.name = `${repeater}[${index}][image]`;
+        });
+    }
+
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('upload-image')) {
             e.preventDefault();
@@ -54,33 +69,33 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const button = e.target;
             const repeater = button.getAttribute('data-repeater');
+            if (repeater !== 'about_slider_items') return; // Only handle about_slider_items
+
             const container = document.querySelector(`.repeater-container[data-repeater="${repeater}"]`);
             const itemCount = container.querySelectorAll('.repeater-item').length;
 
             const newItem = document.createElement('div');
             newItem.className = 'repeater-item';
 
-            let fieldsHTML = '';
+            newItem.innerHTML = `
+                <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
+                <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
+                <p><label>Image:</label><br>
+                <input type="hidden" name="${repeater}[${itemCount}][image]" class="image-id">
+                <img src="" class="image-preview">
+                <button type="button" class="upload-image button">Upload Image</button></p>
+                <button type="button" class="remove-item button">Remove</button>
+            `;
 
-            if (repeater === 'about_slider_items') {
-                fieldsHTML = `
-                    <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
-                    <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
-                    <p><label>Image:</label><br>
-                    <input type="hidden" name="${repeater}[${itemCount}][image]" class="image-id">
-                    <img src="" class="image-preview">
-                    <button type="button" class="upload-image button">Upload Image</button></p>
-                `;
-            } 
-
-            newItem.innerHTML = fieldsHTML + '<button type="button" class="remove-item button">Remove</button>';
             container.appendChild(newItem);
         }
 
         if (e.target.classList.contains('remove-item')) {
             e.preventDefault();
             const item = e.target.closest('.repeater-item');
+            const container = item.closest('.repeater-container');
             item.remove();
+            reindexRepeater(container);
         }
     });
 });
