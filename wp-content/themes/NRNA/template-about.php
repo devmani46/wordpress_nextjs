@@ -24,6 +24,7 @@ get_header(); ?>
             ?>
             <div class="slider-item">
                 <h2><?php echo esc_html($item['title'] ?? ''); ?></h2>
+                <p><?php echo wp_kses_post($item['description'] ?? ''); ?></p>
                 <?php if ($item['image']) : ?>
                     <img src="<?php echo esc_url(wp_get_attachment_image_url($item['image'], 'full')); ?>" alt="">
                 <?php endif; ?>
