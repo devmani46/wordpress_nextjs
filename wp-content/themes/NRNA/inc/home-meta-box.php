@@ -6,7 +6,9 @@ function nrna_register_home_meta_fields() {
         'hero_cta_link' => ['type' => 'string'],
         'hero_cta_title' => ['type' => 'string'],
         'about_title' => ['type' => 'string'],
-        'about_image' => ['type' => 'integer'],
+        'about_image_1' => ['type' => 'integer'],
+        'about_image_2' => ['type' => 'integer'],
+        'about_image_3' => ['type' => 'integer'],
         'why_title' => ['type' => 'string'],
         'why_description' => ['type' => 'string'],
         'why_cta_link' => ['type' => 'string'],
@@ -182,14 +184,24 @@ function nrna_render_home_meta_box($post) {
 
     case 'about-us':
         $title = get_post_meta($post->ID, 'about_title', true);
-        $image = get_post_meta($post->ID, 'about_image', true);
+        $image1 = get_post_meta($post->ID, 'about_image_1', true);
+        $image2 = get_post_meta($post->ID, 'about_image_2', true);
+        $image3 = get_post_meta($post->ID, 'about_image_3', true);
         $stats = get_post_meta($post->ID, 'about_stats', true);
         if (!is_array($stats)) $stats = [];
         ?>
         <p><label>Title:</label><br><input type="text" name="about_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-        <p><label>Image:</label><br>
-        <input type="hidden" name="about_image" value="<?php echo esc_attr($image); ?>" class="image-id">
-        <img src="<?php echo $image ? esc_url(wp_get_attachment_image_url($image, 'medium')) : ''; ?>" class="image-preview <?php echo $image ? 'has-image' : ''; ?>">
+        <p><label>Image 1:</label><br>
+        <input type="hidden" name="about_image_1" value="<?php echo esc_attr($image1); ?>" class="image-id">
+        <img src="<?php echo $image1 ? esc_url(wp_get_attachment_image_url($image1, 'medium')) : ''; ?>" class="image-preview <?php echo $image1 ? 'has-image' : ''; ?>">
+        <button type="button" class="upload-image button">Upload Image</button></p>
+        <p><label>Image 2:</label><br>
+        <input type="hidden" name="about_image_2" value="<?php echo esc_attr($image2); ?>" class="image-id">
+        <img src="<?php echo $image2 ? esc_url(wp_get_attachment_image_url($image2, 'medium')) : ''; ?>" class="image-preview <?php echo $image2 ? 'has-image' : ''; ?>">
+        <button type="button" class="upload-image button">Upload Image</button></p>
+        <p><label>Image 3:</label><br>
+        <input type="hidden" name="about_image_3" value="<?php echo esc_attr($image3); ?>" class="image-id">
+        <img src="<?php echo $image3 ? esc_url(wp_get_attachment_image_url($image3, 'medium')) : ''; ?>" class="image-preview <?php echo $image3 ? 'has-image' : ''; ?>">
         <button type="button" class="upload-image button">Upload Image</button></p>
         <div class="repeater-container" data-repeater="about_stats">
             <?php foreach ($stats as $index => $stat): ?>
@@ -306,7 +318,9 @@ function nrna_save_home_meta_box($post_id) {
         'hero_cta_title' => 'sanitize_text_field',
 
         'about_title' => 'sanitize_text_field',
-        'about_image' => 'intval',
+        'about_image_1' => 'intval',
+        'about_image_2' => 'intval',
+        'about_image_3' => 'intval',
 
         'why_title' => 'sanitize_text_field',
         'why_description' => 'wp_kses_post',
@@ -398,7 +412,7 @@ function nrna_prepare_page_rest_response($response, $post, $request) {
     $data['meta'] = $filtered_meta;
 
     // Single image fields
-    $single_image_fields = ['about_image'];
+    $single_image_fields = ['about_image_1', 'about_image_2', 'about_image_3'];
     foreach ($single_image_fields as $field) {
         $image_id = get_post_meta($post->ID, $field, true);
         if ($image_id) {
