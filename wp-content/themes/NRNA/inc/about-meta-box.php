@@ -51,6 +51,9 @@ add_action('init', 'nrna_register_about_meta_fields');
 
 
 function nrna_add_about_meta_box() {
+    global $post;
+    if ($post && $post->ID && get_page_template_slug($post->ID) !== 'template-about.php') return;
+
     add_meta_box(
         'about_page_meta_box',
         __('About Page Content', 'nrna'),

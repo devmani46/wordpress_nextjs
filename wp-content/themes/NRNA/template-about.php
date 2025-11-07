@@ -7,6 +7,8 @@ get_header(); ?>
 
 <?php while (have_posts()) : the_post(); ?>
 
+<?php if (is_page_template('template-about.php')) : ?>
+
 <section class="hero">
     <?php
     $hero_title = get_post_meta(get_the_ID(), 'about_hero_title', true);
@@ -106,6 +108,14 @@ get_header(); ?>
         <img src="<?php echo esc_url(wp_get_attachment_image_url($team_image, 'full')); ?>" alt="">
     <?php endif; ?>
 </section>
+
+<?php else : ?>
+
+<div class="entry-content">
+    <?php the_content(); ?>
+</div>
+
+<?php endif; ?>
 
 <?php endwhile; ?>
 
