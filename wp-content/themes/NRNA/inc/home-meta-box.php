@@ -411,6 +411,12 @@ function nrna_prepare_page_rest_response($response, $post, $request) {
     }
     $data['meta'] = $filtered_meta;
 
+    // Add about_title outside meta
+    $about_title = get_post_meta($post->ID, 'about_title', true);
+    if ($about_title) {
+        $data['about_title'] = $about_title;
+    }
+
     // Single image fields
     $single_image_fields = ['about_image_1', 'about_image_2', 'about_image_3'];
     foreach ($single_image_fields as $field) {
@@ -420,24 +426,21 @@ function nrna_prepare_page_rest_response($response, $post, $request) {
         }
     }
 
-    // Array fields with images
-    $array_image_fields = [
-        'slider_items' => 'image',
-        'why_images' => null, // why_images is array of IDs directly
-    ];
+    // Array fields
+    $array_fields = ['slider_items', 'about_stats', 'why_images', 'why_features', 'involved_actions'];
 
-    foreach ($array_image_fields as $field => $subfield) {
+    foreach ($array_fields as $field) {
         $items = get_post_meta($post->ID, $field, true);
-        if (is_array($items)) {
-            if ($subfield) {
-                // For objects with image subfield
+        if (is_array($items) && !empty($items)) {
+            if ($field === 'slider_items') {
+                // Add image URLs for slider_items
                 foreach ($items as &$item) {
-                    if (isset($item[$subfield]) && $item[$subfield]) {
-                        $item[$subfield . '_url'] = wp_get_attachment_image_url($item[$subfield], 'full');
+                    if (isset($item['image']) && $item['image']) {
+                        $item['image_url'] = wp_get_attachment_image_url($item['image'], 'full');
                     }
                 }
-            } else {
-                // For array of IDs
+            } elseif ($field === 'why_images') {
+                // Add URLs array for why_images
                 $urls = [];
                 foreach ($items as $id) {
                     if ($id) {
@@ -446,6 +449,7 @@ function nrna_prepare_page_rest_response($response, $post, $request) {
                 }
                 $data[$field . '_urls'] = $urls;
             }
+            // Add the array itself
             $data[$field] = $items;
         }
     }
