@@ -22,6 +22,10 @@ function nrna_render_events_meta_box($post) {
         'schedule' => 'Event Schedule',
         'sponsorship' => 'Sponsorship',
         'venue' => 'Venue',
+        'organizing-committee' => 'Organizing Committee',
+        'sponsors' => 'Our Sponsors',
+        'partners' => 'Partners',
+        'banner' => 'Banner',
     ];
 
     echo '<div class="events-meta-tabs">';
@@ -223,6 +227,157 @@ function nrna_render_events_meta_box($post) {
                 </div>
                 <?php
                 break;
+
+            case 'organizing-committee':
+                $organizing_committee_title = get_post_meta($post->ID, 'event_organizing_committee_title', true);
+                $organizing_committee = get_post_meta($post->ID, 'event_organizing_committee', true);
+                if (!is_array($organizing_committee)) $organizing_committee = [];
+                ?>
+                <p><label>Title:</label><br><input type="text" name="event_organizing_committee_title" value="<?php echo esc_attr($organizing_committee_title); ?>" class="wide-input"></p>
+                <div class="committee-table-container">
+                    <table class="committee-table">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Service</th>
+                                <th>Country</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($organizing_committee as $index => $member): ?>
+                                <tr class="committee-row">
+                                    <td><input type="text" name="event_organizing_committee[<?php echo $index; ?>][photo]" value="<?php echo esc_attr($member['photo'] ?? ''); ?>" placeholder="Image URL" class="wide-input"></td>
+                                    <td><input type="text" name="event_organizing_committee[<?php echo $index; ?>][name]" value="<?php echo esc_attr($member['name'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><input type="text" name="event_organizing_committee[<?php echo $index; ?>][role]" value="<?php echo esc_attr($member['role'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><input type="text" name="event_organizing_committee[<?php echo $index; ?>][service]" value="<?php echo esc_attr($member['service'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><input type="text" name="event_organizing_committee[<?php echo $index; ?>][country]" value="<?php echo esc_attr($member['country'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><button type="button" class="remove-committee button">Remove</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <button type="button" class="add-committee button">Add Committee Member</button>
+                </div>
+                <?php
+                break;
+
+            case 'sponsors':
+                $sponsors_title = get_post_meta($post->ID, 'event_sponsors_title', true);
+                $sponsors = get_post_meta($post->ID, 'event_sponsors', true);
+                if (!is_array($sponsors)) $sponsors = [];
+                ?>
+                <p><label>Title:</label><br><input type="text" name="event_sponsors_title" value="<?php echo esc_attr($sponsors_title); ?>" class="wide-input"></p>
+                <div class="sponsors-table-container">
+                    <table class="sponsors-table">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Service</th>
+                                <th>Country</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($sponsors as $index => $sponsor): ?>
+                                <tr class="sponsor-row">
+                                    <td><input type="text" name="event_sponsors[<?php echo $index; ?>][photo]" value="<?php echo esc_attr($sponsor['photo'] ?? ''); ?>" placeholder="Image URL" class="wide-input"></td>
+                                    <td><input type="text" name="event_sponsors[<?php echo $index; ?>][name]" value="<?php echo esc_attr($sponsor['name'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><input type="text" name="event_sponsors[<?php echo $index; ?>][role]" value="<?php echo esc_attr($sponsor['role'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><input type="text" name="event_sponsors[<?php echo $index; ?>][service]" value="<?php echo esc_attr($sponsor['service'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><input type="text" name="event_sponsors[<?php echo $index; ?>][country]" value="<?php echo esc_attr($sponsor['country'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><button type="button" class="remove-sponsor button">Remove</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <button type="button" class="add-sponsor button">Add Sponsor</button>
+                </div>
+                <?php
+                break;
+
+            case 'partners':
+                $partners = get_post_meta($post->ID, 'event_partners', true);
+                if (!is_array($partners)) $partners = [];
+                ?>
+                <div class="partners-container">
+                    <h4>Gold Partners</h4>
+                    <div class="partners-section" data-category="gold">
+                        <?php
+                        $gold_partners = array_filter($partners, function($partner) {
+                            return isset($partner['category']) && $partner['category'] === 'gold';
+                        });
+                        foreach ($gold_partners as $index => $partner): ?>
+                            <div class="partner-item">
+                                <p><label>Logo URL:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="wide-input"></p>
+                                <p><label>Name:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></p>
+                                <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="gold">
+                                <button type="button" class="remove-partner button">Remove Gold Partner</button>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="add-partner button" data-category="gold">Add Gold Partner</button>
+
+                    <h4>Silver Partners</h4>
+                    <div class="partners-section" data-category="silver">
+                        <?php
+                        $silver_partners = array_filter($partners, function($partner) {
+                            return isset($partner['category']) && $partner['category'] === 'silver';
+                        });
+                        foreach ($silver_partners as $index => $partner): ?>
+                            <div class="partner-item">
+                                <p><label>Logo URL:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="wide-input"></p>
+                                <p><label>Name:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></p>
+                                <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="silver">
+                                <button type="button" class="remove-partner button">Remove Silver Partner</button>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="add-partner button" data-category="silver">Add Silver Partner</button>
+
+                    <h4>Airlines Partners</h4>
+                    <div class="partners-section" data-category="airlines">
+                        <?php
+                        $airlines_partners = array_filter($partners, function($partner) {
+                            return isset($partner['category']) && $partner['category'] === 'airlines';
+                        });
+                        foreach ($airlines_partners as $index => $partner): ?>
+                            <div class="partner-item">
+                                <p><label>Logo URL:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="wide-input"></p>
+                                <p><label>Name:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></p>
+                                <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="airlines">
+                                <button type="button" class="remove-partner button">Remove Airlines Partner</button>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="add-partner button" data-category="airlines">Add Airlines Partner</button>
+                </div>
+                <?php
+                break;
+
+            case 'banner':
+                $banner_title = get_post_meta($post->ID, 'event_banner_title', true);
+                $banner_description = get_post_meta($post->ID, 'event_banner_description', true);
+                $banner_cta_link = get_post_meta($post->ID, 'event_banner_cta_link', true);
+                $banner_cta_title = get_post_meta($post->ID, 'event_banner_cta_title', true);
+                ?>
+                <p><label>Title:</label><br><input type="text" name="event_banner_title" value="<?php echo esc_attr($banner_title); ?>" class="wide-input"></p>
+                <p><label>Description:</label><br><?php
+                wp_editor(get_post_meta($post->ID, 'event_banner_description', true), 'event_banner_description', array(
+                    'media_buttons' => true,
+                    'textarea_rows' => 10,
+                    'teeny' => false,
+                    'quicktags' => true,
+                ));
+                ?></p>
+                <p><label>CTA Link:</label><br><input type="url" name="event_banner_cta_link" value="<?php echo esc_attr($banner_cta_link); ?>" class="wide-input"></p>
+                <p><label>CTA Title:</label><br><input type="text" name="event_banner_cta_title" value="<?php echo esc_attr($banner_cta_title); ?>" class="wide-input"></p>
+                <?php
+                break;
         }
 
         echo '</div>';
@@ -262,6 +417,12 @@ function nrna_save_events_meta_box($post_id) {
         'event_venue_title' => 'sanitize_text_field',
         'event_venue_description' => 'wp_kses_post',
         'event_venue_map' => 'wp_kses_post',
+        'event_organizing_committee_title' => 'sanitize_text_field',
+        'event_sponsors_title' => 'sanitize_text_field',
+        'event_banner_title' => 'sanitize_text_field',
+        'event_banner_description' => 'wp_kses_post',
+        'event_banner_cta_link' => 'esc_url_raw',
+        'event_banner_cta_title' => 'sanitize_text_field',
     ];
 
     foreach ($fields as $field => $sanitize) {
@@ -339,6 +500,64 @@ function nrna_save_events_meta_box($post_id) {
         update_post_meta($post_id, 'event_venue_details', $sanitized_venue_details);
     } else {
         delete_post_meta($post_id, 'event_venue_details');
+    }
+
+    // Save organizing committee array
+    if (isset($_POST['event_organizing_committee'])) {
+        $committee_data = $_POST['event_organizing_committee'];
+        $sanitized_committee = [];
+
+        foreach ((array)$committee_data as $member) {
+            $clean_member = [];
+            if (isset($member['photo'])) $clean_member['photo'] = sanitize_text_field($member['photo']);
+            if (isset($member['name'])) $clean_member['name'] = sanitize_text_field($member['name']);
+            if (isset($member['role'])) $clean_member['role'] = sanitize_text_field($member['role']);
+            if (isset($member['service'])) $clean_member['service'] = sanitize_text_field($member['service']);
+            if (isset($member['country'])) $clean_member['country'] = sanitize_text_field($member['country']);
+            if (!empty($clean_member)) $sanitized_committee[] = $clean_member;
+        }
+
+        update_post_meta($post_id, 'event_organizing_committee', $sanitized_committee);
+    } else {
+        delete_post_meta($post_id, 'event_organizing_committee');
+    }
+
+    // Save sponsors array
+    if (isset($_POST['event_sponsors'])) {
+        $sponsors_data = $_POST['event_sponsors'];
+        $sanitized_sponsors = [];
+
+        foreach ((array)$sponsors_data as $sponsor) {
+            $clean_sponsor = [];
+            if (isset($sponsor['photo'])) $clean_sponsor['photo'] = sanitize_text_field($sponsor['photo']);
+            if (isset($sponsor['name'])) $clean_sponsor['name'] = sanitize_text_field($sponsor['name']);
+            if (isset($sponsor['role'])) $clean_sponsor['role'] = sanitize_text_field($sponsor['role']);
+            if (isset($sponsor['service'])) $clean_sponsor['service'] = sanitize_text_field($sponsor['service']);
+            if (isset($sponsor['country'])) $clean_sponsor['country'] = sanitize_text_field($sponsor['country']);
+            if (!empty($clean_sponsor)) $sanitized_sponsors[] = $clean_sponsor;
+        }
+
+        update_post_meta($post_id, 'event_sponsors', $sanitized_sponsors);
+    } else {
+        delete_post_meta($post_id, 'event_sponsors');
+    }
+
+    // Save partners array
+    if (isset($_POST['event_partners'])) {
+        $partners_data = $_POST['event_partners'];
+        $sanitized_partners = [];
+
+        foreach ((array)$partners_data as $partner) {
+            $clean_partner = [];
+            if (isset($partner['category'])) $clean_partner['category'] = sanitize_text_field($partner['category']);
+            if (isset($partner['logo'])) $clean_partner['logo'] = sanitize_text_field($partner['logo']);
+            if (isset($partner['name'])) $clean_partner['name'] = sanitize_text_field($partner['name']);
+            if (!empty($clean_partner)) $sanitized_partners[] = $clean_partner;
+        }
+
+        update_post_meta($post_id, 'event_partners', $sanitized_partners);
+    } else {
+        delete_post_meta($post_id, 'event_partners');
     }
 }
 add_action('save_post', 'nrna_save_events_meta_box');

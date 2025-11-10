@@ -1,15 +1,18 @@
 .events-meta-tabs .tab-buttons {
     display: flex;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .events-meta-tabs .tab-button {
     background: #f1f1f1;
     border: 1px solid #ddd;
-    padding: 10px 20px;
+    padding: 10px 15px;
     cursor: pointer;
     border-radius: 4px 4px 0 0;
     margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
 }
 
 .events-meta-tabs .tab-button.active {
@@ -26,31 +29,52 @@
 
 .wide-input, .wide-textarea {
     width: 100%;
+    box-sizing: border-box;
 }
 
-.sponsorship-table {
+.sponsorship-table, .committee-table, .sponsors-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.sponsorship-table th, .sponsorship-table td {
+.sponsorship-table th, .sponsorship-table td,
+.committee-table th, .committee-table td,
+.sponsors-table th, .sponsors-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
-.sponsorship-table th {
+.sponsorship-table th, .committee-table th, .sponsors-table th {
     background-color: #f2f2f2;
 }
 
-.sponsorship-table input {
+.sponsorship-table input, .committee-table input, .sponsors-table input {
     width: 100%;
     box-sizing: border-box;
 }
 
-.add-sponsorship, .remove-sponsorship {
+.add-sponsorship, .remove-sponsorship,
+.add-committee, .remove-committee,
+.add-sponsor, .remove-sponsor,
+.add-venue-detail, .remove-venue-detail,
+.add-partner, .remove-partner {
     margin: 5px 0;
+    padding: 5px 10px;
+    background: #007cba;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.add-sponsorship:hover, .remove-sponsorship:hover,
+.add-committee:hover, .remove-committee:hover,
+.add-sponsor:hover, .remove-sponsor:hover,
+.add-venue-detail:hover, .remove-venue-detail:hover,
+.add-partner:hover, .remove-partner:hover {
+    background: #005a87;
 }
 
 .venue-details-container {
@@ -68,6 +92,27 @@
     margin-bottom: 10px;
 }
 
-.add-venue-detail, .remove-venue-detail {
-    margin: 5px 0;
+.partners-container {
+    margin-top: 20px;
+}
+
+.partners-section {
+    margin-bottom: 30px;
+}
+
+.partner-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+}
+
+.partner-item p {
+    margin-bottom: 10px;
+}
+
+.partners-container h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #23282d;
 }

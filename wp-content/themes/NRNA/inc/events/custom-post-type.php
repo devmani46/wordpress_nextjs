@@ -56,6 +56,12 @@ function nrna_register_events_meta_fields() {
         'event_venue_title' => ['type' => 'string'],
         'event_venue_description' => ['type' => 'string'],
         'event_venue_map' => ['type' => 'string'],
+        'event_organizing_committee_title' => ['type' => 'string'],
+        'event_sponsors_title' => ['type' => 'string'],
+        'event_banner_title' => ['type' => 'string'],
+        'event_banner_description' => ['type' => 'string'],
+        'event_banner_cta_link' => ['type' => 'string'],
+        'event_banner_cta_title' => ['type' => 'string'],
     ];
 
     foreach ($fields as $key => $args) {
@@ -119,6 +125,55 @@ function nrna_register_events_meta_fields() {
         'show_in_rest' => true,
         'single' => true,
     ]);
+
+    register_meta('post', 'event_organizing_committee', [
+        'object_subtype' => 'events',
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'photo' => ['type' => 'string'],
+                'name' => ['type' => 'string'],
+                'role' => ['type' => 'string'],
+                'service' => ['type' => 'string'],
+                'country' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    register_meta('post', 'event_sponsors', [
+        'object_subtype' => 'events',
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'photo' => ['type' => 'string'],
+                'name' => ['type' => 'string'],
+                'role' => ['type' => 'string'],
+                'service' => ['type' => 'string'],
+                'country' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    register_meta('post', 'event_partners', [
+        'object_subtype' => 'events',
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'category' => ['type' => 'string'],
+                'logo' => ['type' => 'string'],
+                'name' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
 }
 add_action('init', 'nrna_register_events_meta_fields');
 
@@ -154,6 +209,12 @@ function nrna_prepare_events_rest($response, $post, $request) {
         'event_venue_title',
         'event_venue_description',
         'event_venue_map',
+        'event_organizing_committee_title',
+        'event_sponsors_title',
+        'event_banner_title',
+        'event_banner_description',
+        'event_banner_cta_link',
+        'event_banner_cta_title',
     ];
 
     foreach ($meta_fields as $field) {
@@ -163,6 +224,9 @@ function nrna_prepare_events_rest($response, $post, $request) {
     $data['event_schedule_dates'] = get_post_meta($post->ID, 'event_schedule_dates', true);
     $data['event_sponsorships'] = get_post_meta($post->ID, 'event_sponsorships', true);
     $data['event_venue_details'] = get_post_meta($post->ID, 'event_venue_details', true);
+    $data['event_organizing_committee'] = get_post_meta($post->ID, 'event_organizing_committee', true);
+    $data['event_sponsors'] = get_post_meta($post->ID, 'event_sponsors', true);
+    $data['event_partners'] = get_post_meta($post->ID, 'event_partners', true);
 
     $response->set_data($data);
     return $response;
