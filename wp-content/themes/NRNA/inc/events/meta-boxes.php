@@ -62,7 +62,14 @@ function nrna_render_events_meta_box($post) {
                     <input type="number" name="event_countdown_minutes" value="<?php echo esc_attr($countdown_minutes); ?>" placeholder="Minutes" min="0" max="59" style="width:80px;"> Minutes
                     <input type="number" name="event_countdown_seconds" value="<?php echo esc_attr($countdown_seconds); ?>" placeholder="Seconds" min="0" max="59" style="width:80px;"> Seconds
                 </p>
-                <p><label>Description:</label><br><textarea name="event_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+                <p><label>Description:</label><br><?php
+                wp_editor(get_post_meta($post->ID, 'event_description', true), 'event_description', array(
+                    'media_buttons' => true,
+                    'textarea_rows' => 10,
+                    'teeny' => false,
+                    'quicktags' => true,
+                ));
+                ?></p>
                 <?php
                 break;
 
@@ -73,7 +80,14 @@ function nrna_render_events_meta_box($post) {
                 $obj_cta_title = get_post_meta($post->ID, 'event_objective_cta_title', true);
                 ?>
                 <p><label>Title:</label><br><input type="text" name="event_objective_title" value="<?php echo esc_attr($obj_title); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="event_objective_description" rows="4" class="wide-textarea"><?php echo esc_textarea($obj_description); ?></textarea></p>
+                <p><label>Description:</label><br><?php
+                wp_editor(get_post_meta($post->ID, 'event_objective_description', true), 'event_objective_description', array(
+                    'media_buttons' => true,
+                    'textarea_rows' => 10,
+                    'teeny' => false,
+                    'quicktags' => true,
+                ));
+                ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="event_objective_cta_link" value="<?php echo esc_attr($obj_cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="event_objective_cta_title" value="<?php echo esc_attr($obj_cta_title); ?>" class="wide-input"></p>
                 <?php
@@ -86,7 +100,14 @@ function nrna_render_events_meta_box($post) {
                 if (!is_array($schedule_dates)) $schedule_dates = [];
                 ?>
                 <p><label>Title:</label><br><input type="text" name="event_schedule_title" value="<?php echo esc_attr($schedule_title); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="event_schedule_description" rows="4" class="wide-textarea"><?php echo esc_textarea($schedule_description); ?></textarea></p>
+                <p><label>Description:</label><br><?php
+                wp_editor(get_post_meta($post->ID, 'event_schedule_description', true), 'event_schedule_description', array(
+                    'media_buttons' => true,
+                    'textarea_rows' => 10,
+                    'teeny' => false,
+                    'quicktags' => true,
+                ));
+                ?></p>
                 <div class="repeater-container" data-repeater="event_schedule_dates">
                     <?php foreach ($schedule_dates as $date_index => $date_item): ?>
                         <div class="date-item">
@@ -100,7 +121,14 @@ function nrna_render_events_meta_box($post) {
                                             <p><label>Start Time:</label><br><input type="time" name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][start_time]" value="<?php echo esc_attr($session['start_time'] ?? ''); ?>" class="wide-input"></p>
                                             <p><label>End Time:</label><br><input type="time" name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][end_time]" value="<?php echo esc_attr($session['end_time'] ?? ''); ?>" class="wide-input"></p>
                                             <p><label>Title:</label><br><input type="text" name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][title]" value="<?php echo esc_attr($session['title'] ?? ''); ?>" class="wide-input"></p>
-                                            <p><label>Description:</label><br><textarea name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][description]" rows="3" class="wide-textarea"><?php echo esc_textarea($session['description'] ?? ''); ?></textarea></p>
+                                            <p><label>Description:</label><br><?php
+                                            wp_editor($session['description'] ?? '', "event_schedule_dates_{$date_index}_sessions_{$session_index}_description", array(
+                                                'media_buttons' => true,
+                                                'textarea_rows' => 10,
+                                                'teeny' => false,
+                                                'quicktags' => true,
+                                            ));
+                                            ?></p>
                                             <button type="button" class="remove-session button">Remove Session</button>
                                         </div>
                                     <?php endforeach; ?>
@@ -172,7 +200,11 @@ function nrna_save_events_meta_box($post_id) {
                     if (isset($session['start_time'])) $clean_session['start_time'] = sanitize_text_field($session['start_time']);
                     if (isset($session['end_time'])) $clean_session['end_time'] = sanitize_text_field($session['end_time']);
                     if (isset($session['title'])) $clean_session['title'] = sanitize_text_field($session['title']);
-                    if (isset($session['description'])) $clean_session['description'] = wp_kses_post($session['description']);
+                    // Handle wp_editor content for session descriptions
+                    $session_desc_key = 'event_schedule_dates_' . array_search($date_item, $schedule_data) . '_sessions_' . array_search($session, $date_item['sessions']) . '_description';
+                    if (isset($_POST[$session_desc_key])) {
+                        $clean_session['description'] = wp_kses_post($_POST[$session_desc_key]);
+                    }
                     if (!empty($clean_session)) $clean_sessions[] = $clean_session;
                 }
             }
