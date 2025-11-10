@@ -34,6 +34,10 @@ require_once $inc . 'activities/meta-boxes.php';
 require_once $inc . 'downloads/custom-post-type.php';
 require_once $inc . 'downloads/meta-boxes.php';
 
+// Load news includes
+require_once $inc . 'news/custom-post-type.php';
+require_once $inc . 'news/meta-boxes.php';
+
 // Theme setup
 function nrna_theme_setup() {
     add_theme_support('title-tag');
