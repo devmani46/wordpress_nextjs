@@ -18,6 +18,11 @@ require_once $inc . 'about-meta-box.php';
 require_once $inc . 'projects/custom-post-type.php';
 require_once $inc . 'projects/meta-boxes.php';
 
+// Load events includes
+require_once $inc . 'events/custom-post-type.php';
+require_once $inc . 'events/meta-boxes.php';
+
+
 // Load faqs includes
 require_once $inc . 'faqs/custom-post-type.php';
 require_once $inc . 'faqs/meta-boxes.php';

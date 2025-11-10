@@ -1,0 +1,29 @@
+.events-meta-tabs .tab-buttons {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.events-meta-tabs .tab-button {
+    background: #f1f1f1;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    margin-right: 5px;
+}
+
+.events-meta-tabs .tab-button.active {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.events-meta-tabs .tab-pane {
+    display: none;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background: #fff;
+}
+
+.wide-input, .wide-textarea {
+    width: 100%;
+}

@@ -23,8 +23,12 @@ function nrna_enqueue_admin_assets($hook) {
         } elseif ($post && get_page_template_slug($post->ID) === 'template-about.php') {
             wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], false, true);
             wp_enqueue_style('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.css', [], false);
-        }
+        } elseif ($post && $post->post_type === 'events') {
+            wp_enqueue_script('nrna-events-tabs', get_template_directory_uri() . '/assets/admin/events-tabs.js', [], false, true);
+            wp_enqueue_style('nrna-events-tabs', get_template_directory_uri() . '/assets/admin/events-tabs.css', [], false);
+
     }
+}
 }
 add_action('admin_enqueue_scripts', 'nrna_enqueue_admin_assets');
 ?>
