@@ -20,6 +20,8 @@ function nrna_render_events_meta_box($post) {
         'hero' => 'Hero Section',
         'objective' => 'Objective Section',
         'schedule' => 'Event Schedule',
+        'sponsorship' => 'Sponsorship',
+        'venue' => 'Venue',
     ];
 
     echo '<div class="events-meta-tabs">';
@@ -142,6 +144,85 @@ function nrna_render_events_meta_box($post) {
                 <button type="button" class="add-date button" data-repeater="event_schedule_dates">Add Date</button>
                 <?php
                 break;
+
+            case 'sponsorship':
+                $sponsorship_title = get_post_meta($post->ID, 'event_sponsorship_title', true);
+                $sponsorship_description = get_post_meta($post->ID, 'event_sponsorship_description', true);
+                $sponsorships = get_post_meta($post->ID, 'event_sponsorships', true);
+                if (!is_array($sponsorships)) $sponsorships = [];
+                ?>
+                <p><label>Title:</label><br><input type="text" name="event_sponsorship_title" value="<?php echo esc_attr($sponsorship_title); ?>" class="wide-input"></p>
+                <p><label>Description:</label><br><?php
+                wp_editor(get_post_meta($post->ID, 'event_sponsorship_description', true), 'event_sponsorship_description', array(
+                    'media_buttons' => true,
+                    'textarea_rows' => 10,
+                    'teeny' => false,
+                    'quicktags' => true,
+                ));
+                ?></p>
+                <div class="sponsorship-table-container">
+                    <table class="sponsorship-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Amount to be Contributed</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($sponsorships as $index => $sponsorship): ?>
+                                <tr class="sponsorship-row">
+                                    <td><input type="text" name="event_sponsorships[<?php echo $index; ?>][category]" value="<?php echo esc_attr($sponsorship['category'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><input type="text" name="event_sponsorships[<?php echo $index; ?>][amount]" value="<?php echo esc_attr($sponsorship['amount'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><button type="button" class="remove-sponsorship button">Remove</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <button type="button" class="add-sponsorship button">Add Sponsorship Category</button>
+                </div>
+                <?php
+                break;
+
+            case 'venue':
+                $venue_title = get_post_meta($post->ID, 'event_venue_title', true);
+                $venue_description = get_post_meta($post->ID, 'event_venue_description', true);
+                $venue_map = get_post_meta($post->ID, 'event_venue_map', true);
+                $venue_details = get_post_meta($post->ID, 'event_venue_details', true);
+                if (!is_array($venue_details)) $venue_details = [];
+                ?>
+                <p><label>Title:</label><br><input type="text" name="event_venue_title" value="<?php echo esc_attr($venue_title); ?>" class="wide-input"></p>
+                <p><label>Description:</label><br><?php
+                wp_editor(get_post_meta($post->ID, 'event_venue_description', true), 'event_venue_description', array(
+                    'media_buttons' => true,
+                    'textarea_rows' => 10,
+                    'teeny' => false,
+                    'quicktags' => true,
+                ));
+                ?></p>
+                <p><label>Map Embed Code:</label><br><textarea name="event_venue_map" rows="4" class="wide-textarea"><?php echo esc_textarea($venue_map); ?></textarea></p>
+                <div class="venue-details-container">
+                    <h4>Venue Details</h4>
+                    <div class="venue-details-list">
+                        <?php foreach ($venue_details as $index => $detail): ?>
+                            <div class="venue-detail-item">
+                                <p><label>Title:</label><br><input type="text" name="event_venue_details[<?php echo $index; ?>][title]" value="<?php echo esc_attr($detail['title'] ?? ''); ?>" class="wide-input"></p>
+                                <p><label>Description:</label><br><?php
+                                wp_editor($detail['description'] ?? '', "event_venue_details_{$index}_description", array(
+                                    'media_buttons' => true,
+                                    'textarea_rows' => 5,
+                                    'teeny' => false,
+                                    'quicktags' => true,
+                                ));
+                                ?></p>
+                                <button type="button" class="remove-venue-detail button">Remove Detail</button>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="add-venue-detail button">Add Venue Detail</button>
+                </div>
+                <?php
+                break;
         }
 
         echo '</div>';
@@ -176,6 +257,11 @@ function nrna_save_events_meta_box($post_id) {
         'event_objective_cta_title' => 'sanitize_text_field',
         'event_schedule_title' => 'sanitize_text_field',
         'event_schedule_description' => 'wp_kses_post',
+        'event_sponsorship_title' => 'sanitize_text_field',
+        'event_sponsorship_description' => 'wp_kses_post',
+        'event_venue_title' => 'sanitize_text_field',
+        'event_venue_description' => 'wp_kses_post',
+        'event_venue_map' => 'wp_kses_post',
     ];
 
     foreach ($fields as $field => $sanitize) {
@@ -215,6 +301,44 @@ function nrna_save_events_meta_box($post_id) {
         update_post_meta($post_id, 'event_schedule_dates', $sanitized_schedule);
     } else {
         delete_post_meta($post_id, 'event_schedule_dates');
+    }
+
+    // Save sponsorships array
+    if (isset($_POST['event_sponsorships'])) {
+        $sponsorship_data = $_POST['event_sponsorships'];
+        $sanitized_sponsorships = [];
+
+        foreach ((array)$sponsorship_data as $sponsorship) {
+            $clean_sponsorship = [];
+            if (isset($sponsorship['category'])) $clean_sponsorship['category'] = sanitize_text_field($sponsorship['category']);
+            if (isset($sponsorship['amount'])) $clean_sponsorship['amount'] = sanitize_text_field($sponsorship['amount']);
+            if (!empty($clean_sponsorship)) $sanitized_sponsorships[] = $clean_sponsorship;
+        }
+
+        update_post_meta($post_id, 'event_sponsorships', $sanitized_sponsorships);
+    } else {
+        delete_post_meta($post_id, 'event_sponsorships');
+    }
+
+    // Save venue details array
+    if (isset($_POST['event_venue_details'])) {
+        $venue_data = $_POST['event_venue_details'];
+        $sanitized_venue_details = [];
+
+        foreach ((array)$venue_data as $detail) {
+            $clean_detail = [];
+            if (isset($detail['title'])) $clean_detail['title'] = sanitize_text_field($detail['title']);
+            // Handle wp_editor content for venue detail descriptions
+            $detail_desc_key = 'event_venue_details_' . array_search($detail, $venue_data) . '_description';
+            if (isset($_POST[$detail_desc_key])) {
+                $clean_detail['description'] = wp_kses_post($_POST[$detail_desc_key]);
+            }
+            if (!empty($clean_detail)) $sanitized_venue_details[] = $clean_detail;
+        }
+
+        update_post_meta($post_id, 'event_venue_details', $sanitized_venue_details);
+    } else {
+        delete_post_meta($post_id, 'event_venue_details');
     }
 }
 add_action('save_post', 'nrna_save_events_meta_box');

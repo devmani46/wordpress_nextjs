@@ -51,6 +51,11 @@ function nrna_register_events_meta_fields() {
         'event_objective_cta_title' => ['type' => 'string'],
         'event_schedule_title' => ['type' => 'string'],
         'event_schedule_description' => ['type' => 'string'],
+        'event_sponsorship_title' => ['type' => 'string'],
+        'event_sponsorship_description' => ['type' => 'string'],
+        'event_venue_title' => ['type' => 'string'],
+        'event_venue_description' => ['type' => 'string'],
+        'event_venue_map' => ['type' => 'string'],
     ];
 
     foreach ($fields as $key => $args) {
@@ -86,6 +91,34 @@ function nrna_register_events_meta_fields() {
         'show_in_rest' => true,
         'single' => true,
     ]);
+
+    register_meta('post', 'event_sponsorships', [
+        'object_subtype' => 'events',
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'category' => ['type' => 'string'],
+                'amount' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    register_meta('post', 'event_venue_details', [
+        'object_subtype' => 'events',
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'title' => ['type' => 'string'],
+                'description' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
 }
 add_action('init', 'nrna_register_events_meta_fields');
 
@@ -116,6 +149,11 @@ function nrna_prepare_events_rest($response, $post, $request) {
         'event_objective_cta_title',
         'event_schedule_title',
         'event_schedule_description',
+        'event_sponsorship_title',
+        'event_sponsorship_description',
+        'event_venue_title',
+        'event_venue_description',
+        'event_venue_map',
     ];
 
     foreach ($meta_fields as $field) {
@@ -123,6 +161,8 @@ function nrna_prepare_events_rest($response, $post, $request) {
     }
 
     $data['event_schedule_dates'] = get_post_meta($post->ID, 'event_schedule_dates', true);
+    $data['event_sponsorships'] = get_post_meta($post->ID, 'event_sponsorships', true);
+    $data['event_venue_details'] = get_post_meta($post->ID, 'event_venue_details', true);
 
     $response->set_data($data);
     return $response;

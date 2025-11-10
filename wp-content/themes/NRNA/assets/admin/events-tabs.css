@@ -28,51 +28,46 @@
     width: 100%;
 }
 
-.date-item {
+.sponsorship-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.sponsorship-table th, .sponsorship-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.sponsorship-table th {
+    background-color: #f2f2f2;
+}
+
+.sponsorship-table input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-sponsorship, .remove-sponsorship {
+    margin: 5px 0;
+}
+
+.venue-details-container {
+    margin-top: 20px;
+}
+
+.venue-detail-item {
     border: 1px solid #ddd;
     padding: 15px;
     margin-bottom: 15px;
     background: #f9f9f9;
 }
 
-.date-item h4 {
-    margin-top: 0;
-    color: #23282d;
-}
-
-.session-item {
-    border: 1px solid #e1e1e1;
-    padding: 10px;
+.venue-detail-item p {
     margin-bottom: 10px;
-    background: #fff;
 }
 
-.session-item h5 {
-    margin-top: 0;
-    color: #666;
-}
-
-.button {
-    background: #007cba;
-    border: 1px solid #007cba;
-    color: #fff;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 3px;
-    margin-right: 5px;
-}
-
-.button:hover {
-    background: #005a87;
-    border-color: #005a87;
-}
-
-.remove-date, .remove-session {
-    background: #dc3232;
-    border-color: #dc3232;
-}
-
-.remove-date:hover, .remove-session:hover {
-    background: #a00;
-    border-color: #a00;
+.add-venue-detail, .remove-venue-detail {
+    margin: 5px 0;
 }
