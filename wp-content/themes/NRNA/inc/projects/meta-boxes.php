@@ -51,8 +51,8 @@ function nrna_render_project_description_meta_box($post) {
         'textarea_name' => 'project_description',
         'media_buttons' => false,
         'textarea_rows' => 8,
-        'teeny' => true,
-        'quicktags' => false,
+        'teeny' => false,
+        'quicktags' => true,
     ]);
 }
 
@@ -64,8 +64,8 @@ function nrna_render_project_objective_meta_box($post) {
         'textarea_name' => 'project_objective',
         'media_buttons' => false,
         'textarea_rows' => 8,
-        'teeny' => true,
-        'quicktags' => false,
+        'teeny' => false,
+        'quicktags' => true,
     ]);
 }
 
