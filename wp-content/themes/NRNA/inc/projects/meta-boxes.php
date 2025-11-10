@@ -1,4 +1,32 @@
 <?php
+// Register Projects meta fields for REST API
+function nrna_register_projects_meta_fields() {
+    $fields = [
+        'project_subtitle' => ['type' => 'string'],
+        'project_description' => ['type' => 'string'],
+        'project_objective' => ['type' => 'string'],
+        'project_locations' => [
+            'type' => 'array',
+            'items' => [
+                'type' => 'object',
+                'properties' => [
+                    'place' => ['type' => 'string'],
+                    'date' => ['type' => 'string'],
+                    'description' => ['type' => 'string'],
+                ],
+            ],
+        ],
+    ];
+
+    foreach ($fields as $key => $args) {
+        register_post_meta('projects', $key, array_merge($args, [
+            'show_in_rest' => true,
+            'single' => true,
+        ]));
+    }
+}
+add_action('init', 'nrna_register_projects_meta_fields');
+
 // Add Projects meta boxes
 function nrna_add_projects_meta_boxes() {
     add_meta_box(
@@ -49,8 +77,8 @@ function nrna_render_project_description_meta_box($post) {
     echo '<label for="project_description" style="display:block; font-weight:bold; margin-bottom:8px;">Description:</label>';
     wp_editor($description, 'project_description', [
         'textarea_name' => 'project_description',
-        'media_buttons' => false,
-        'textarea_rows' => 8,
+        'media_buttons' => true,
+        'textarea_rows' => 10,
         'teeny' => false,
         'quicktags' => true,
     ]);
@@ -62,8 +90,8 @@ function nrna_render_project_objective_meta_box($post) {
     echo '<label for="project_objective" style="display:block; font-weight:bold; margin-bottom:8px;">Objective:</label>';
     wp_editor($objective, 'project_objective', [
         'textarea_name' => 'project_objective',
-        'media_buttons' => false,
-        'textarea_rows' => 8,
+        'media_buttons' => true,
+        'textarea_rows' => 10,
         'teeny' => false,
         'quicktags' => true,
     ]);
@@ -160,3 +188,23 @@ function nrna_remove_projects_meta_boxes() {
     remove_meta_box('revisionsdiv', 'projects', 'normal');
 }
 add_action('admin_menu', 'nrna_remove_projects_meta_boxes');
+
+// Prepare Projects REST response to include all meta fields
+function nrna_prepare_projects_rest_response($response, $post, $request) {
+    $data = $response->get_data();
+
+    // Add meta fields
+    $data['project_subtitle'] = get_post_meta($post->ID, 'project_subtitle', true);
+    $data['project_description'] = get_post_meta($post->ID, 'project_description', true);
+    $data['project_objective'] = get_post_meta($post->ID, 'project_objective', true);
+    $data['project_locations'] = get_post_meta($post->ID, 'project_locations', true);
+
+    // Add featured image URL if exists
+    if (has_post_thumbnail($post->ID)) {
+        $data['featured_image_url'] = get_the_post_thumbnail_url($post->ID, 'full');
+    }
+
+    $response->set_data($data);
+    return $response;
+}
+add_filter('rest_prepare_projects', 'nrna_prepare_projects_rest_response', 10, 3);
