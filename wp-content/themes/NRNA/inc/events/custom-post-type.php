@@ -49,6 +49,8 @@ function nrna_register_events_meta_fields() {
         'event_objective_description' => ['type' => 'string'],
         'event_objective_cta_link' => ['type' => 'string'],
         'event_objective_cta_title' => ['type' => 'string'],
+        'event_schedule_title' => ['type' => 'string'],
+        'event_schedule_description' => ['type' => 'string'],
     ];
 
     foreach ($fields as $key => $args) {
@@ -58,6 +60,32 @@ function nrna_register_events_meta_fields() {
             'single' => true,
         ]));
     }
+
+    // Array fields
+    register_meta('post', 'event_schedule_dates', [
+        'object_subtype' => 'events',
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'date' => ['type' => 'string'],
+                'sessions' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'start_time' => ['type' => 'string'],
+                            'end_time' => ['type' => 'string'],
+                            'title' => ['type' => 'string'],
+                            'description' => ['type' => 'string'],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
 }
 add_action('init', 'nrna_register_events_meta_fields');
 
@@ -86,11 +114,15 @@ function nrna_prepare_events_rest($response, $post, $request) {
         'event_objective_description',
         'event_objective_cta_link',
         'event_objective_cta_title',
+        'event_schedule_title',
+        'event_schedule_description',
     ];
 
     foreach ($meta_fields as $field) {
         $data[$field] = get_post_meta($post->ID, $field, true);
     }
+
+    $data['event_schedule_dates'] = get_post_meta($post->ID, 'event_schedule_dates', true);
 
     $response->set_data($data);
     return $response;

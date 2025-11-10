@@ -19,6 +19,7 @@ function nrna_render_events_meta_box($post) {
     $tabs = [
         'hero' => 'Hero Section',
         'objective' => 'Objective Section',
+        'schedule' => 'Event Schedule',
     ];
 
     echo '<div class="events-meta-tabs">';
@@ -77,6 +78,42 @@ function nrna_render_events_meta_box($post) {
                 <p><label>CTA Title:</label><br><input type="text" name="event_objective_cta_title" value="<?php echo esc_attr($obj_cta_title); ?>" class="wide-input"></p>
                 <?php
                 break;
+
+            case 'schedule':
+                $schedule_title = get_post_meta($post->ID, 'event_schedule_title', true);
+                $schedule_description = get_post_meta($post->ID, 'event_schedule_description', true);
+                $schedule_dates = get_post_meta($post->ID, 'event_schedule_dates', true);
+                if (!is_array($schedule_dates)) $schedule_dates = [];
+                ?>
+                <p><label>Title:</label><br><input type="text" name="event_schedule_title" value="<?php echo esc_attr($schedule_title); ?>" class="wide-input"></p>
+                <p><label>Description:</label><br><textarea name="event_schedule_description" rows="4" class="wide-textarea"><?php echo esc_textarea($schedule_description); ?></textarea></p>
+                <div class="repeater-container" data-repeater="event_schedule_dates">
+                    <?php foreach ($schedule_dates as $date_index => $date_item): ?>
+                        <div class="date-item">
+                            <h4>Date <?php echo $date_index + 1; ?></h4>
+                            <p><label>Date:</label><br><input type="date" name="event_schedule_dates[<?php echo $date_index; ?>][date]" value="<?php echo esc_attr($date_item['date'] ?? ''); ?>" class="wide-input"></p>
+                            <div class="sessions-container" data-repeater="sessions">
+                                <?php if (isset($date_item['sessions']) && is_array($date_item['sessions'])): ?>
+                                    <?php foreach ($date_item['sessions'] as $session_index => $session): ?>
+                                        <div class="session-item">
+                                            <h5>Session <?php echo $session_index + 1; ?></h5>
+                                            <p><label>Start Time:</label><br><input type="time" name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][start_time]" value="<?php echo esc_attr($session['start_time'] ?? ''); ?>" class="wide-input"></p>
+                                            <p><label>End Time:</label><br><input type="time" name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][end_time]" value="<?php echo esc_attr($session['end_time'] ?? ''); ?>" class="wide-input"></p>
+                                            <p><label>Title:</label><br><input type="text" name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][title]" value="<?php echo esc_attr($session['title'] ?? ''); ?>" class="wide-input"></p>
+                                            <p><label>Description:</label><br><textarea name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][description]" rows="3" class="wide-textarea"><?php echo esc_textarea($session['description'] ?? ''); ?></textarea></p>
+                                            <button type="button" class="remove-session button">Remove Session</button>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                            <button type="button" class="add-session button" data-date-index="<?php echo $date_index; ?>">Add Session</button>
+                            <button type="button" class="remove-date button">Remove Date</button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <button type="button" class="add-date button" data-repeater="event_schedule_dates">Add Date</button>
+                <?php
+                break;
         }
 
         echo '</div>';
@@ -109,12 +146,43 @@ function nrna_save_events_meta_box($post_id) {
         'event_objective_description' => 'wp_kses_post',
         'event_objective_cta_link' => 'esc_url_raw',
         'event_objective_cta_title' => 'sanitize_text_field',
+        'event_schedule_title' => 'sanitize_text_field',
+        'event_schedule_description' => 'wp_kses_post',
     ];
 
     foreach ($fields as $field => $sanitize) {
         if (isset($_POST[$field])) {
             update_post_meta($post_id, $field, call_user_func($sanitize, $_POST[$field]));
         }
+    }
+
+    // Save schedule dates array
+    if (isset($_POST['event_schedule_dates'])) {
+        $schedule_data = $_POST['event_schedule_dates'];
+        $sanitized_schedule = [];
+
+        foreach ((array)$schedule_data as $date_item) {
+            $clean_date = [];
+            if (isset($date_item['date'])) $clean_date['date'] = sanitize_text_field($date_item['date']);
+
+            $clean_sessions = [];
+            if (isset($date_item['sessions']) && is_array($date_item['sessions'])) {
+                foreach ($date_item['sessions'] as $session) {
+                    $clean_session = [];
+                    if (isset($session['start_time'])) $clean_session['start_time'] = sanitize_text_field($session['start_time']);
+                    if (isset($session['end_time'])) $clean_session['end_time'] = sanitize_text_field($session['end_time']);
+                    if (isset($session['title'])) $clean_session['title'] = sanitize_text_field($session['title']);
+                    if (isset($session['description'])) $clean_session['description'] = wp_kses_post($session['description']);
+                    if (!empty($clean_session)) $clean_sessions[] = $clean_session;
+                }
+            }
+            $clean_date['sessions'] = $clean_sessions;
+            if (!empty($clean_date)) $sanitized_schedule[] = $clean_date;
+        }
+
+        update_post_meta($post_id, 'event_schedule_dates', $sanitized_schedule);
+    } else {
+        delete_post_meta($post_id, 'event_schedule_dates');
     }
 }
 add_action('save_post', 'nrna_save_events_meta_box');
