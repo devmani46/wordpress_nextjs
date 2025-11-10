@@ -1,32 +1,4 @@
 <?php
-// Register Projects meta fields for REST API
-function nrna_register_projects_meta_fields() {
-    $fields = [
-        'project_subtitle' => ['type' => 'string'],
-        'project_description' => ['type' => 'string'],
-        'project_objective' => ['type' => 'string'],
-        'project_locations' => [
-            'type' => 'array',
-            'items' => [
-                'type' => 'object',
-                'properties' => [
-                    'place' => ['type' => 'string'],
-                    'date' => ['type' => 'string'],
-                    'description' => ['type' => 'string'],
-                ],
-            ],
-        ],
-    ];
-
-    foreach ($fields as $key => $args) {
-        register_post_meta('projects', $key, array_merge($args, [
-            'show_in_rest' => true,
-            'single' => true,
-        ]));
-    }
-}
-add_action('init', 'nrna_register_projects_meta_fields');
-
 // Add Projects meta boxes
 function nrna_add_projects_meta_boxes() {
     add_meta_box(
@@ -208,3 +180,31 @@ function nrna_prepare_projects_rest_response($response, $post, $request) {
     return $response;
 }
 add_filter('rest_prepare_projects', 'nrna_prepare_projects_rest_response', 10, 3);
+
+// Register Projects meta fields for REST API
+function nrna_register_projects_meta_fields() {
+    $fields = [
+        'project_subtitle' => ['type' => 'string'],
+        'project_description' => ['type' => 'string'],
+        'project_objective' => ['type' => 'string'],
+        'project_locations' => [
+            'type' => 'array',
+            'items' => [
+                'type' => 'object',
+                'properties' => [
+                    'place' => ['type' => 'string'],
+                    'date' => ['type' => 'string'],
+                    'description' => ['type' => 'string'],
+                ],
+            ],
+        ],
+    ];
+
+    foreach ($fields as $key => $args) {
+        register_post_meta('projects', $key, array_merge($args, [
+            'show_in_rest' => true,
+            'single' => true,
+        ]));
+    }
+}
+add_action('init', 'nrna_register_projects_meta_fields');
