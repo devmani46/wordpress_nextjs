@@ -5,6 +5,10 @@ function nrna_register_home_meta_fields() {
         'hero_description' => ['type' => 'string'],
         'hero_cta_link' => ['type' => 'string'],
         'hero_cta_title' => ['type' => 'string'],
+        'banner_title' => ['type' => 'string'],
+        'banner_description' => ['type' => 'string'],
+        'banner_cta_link' => ['type' => 'string'],
+        'banner_cta_title' => ['type' => 'string'],
         'about_title' => ['type' => 'string'],
         'about_image_1' => ['type' => 'integer'],
         'about_image_2' => ['type' => 'integer'],
@@ -126,6 +130,7 @@ function nrna_render_home_meta_box($post) {
     $tabs = [
         'hero' => 'Hero',
         'slider' => 'Slider',
+        'banner' => 'Banner',
         'about-us' => 'About Us',
         'why-choose-us' => 'Why Choose Us',
         'get-involved' => 'Get Involved',
@@ -179,6 +184,19 @@ function nrna_render_home_meta_box($post) {
             <?php endforeach; ?>
         </div>
         <button type="button" class="add-item button" data-repeater="slider_items">Add Slider</button>
+        <?php
+        break;
+
+    case 'banner':
+        $title = get_post_meta($post->ID, 'banner_title', true);
+        $description = get_post_meta($post->ID, 'banner_description', true);
+        $cta_link = get_post_meta($post->ID, 'banner_cta_link', true);
+        $cta_title = get_post_meta($post->ID, 'banner_cta_title', true);
+        ?>
+        <p><label>Title:</label><br><input type="text" name="banner_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+        <p><label>Description:</label><br><textarea name="banner_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+        <p><label>CTA Link:</label><br><input type="url" name="banner_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
+        <p><label>CTA Title:</label><br><input type="text" name="banner_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
         <?php
         break;
 
@@ -316,6 +334,10 @@ function nrna_save_home_meta_box($post_id) {
         'hero_description' => 'wp_kses_post',
         'hero_cta_link' => 'esc_url_raw',
         'hero_cta_title' => 'sanitize_text_field',
+        'banner_title' => 'sanitize_text_field',
+        'banner_description' => 'wp_kses_post',
+        'banner_cta_link' => 'esc_url_raw',
+        'banner_cta_title' => 'sanitize_text_field',
 
         'about_title' => 'sanitize_text_field',
         'about_image_1' => 'intval',

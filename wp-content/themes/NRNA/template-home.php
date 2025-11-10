@@ -39,6 +39,20 @@ get_header(); ?>
     <?php endif; ?>
 </section>
 
+<section class="banner">
+    <?php
+    $banner_title = get_post_meta(get_the_ID(), 'banner_title', true);
+    $banner_description = get_post_meta(get_the_ID(), 'banner_description', true);
+    $banner_cta_link = get_post_meta(get_the_ID(), 'banner_cta_link', true);
+    $banner_cta_title = get_post_meta(get_the_ID(), 'banner_cta_title', true);
+    ?>
+    <h2><?php echo esc_html($banner_title); ?></h2>
+    <p><?php echo wp_kses_post($banner_description); ?></p>
+    <?php if ($banner_cta_title && $banner_cta_link) : ?>
+        <a href="<?php echo esc_url($banner_cta_link); ?>"><?php echo esc_html($banner_cta_title); ?></a>
+    <?php endif; ?>
+</section>
+
 <section class="about-us">
     <?php
     $about_title = get_post_meta(get_the_ID(), 'about_title', true);
