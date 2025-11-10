@@ -38,6 +38,10 @@ require_once $inc . 'downloads/meta-boxes.php';
 require_once $inc . 'news/custom-post-type.php';
 require_once $inc . 'news/meta-boxes.php';
 
+// Load executive committee includes
+require_once $inc . 'executive-committee/custom-post-type.php';
+require_once $inc . 'executive-committee/meta-boxes.php';
+
 // Theme setup
 function nrna_theme_setup() {
     add_theme_support('title-tag');
