@@ -29,3 +29,38 @@ function nrna_register_activities_cpt() {
     register_post_type('activities', $args);
 }
 add_action('init', 'nrna_register_activities_cpt');
+
+// Register meta fields for REST API
+function nrna_register_activities_meta_rest() {
+    register_meta('post', 'activity_content', array(
+        'object_subtype' => 'activities',
+        'type' => 'string',
+        'description' => 'Activity Content',
+        'single' => true,
+        'show_in_rest' => true,
+    ));
+
+    register_meta('post', 'activity_related_activities', array(
+        'object_subtype' => 'activities',
+        'type' => 'array',
+        'description' => 'Related Activities',
+        'single' => true,
+        'show_in_rest' => array(
+            'schema' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'integer',
+                ),
+            ),
+        ),
+    ));
+}
+add_action('init', 'nrna_register_activities_meta_rest');
+
+// Prepare REST API response to include meta fields
+function nrna_prepare_activities_rest($response, $post, $request) {
+    $response->data['activity_content'] = get_post_meta($post->ID, 'activity_content', true);
+    $response->data['activity_related_activities'] = get_post_meta($post->ID, 'activity_related_activities', false);
+    return $response;
+}
+add_filter('rest_prepare_activities', 'nrna_prepare_activities_rest', 10, 3);
