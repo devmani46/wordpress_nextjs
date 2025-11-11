@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const button = e.target;
             const repeater = button.getAttribute('data-repeater');
-            if (repeater !== 'about_slider_items') return; // Only handle about_slider_items
+            if (repeater !== 'about_slider_items' && repeater !== 'who_we_are_slider_items') return; // Handle about_slider_items and who_we_are_slider_items
 
             const container = document.querySelector(`.repeater-container[data-repeater="${repeater}"]`);
             const itemCount = container.querySelectorAll('.repeater-item').length;

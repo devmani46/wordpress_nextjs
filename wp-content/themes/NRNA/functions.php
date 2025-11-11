@@ -14,6 +14,10 @@ require_once $inc . 'home-meta-box.php';
 // Load about meta box
 require_once $inc . 'about-meta-box.php';
 
+// Load who we are includes
+require_once $inc . 'who-we-are/custom-post-type.php';
+require_once $inc . 'who-we-are/meta-boxes.php';
+
 // Load projects includes
 require_once $inc . 'projects/custom-post-type.php';
 require_once $inc . 'projects/meta-boxes.php';
@@ -74,4 +78,3 @@ function nrna_add_news_events_menu() {
     );
 }
 add_action('admin_menu', 'nrna_add_news_events_menu');
-?>
