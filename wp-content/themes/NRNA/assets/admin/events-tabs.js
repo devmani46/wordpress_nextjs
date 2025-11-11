@@ -97,7 +97,13 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.add-sponsor', function() {
         var sponsorCount = $('.sponsor-row').length;
         var newRow = '<tr class="sponsor-row">' +
-            '<td><input type="text" name="event_sponsors[' + sponsorCount + '][photo]" placeholder="Image URL" class="wide-input"></td>' +
+            '<td>' +
+                '<input type="hidden" name="event_sponsors[' + sponsorCount + '][photo]" class="committee-photo-url">' +
+                '<div class="image-preview-container">' +
+                    '<img src="" alt="Photo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; display: none;">' +
+                    '<button type="button" class="select-image button">Select Image</button>' +
+                '</div>' +
+            '</td>' +
             '<td><input type="text" name="event_sponsors[' + sponsorCount + '][name]" class="wide-input"></td>' +
             '<td><input type="text" name="event_sponsors[' + sponsorCount + '][role]" class="wide-input"></td>' +
             '<td><input type="text" name="event_sponsors[' + sponsorCount + '][service]" class="wide-input"></td>' +

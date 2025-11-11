@@ -1,4 +1,4 @@
-<?php
+t <?php
 // Add Events meta boxes
 function nrna_add_events_meta_boxes() {
     add_meta_box(
@@ -291,7 +291,13 @@ function nrna_render_events_meta_box($post) {
                         <tbody>
                             <?php foreach ($sponsors as $index => $sponsor): ?>
                                 <tr class="sponsor-row">
-                                    <td><input type="text" name="event_sponsors[<?php echo $index; ?>][photo]" value="<?php echo esc_attr($sponsor['photo'] ?? ''); ?>" placeholder="Image URL" class="wide-input"></td>
+                                    <td>
+                                        <input type="hidden" name="event_sponsors[<?php echo $index; ?>][photo]" value="<?php echo esc_attr($sponsor['photo'] ?? ''); ?>" class="committee-photo-url">
+                                        <div class="image-preview-container">
+                                            <img src="<?php echo esc_url($sponsor['photo'] ?? ''); ?>" alt="Photo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($sponsor['photo']) ? 'display: none;' : ''; ?>">
+                                            <button type="button" class="select-image button"><?php echo empty($sponsor['photo']) ? 'Select Image' : 'Change Image'; ?></button>
+                                        </div>
+                                    </td>
                                     <td><input type="text" name="event_sponsors[<?php echo $index; ?>][name]" value="<?php echo esc_attr($sponsor['name'] ?? ''); ?>" class="wide-input"></td>
                                     <td><input type="text" name="event_sponsors[<?php echo $index; ?>][role]" value="<?php echo esc_attr($sponsor['role'] ?? ''); ?>" class="wide-input"></td>
                                     <td><input type="text" name="event_sponsors[<?php echo $index; ?>][service]" value="<?php echo esc_attr($sponsor['service'] ?? ''); ?>" class="wide-input"></td>
