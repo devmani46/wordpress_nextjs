@@ -64,7 +64,13 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.add-committee', function() {
         var memberCount = $('.committee-row').length;
         var newRow = '<tr class="committee-row">' +
-            '<td><input type="text" name="event_organizing_committee[' + memberCount + '][photo]" placeholder="Image URL" class="wide-input"></td>' +
+            '<td>' +
+                '<input type="hidden" name="event_organizing_committee[' + memberCount + '][photo]" class="committee-photo-url">' +
+                '<div class="image-preview-container">' +
+                    '<img src="" alt="Photo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; display: none;">' +
+                    '<button type="button" class="select-image button">Select Image</button>' +
+                '</div>' +
+            '</td>' +
             '<td><input type="text" name="event_organizing_committee[' + memberCount + '][name]" class="wide-input"></td>' +
             '<td><input type="text" name="event_organizing_committee[' + memberCount + '][role]" class="wide-input"></td>' +
             '<td><input type="text" name="event_organizing_committee[' + memberCount + '][service]" class="wide-input"></td>' +
@@ -139,5 +145,26 @@ jQuery(document).ready(function($) {
                 $(this).attr('name', name);
             });
         });
+    });
+
+    // Image selection for committee members
+    $(document).on('click', '.select-image', function(e) {
+        e.preventDefault();
+        var button = $(this);
+        var container = button.closest('.image-preview-container');
+        var input = container.find('.committee-photo-url');
+        var preview = container.find('.committee-photo-preview');
+        var custom_uploader = wp.media({
+            title: 'Select Image',
+            button: {
+                text: 'Use this image'
+            },
+            multiple: false
+        }).on('select', function() {
+            var attachment = custom_uploader.state().get('selection').first().toJSON();
+            input.val(attachment.url);
+            preview.attr('src', attachment.url).show();
+            button.text('Change Image');
+        }).open();
     });
 });
