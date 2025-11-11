@@ -1,33 +1,33 @@
 <?php
-// Add Downloads meta boxes
-function nrna_add_downloads_meta_boxes() {
+// Add Resources meta boxes
+function nrna_add_resources_meta_boxes() {
     add_meta_box(
-        'download_files_box',
-        __('Download Files', 'nrna'),
-        'nrna_render_download_files_meta_box',
-        'downloads',
+        'resource_files_box',
+        __('Resource Files', 'nrna'),
+        'nrna_render_resource_files_meta_box',
+        'resources',
         'normal',
         'high'
     );
 }
-add_action('add_meta_boxes', 'nrna_add_downloads_meta_boxes');
+add_action('add_meta_boxes', 'nrna_add_resources_meta_boxes');
 
-// Render Download Files meta box (multiple file uploads)
-function nrna_render_download_files_meta_box($post) {
-    $files = get_post_meta($post->ID, 'download_files', true);
+// Render Resource Files meta box (multiple file uploads)
+function nrna_render_resource_files_meta_box($post) {
+    $files = get_post_meta($post->ID, 'resource_files', true);
     if (!is_array($files)) {
         $files = [];
     }
 
-    echo '<div id="download-files-container">';
-    echo '<p class="description">Upload multiple files for this download.</p>';
+    echo '<div id="resource-files-container">';
+    echo '<p class="description">Upload multiple files for this resource.</p>';
 
     if (!empty($files)) {
         foreach ($files as $index => $file_id) {
             $file_url = wp_get_attachment_url($file_id);
             $file_name = basename($file_url);
             echo '<div class="file-item" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd;">';
-            echo '<input type="hidden" name="download_files[]" value="' . esc_attr($file_id) . '" />';
+            echo '<input type="hidden" name="resource_files[]" value="' . esc_attr($file_id) . '" />';
             echo '<a href="' . esc_url($file_url) . '" target="_blank">' . esc_html($file_name) . '</a>';
             echo '<button type="button" class="upload-file-button button" data-index="' . $index . '" style="margin-left: 10px;">Change File</button>';
             echo '<button type="button" class="remove-file-button button" style="margin-left: 5px;">Remove</button>';
@@ -46,12 +46,12 @@ function nrna_render_download_files_meta_box($post) {
 
         $('#add-file-button').on('click', function() {
             var html = '<div class="file-item" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd;">' +
-                '<input type="hidden" name="download_files[]" />' +
+                '<input type="hidden" name="resource_files[]" />' +
                 '<span class="file-link" style="display: none;"><a href="" target="_blank"></a></span>' +
                 '<button type="button" class="upload-file-button button" data-index="' + fileIndex + '">Upload File</button>' +
                 '<button type="button" class="remove-file-button button" style="margin-left: 5px;">Remove</button>' +
                 '</div>';
-            $('#download-files-container').append(html);
+            $('#resource-files-container').append(html);
             fileIndex++;
         });
 
@@ -86,27 +86,27 @@ function nrna_render_download_files_meta_box($post) {
     <?php
 }
 
-// Save Downloads meta
-function nrna_save_downloads_meta_boxes($post_id) {
-    if (array_key_exists('download_files', $_POST)) {
+// Save Resources meta
+function nrna_save_resources_meta_boxes($post_id) {
+    if (array_key_exists('resource_files', $_POST)) {
         $files = [];
-        foreach ($_POST['download_files'] as $file_id) {
+        foreach ($_POST['resource_files'] as $file_id) {
             if (!empty($file_id)) {
                 $files[] = intval($file_id);
             }
         }
-        update_post_meta($post_id, 'download_files', $files);
+        update_post_meta($post_id, 'resource_files', $files);
     } else {
-        delete_post_meta($post_id, 'download_files');
+        delete_post_meta($post_id, 'resource_files');
     }
 }
-add_action('save_post', 'nrna_save_downloads_meta_boxes');
+add_action('save_post', 'nrna_save_resources_meta_boxes');
 
-// Clean up Downloads admin screen
-function nrna_remove_downloads_meta_boxes() {
-    remove_meta_box('slugdiv', 'downloads', 'normal');
-    remove_meta_box('authordiv', 'downloads', 'normal');
-    remove_meta_box('commentsdiv', 'downloads', 'normal');
-    remove_meta_box('revisionsdiv', 'downloads', 'normal');
+// Clean up Resources admin screen
+function nrna_remove_resources_meta_boxes() {
+    remove_meta_box('slugdiv', 'resources', 'normal');
+    remove_meta_box('authordiv', 'resources', 'normal');
+    remove_meta_box('commentsdiv', 'resources', 'normal');
+    remove_meta_box('revisionsdiv', 'resources', 'normal');
 }
-add_action('admin_menu', 'nrna_remove_downloads_meta_boxes');
+add_action('admin_menu', 'nrna_remove_resources_meta_boxes');

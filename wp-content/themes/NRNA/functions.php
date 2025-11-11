@@ -35,9 +35,9 @@ require_once $inc . 'notices/meta-boxes.php';
 require_once $inc . 'activities/custom-post-type.php';
 require_once $inc . 'activities/meta-boxes.php';
 
-// Load downloads includes
-require_once $inc . 'downloads/custom-post-type.php';
-require_once $inc . 'downloads/meta-boxes.php';
+// Load resources includes
+require_once $inc . 'resources/custom-post-type.php';
+require_once $inc . 'resources/meta-boxes.php';
 
 // Load news includes
 require_once $inc . 'news/custom-post-type.php';
