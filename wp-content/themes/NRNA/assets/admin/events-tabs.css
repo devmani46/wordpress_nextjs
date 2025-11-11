@@ -32,7 +32,7 @@
     box-sizing: border-box;
 }
 
-.sponsorship-table, .committee-table, .sponsors-table {
+.sponsorship-table, .committee-table, .sponsors-table, .partners-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -40,17 +40,18 @@
 
 .sponsorship-table th, .sponsorship-table td,
 .committee-table th, .committee-table td,
-.sponsors-table th, .sponsors-table td {
+.sponsors-table th, .sponsors-table td,
+.partners-table th, .partners-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
-.sponsorship-table th, .committee-table th, .sponsors-table th {
+.sponsorship-table th, .committee-table th, .sponsors-table th, .partners-table th {
     background-color: #f2f2f2;
 }
 
-.sponsorship-table input, .committee-table input, .sponsors-table input {
+.sponsorship-table input, .committee-table input, .sponsors-table input, .partners-table input {
     width: 100%;
     box-sizing: border-box;
 }

@@ -1,4 +1,4 @@
-t <?php
+<?php
 // Add Events meta boxes
 function nrna_add_events_meta_boxes() {
     add_meta_box(
@@ -305,7 +305,6 @@ function nrna_render_events_meta_box($post) {
                                     <td><button type="button" class="remove-sponsor button">Remove</button></td>
                                 </tr>
                             <?php endforeach; ?>
-                        </tbody>
                     </table>
                     <button type="button" class="add-sponsor button">Add Sponsor</button>
                 </div>
@@ -319,54 +318,111 @@ function nrna_render_events_meta_box($post) {
                 <div class="partners-container">
                     <h4>Gold Partners</h4>
                     <div class="partners-section" data-category="gold">
-                        <?php
-                        $gold_partners = array_filter($partners, function($partner) {
-                            return isset($partner['category']) && $partner['category'] === 'gold';
-                        });
-                        foreach ($gold_partners as $index => $partner): ?>
-                            <div class="partner-item">
-                                <p><label>Logo URL:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="wide-input"></p>
-                                <p><label>Name:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></p>
-                                <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="gold">
-                                <button type="button" class="remove-partner button">Remove Gold Partner</button>
-                            </div>
-                        <?php endforeach; ?>
+                        <table class="partners-table">
+                            <thead>
+                                <tr>
+                                    <th>Logo</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $gold_partners = array_filter($partners, function($partner) {
+                                    return isset($partner['category']) && $partner['category'] === 'gold';
+                                });
+                                foreach ($gold_partners as $index => $partner): ?>
+                                    <tr class="partner-row">
+                                        <td>
+                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
+                                            <div class="image-preview-container">
+                                                <img src="<?php echo esc_url($partner['logo'] ?? ''); ?>" alt="Logo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($partner['logo']) ? 'display: none;' : ''; ?>">
+                                                <button type="button" class="select-image button"><?php echo empty($partner['logo']) ? 'Select Image' : 'Change Image'; ?></button>
+                                            </div>
+                                        </td>
+                                        <td><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></td>
+                                        <td>
+                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="gold">
+                                            <button type="button" class="remove-partner button">Remove</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <button type="button" class="add-partner button" data-category="gold">Add Gold Partner</button>
                     </div>
-                    <button type="button" class="add-partner button" data-category="gold">Add Gold Partner</button>
 
                     <h4>Silver Partners</h4>
                     <div class="partners-section" data-category="silver">
-                        <?php
-                        $silver_partners = array_filter($partners, function($partner) {
-                            return isset($partner['category']) && $partner['category'] === 'silver';
-                        });
-                        foreach ($silver_partners as $index => $partner): ?>
-                            <div class="partner-item">
-                                <p><label>Logo URL:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="wide-input"></p>
-                                <p><label>Name:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></p>
-                                <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="silver">
-                                <button type="button" class="remove-partner button">Remove Silver Partner</button>
-                            </div>
-                        <?php endforeach; ?>
+                        <table class="partners-table">
+                            <thead>
+                                <tr>
+                                    <th>Logo</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $silver_partners = array_filter($partners, function($partner) {
+                                    return isset($partner['category']) && $partner['category'] === 'silver';
+                                });
+                                foreach ($silver_partners as $index => $partner): ?>
+                                    <tr class="partner-row">
+                                        <td>
+                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
+                                            <div class="image-preview-container">
+                                                <img src="<?php echo esc_url($partner['logo'] ?? ''); ?>" alt="Logo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($partner['logo']) ? 'display: none;' : ''; ?>">
+                                                <button type="button" class="select-image button"><?php echo empty($partner['logo']) ? 'Select Image' : 'Change Image'; ?></button>
+                                            </div>
+                                        </td>
+                                        <td><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></td>
+                                        <td>
+                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="silver">
+                                            <button type="button" class="remove-partner button">Remove</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <button type="button" class="add-partner button" data-category="silver">Add Silver Partner</button>
                     </div>
-                    <button type="button" class="add-partner button" data-category="silver">Add Silver Partner</button>
 
                     <h4>Airlines Partners</h4>
                     <div class="partners-section" data-category="airlines">
-                        <?php
-                        $airlines_partners = array_filter($partners, function($partner) {
-                            return isset($partner['category']) && $partner['category'] === 'airlines';
-                        });
-                        foreach ($airlines_partners as $index => $partner): ?>
-                            <div class="partner-item">
-                                <p><label>Logo URL:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="wide-input"></p>
-                                <p><label>Name:</label><br><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></p>
-                                <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="airlines">
-                                <button type="button" class="remove-partner button">Remove Airlines Partner</button>
-                            </div>
-                        <?php endforeach; ?>
+                        <table class="partners-table">
+                            <thead>
+                                <tr>
+                                    <th>Logo</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $airlines_partners = array_filter($partners, function($partner) {
+                                    return isset($partner['category']) && $partner['category'] === 'airlines';
+                                });
+                                foreach ($airlines_partners as $index => $partner): ?>
+                                    <tr class="partner-row">
+                                        <td>
+                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
+                                            <div class="image-preview-container">
+                                                <img src="<?php echo esc_url($partner['logo'] ?? ''); ?>" alt="Logo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($partner['logo']) ? 'display: none;' : ''; ?>">
+                                                <button type="button" class="select-image button"><?php echo empty($partner['logo']) ? 'Select Image' : 'Change Image'; ?></button>
+                                            </div>
+                                        </td>
+                                        <td><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></td>
+                                        <td>
+                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="airlines">
+                                            <button type="button" class="remove-partner button">Remove</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <button type="button" class="add-partner button" data-category="airlines">Add Airlines Partner</button>
                     </div>
-                    <button type="button" class="add-partner button" data-category="airlines">Add Airlines Partner</button>
                 </div>
                 <?php
                 break;

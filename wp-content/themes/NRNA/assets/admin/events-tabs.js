@@ -129,22 +129,30 @@ jQuery(document).ready(function($) {
     // Add partner
     $(document).on('click', '.add-partner', function() {
         var category = $(this).data('category');
-        var partnerCount = $('.partner-item').length;
+        var partnerCount = $('.partner-row').length;
         var categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
-        var newPartner = '<div class="partner-item">' +
-            '<p><label>Logo URL:</label><br><input type="text" name="event_partners[' + partnerCount + '][logo]" class="wide-input"></p>' +
-            '<p><label>Name:</label><br><input type="text" name="event_partners[' + partnerCount + '][name]" class="wide-input"></p>' +
-            '<input type="hidden" name="event_partners[' + partnerCount + '][category]" value="' + category + '">' +
-            '<button type="button" class="remove-partner button">Remove ' + categoryLabel + ' Partner</button>' +
-            '</div>';
-        $('.partners-section[data-category="' + category + '"]').append(newPartner);
+        var newRow = '<tr class="partner-row">' +
+            '<td>' +
+                '<input type="hidden" name="event_partners[' + partnerCount + '][logo]" class="committee-photo-url">' +
+                '<div class="image-preview-container">' +
+                    '<img src="" alt="Logo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; display: none;">' +
+                    '<button type="button" class="select-image button">Select Image</button>' +
+                '</div>' +
+            '</td>' +
+            '<td><input type="text" name="event_partners[' + partnerCount + '][name]" class="wide-input"></td>' +
+            '<td>' +
+                '<input type="hidden" name="event_partners[' + partnerCount + '][category]" value="' + category + '">' +
+                '<button type="button" class="remove-partner button">Remove</button>' +
+            '</td>' +
+            '</tr>';
+        $('.partners-section[data-category="' + category + '"] tbody').append(newRow);
     });
 
     // Remove partner
     $(document).on('click', '.remove-partner', function() {
-        $(this).closest('.partner-item').remove();
+        $(this).closest('.partner-row').remove();
         // Re-index the remaining partners
-        $('.partner-item').each(function(index) {
+        $('.partner-row').each(function(index) {
             $(this).find('input[name*="event_partners"]').each(function() {
                 var name = $(this).attr('name');
                 name = name.replace(/\[\d+\]/, '[' + index + ']');
