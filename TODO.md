@@ -1,8 +1,11 @@
-# TODO: Create "Who We Are" Custom Post Type
+# TODO: Generate WordPress CPT "Committees, Taskforces & Subcommittees"
 
 ## Tasks
-- [ ] Create custom post type for "Who We Are" (inc/who-we-are/custom-post-type.php)
-- [ ] Create meta boxes for "Who We Are" (inc/who-we-are/meta-boxes.php)
-- [ ] Create template for "Who We Are" (template-who-we-are.php)
-- [ ] Update functions.php to include new files
-- [ ] Test the new functionality
+- [x] Create wp-content/themes/NRNA/inc/committees-taskforces-subcommittees/custom-post-type.php: Register CPT, meta fields, and REST API preparation.
+- [x] Create wp-content/themes/NRNA/inc/committees-taskforces-subcommittees/meta-boxes.php: Tabbed meta box UI with all sections.
+- [x] Create wp-content/themes/NRNA/inc/committees-taskforces-subcommittees/index.php: Include the above files.
+- [x] Create wp-content/themes/NRNA/template-committees-taskforces-subcommittees.php: Frontend template.
+- [x] Create wp-content/themes/NRNA/assets/admin/committees-tabs.js: JavaScript for tabs and repeaters.
+- [x] Create wp-content/themes/NRNA/assets/admin/committees-tabs.css: CSS for tabs.
+- [x] Update wp-content/themes/NRNA/functions.php: Add include for new CPT.
+- [x] Test the implementation.

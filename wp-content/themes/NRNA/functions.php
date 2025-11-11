@@ -55,6 +55,9 @@ require_once $inc . 'news/meta-boxes.php';
 require_once $inc . 'executive-committee/custom-post-type.php';
 require_once $inc . 'executive-committee/meta-boxes.php';
 
+// Load committees, taskforces & subcommittees includes
+require_once $inc . 'committees-taskforces-subcommittees/index.php';
+
 // Theme setup
 function nrna_theme_setup() {
     add_theme_support('title-tag');

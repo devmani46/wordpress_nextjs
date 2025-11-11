@@ -1,0 +1,94 @@
+.committees-meta-tabs .tab-buttons {
+    display: flex;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.committees-meta-tabs .tab-button {
+    background: #f1f1f1;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.committees-meta-tabs .tab-button.active {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.committees-meta-tabs .tab-pane {
+    display: none;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background: #fff;
+}
+
+.wide-input, .wide-textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.repeater-container {
+    margin-top: 20px;
+}
+
+.repeater-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+}
+
+.repeater-item p {
+    margin-bottom: 10px;
+}
+
+.add-item, .remove-item,
+.add-teams, .remove-teams {
+    margin: 5px 0;
+    padding: 5px 10px;
+    background: #007cba;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.add-item:hover, .remove-item:hover,
+.add-teams:hover, .remove-teams:hover {
+    background: #005a87;
+}
+
+.teams-table-container {
+    margin-top: 20px;
+}
+
+.teams-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.teams-table th, .teams-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.teams-table th {
+    background-color: #f2f2f2;
+}
+
+.teams-table input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.image-preview {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 5px;
+}
