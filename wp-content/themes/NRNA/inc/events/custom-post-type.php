@@ -24,6 +24,7 @@ function nrna_register_events_cpt() {
         'menu_position'      => 23,
         'has_archive'        => true,
         'rewrite'            => ['slug' => 'events'],
+        'show_in_menu'       => 'news-events-menu',
     ];
 
     register_post_type('events', $args);

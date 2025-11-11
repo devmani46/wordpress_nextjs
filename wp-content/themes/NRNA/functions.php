@@ -60,4 +60,18 @@ function nrna_theme_setup() {
     ]);
 }
 add_action('after_setup_theme', 'nrna_theme_setup');
+
+// Add News & Events parent menu
+function nrna_add_news_events_menu() {
+    add_menu_page(
+        'News & Events',
+        'News & Events',
+        'manage_options',
+        'news-events-menu',
+        '',
+        'dashicons-admin-site',
+        20
+    );
+}
+add_action('admin_menu', 'nrna_add_news_events_menu');
 ?>

@@ -23,6 +23,7 @@ function nrna_register_notice_cpt() {
         'menu_position'      => 21,
         'has_archive'        => true,
         'rewrite'            => ['slug' => 'notices'],
+        'show_in_menu'       => 'news-events-menu',
     ];
 
     register_post_type('notices', $args);

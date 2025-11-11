@@ -24,6 +24,7 @@ function nrna_register_activities_cpt() {
         'menu_position'      => 22,
         'has_archive'        => true,
         'rewrite'            => ['slug' => 'activities'],
+        'show_in_menu'       => 'news-events-menu',
     ];
 
     register_post_type('activities', $args);
