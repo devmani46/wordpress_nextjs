@@ -45,7 +45,12 @@ function nrna_render_who_we_are_meta_box($post) {
         $description = get_post_meta($post->ID, 'who_we_are_hero_description', true);
         ?>
         <p><label>Title:</label><br><input type="text" name="who_we_are_hero_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-        <p><label>Description:</label><br><textarea name="who_we_are_hero_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+        <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_hero_description', [
+            'media_buttons' => true,
+            'textarea_rows' => 10,
+            'teeny' => false,
+            'quicktags' => true,
+        ]); ?></p>
         <?php
         break;
 
@@ -57,7 +62,12 @@ function nrna_render_who_we_are_meta_box($post) {
             <?php foreach ($slider_items as $index => $item): ?>
                 <div class="repeater-item">
                     <p><label>Title:</label><br><input type="text" name="who_we_are_slider_items[<?php echo $index; ?>][title]" value="<?php echo esc_attr($item['title'] ?? ''); ?>" class="wide-input"></p>
-                    <p><label>Description:</label><br><textarea name="who_we_are_slider_items[<?php echo $index; ?>][description]" rows="3" class="wide-textarea"><?php echo esc_textarea($item['description'] ?? ''); ?></textarea></p>
+                    <p><label>Description:</label><br><?php wp_editor($item['description'] ?? '', 'who_we_are_slider_items_' . $index . '_description', [
+                        'media_buttons' => true,
+                        'textarea_rows' => 10,
+                        'teeny' => false,
+                        'quicktags' => true,
+                    ]); ?></p>
                     <p><label>Image:</label><br>
                     <input type="hidden" name="who_we_are_slider_items[<?php echo $index; ?>][image]" value="<?php echo esc_attr($item['image'] ?? ''); ?>" class="image-id">
                     <img src="<?php echo ($item['image'] ?? '') ? esc_url(wp_get_attachment_image_url($item['image'], 'medium')) : ''; ?>" class="image-preview <?php echo ($item['image'] ?? '') ? 'has-image' : ''; ?>">
@@ -76,7 +86,12 @@ function nrna_render_who_we_are_meta_box($post) {
         $image = get_post_meta($post->ID, 'who_we_are_vision_image', true);
         ?>
         <p><label>Title:</label><br><input type="text" name="who_we_are_vision_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-        <p><label>Description:</label><br><textarea name="who_we_are_vision_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+        <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_vision_description', [
+            'media_buttons' => true,
+            'textarea_rows' => 10,
+            'teeny' => false,
+            'quicktags' => true,
+        ]); ?></p>
         <p><label>Image:</label><br>
         <input type="hidden" name="who_we_are_vision_image" value="<?php echo esc_attr($image); ?>" class="image-id">
         <img src="<?php echo $image ? esc_url(wp_get_attachment_image_url($image, 'medium')) : ''; ?>" class="image-preview <?php echo $image ? 'has-image' : ''; ?>">
@@ -90,7 +105,12 @@ function nrna_render_who_we_are_meta_box($post) {
         $image = get_post_meta($post->ID, 'who_we_are_goals_image', true);
         ?>
         <p><label>Title:</label><br><input type="text" name="who_we_are_goals_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-        <p><label>Description:</label><br><textarea name="who_we_are_goals_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+        <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_goals_description', [
+            'media_buttons' => true,
+            'textarea_rows' => 10,
+            'teeny' => false,
+            'quicktags' => true,
+        ]); ?></p>
         <p><label>Image:</label><br>
         <input type="hidden" name="who_we_are_goals_image" value="<?php echo esc_attr($image); ?>" class="image-id">
         <img src="<?php echo $image ? esc_url(wp_get_attachment_image_url($image, 'medium')) : ''; ?>" class="image-preview <?php echo $image ? 'has-image' : ''; ?>">
@@ -104,7 +124,12 @@ function nrna_render_who_we_are_meta_box($post) {
         $image = get_post_meta($post->ID, 'who_we_are_certificate_image', true);
         ?>
         <p><label>Title:</label><br><input type="text" name="who_we_are_certificate_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-        <p><label>Description:</label><br><textarea name="who_we_are_certificate_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+        <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_certificate_description', [
+            'media_buttons' => true,
+            'textarea_rows' => 10,
+            'teeny' => false,
+            'quicktags' => true,
+        ]); ?></p>
         <p><label>Image:</label><br>
         <input type="hidden" name="who_we_are_certificate_image" value="<?php echo esc_attr($image); ?>" class="image-id">
         <img src="<?php echo $image ? esc_url(wp_get_attachment_image_url($image, 'medium')) : ''; ?>" class="image-preview <?php echo $image ? 'has-image' : ''; ?>">
@@ -120,7 +145,12 @@ function nrna_render_who_we_are_meta_box($post) {
         $role = get_post_meta($post->ID, 'who_we_are_message_representative_role', true);
         ?>
         <p><label>Title:</label><br><input type="text" name="who_we_are_message_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-        <p><label>Description:</label><br><textarea name="who_we_are_message_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+        <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_message_description', [
+            'media_buttons' => true,
+            'textarea_rows' => 10,
+            'teeny' => false,
+            'quicktags' => true,
+        ]); ?></p>
         <p><label>Image:</label><br>
         <input type="hidden" name="who_we_are_message_image" value="<?php echo esc_attr($image); ?>" class="image-id">
         <img src="<?php echo $image ? esc_url(wp_get_attachment_image_url($image, 'medium')) : ''; ?>" class="image-preview <?php echo $image ? 'has-image' : ''; ?>">
@@ -138,7 +168,12 @@ function nrna_render_who_we_are_meta_box($post) {
         $image = get_post_meta($post->ID, 'who_we_are_team_image', true);
         ?>
         <p><label>Title:</label><br><input type="text" name="who_we_are_team_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-        <p><label>Description:</label><br><textarea name="who_we_are_team_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+        <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_team_description', [
+            'media_buttons' => true,
+            'textarea_rows' => 10,
+            'teeny' => false,
+            'quicktags' => true,
+        ]); ?></p>
         <p><label>CTA Link:</label><br><input type="url" name="who_we_are_team_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
         <p><label>CTA Title:</label><br><input type="text" name="who_we_are_team_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
         <p><label>Image:</label><br>
