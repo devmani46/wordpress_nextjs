@@ -2,17 +2,17 @@
 // Register Galleries custom post type
 function nrna_register_galleries_cpt() {
     $labels = [
-        'name'               => _x('Galleries', 'Post Type General Name', 'nrna'),
-        'singular_name'      => _x('Gallery', 'Post Type Singular Name', 'nrna'),
-        'menu_name'          => __('Galleries', 'nrna'),
-        'name_admin_bar'     => __('Gallery', 'nrna'),
-        'add_new_item'       => __('Add New Gallery', 'nrna'),
-        'edit_item'          => __('Edit Gallery', 'nrna'),
-        'view_item'          => __('View Gallery', 'nrna'),
-        'all_items'          => __('All Galleries', 'nrna'),
-        'search_items'       => __('Search Galleries', 'nrna'),
-        'not_found'          => __('No galleries found.', 'nrna'),
-        'not_found_in_trash' => __('No galleries found in Trash.', 'nrna'),
+        'name'               => _x('Images', 'Post Type General Name', 'nrna'),
+        'singular_name'      => _x('Image', 'Post Type Singular Name', 'nrna'),
+        'menu_name'          => __('Images', 'nrna'),
+        'name_admin_bar'     => __('Image', 'nrna'),
+        'add_new_item'       => __('Add New Image', 'nrna'),
+        'edit_item'          => __('Edit Image', 'nrna'),
+        'view_item'          => __('View Image', 'nrna'),
+        'all_items'          => __('All Images', 'nrna'),
+        'search_items'       => __('Search Images', 'nrna'),
+        'not_found'          => __('No images found.', 'nrna'),
+        'not_found_in_trash' => __('No images found in Trash.', 'nrna'),
     ];
 
     $args = [
@@ -24,6 +24,7 @@ function nrna_register_galleries_cpt() {
         'menu_position'      => 25,
         'has_archive'        => true,
         'rewrite'            => ['slug' => 'galleries'],
+        'show_in_menu'       => 'gallery-menu',
     ];
 
     register_post_type('galleries', $args);

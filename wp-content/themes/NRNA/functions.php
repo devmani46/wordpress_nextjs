@@ -90,3 +90,17 @@ function nrna_add_news_events_menu() {
     );
 }
 add_action('admin_menu', 'nrna_add_news_events_menu');
+
+// Add Gallery parent menu
+function nrna_add_gallery_menu() {
+    add_menu_page(
+        'Gallery',
+        'Gallery',
+        'manage_options',
+        'gallery-menu',
+        '',
+        'dashicons-images-alt2',
+        25
+    );
+}
+add_action('admin_menu', 'nrna_add_gallery_menu');

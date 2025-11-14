@@ -24,6 +24,7 @@ function nrna_register_videos_cpt() {
         'menu_position'      => 26,
         'has_archive'        => true,
         'rewrite'            => ['slug' => 'videos'],
+        'show_in_menu'       => 'gallery-menu',
     ];
 
     register_post_type('videos', $args);
