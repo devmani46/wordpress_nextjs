@@ -26,7 +26,7 @@ $query_galleries = new WP_Query($args_galleries);
             </div>
 
             <?php
-            $gallery_images = get_post_meta(get_the_ID(), 'gallery_images', true);
+            $gallery_images = get_post_meta(get_the_ID(), 'images', true);
             if (!empty($gallery_images) && is_array($gallery_images)) :
             ?>
               <div class="gallery-images mb-4">

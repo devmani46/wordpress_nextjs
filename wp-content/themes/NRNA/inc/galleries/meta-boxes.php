@@ -14,7 +14,7 @@ add_action('add_meta_boxes', 'nrna_add_galleries_meta_boxes');
 
 // Render Gallery Images meta box
 function nrna_render_galleries_images_meta_box($post) {
-    $gallery_images = get_post_meta($post->ID, 'gallery_images', true);
+    $gallery_images = get_post_meta($post->ID, 'images', true);
     if (!is_array($gallery_images)) {
         $gallery_images = [];
     }
@@ -95,9 +95,9 @@ function nrna_save_galleries_meta_boxes($post_id) {
 
     if (array_key_exists('gallery_images', $_POST)) {
         $images = array_map('intval', $_POST['gallery_images']);
-        update_post_meta($post_id, 'gallery_images', $images);
+        update_post_meta($post_id, 'images', $images);
     } else {
-        delete_post_meta($post_id, 'gallery_images');
+        delete_post_meta($post_id, 'images');
     }
 }
 add_action('save_post', 'nrna_save_galleries_meta_boxes');
