@@ -29,9 +29,9 @@ function nrna_enqueue_admin_assets($hook) {
         } elseif ($post && $post->post_type === 'who-we-are') {
             wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], false, true);
             wp_enqueue_style('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.css', [], false);
-        } elseif ($post && $post->post_type === 'committees-taskforces-subcommittees') {
+        } elseif ($post && get_page_template_slug($post->ID) === 'template-committees-taskforces-subcommittees.php') {
             wp_enqueue_script('nrna-committees-tabs', get_template_directory_uri() . '/assets/admin/committees-tabs.js', [], false, true);
-            wp_enqueue_style('nrna-committees-tabs', get_template_directory_uri() . '/assets/admin/committees-tabs.css', [], false);
+            wp_enqueue_style('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.css', [], false);
         }
     }
 }

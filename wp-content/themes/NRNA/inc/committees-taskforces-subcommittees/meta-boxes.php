@@ -1,16 +1,15 @@
 <?php
-// Add Committees, Taskforces & Subcommittees meta boxes
+// Add Committees page meta boxes
 function nrna_add_committees_meta_boxes() {
     add_meta_box(
         'committees_meta_box',
         __('Committees Content', 'nrna'),
         'nrna_render_committees_meta_box',
-        'committees-taskforces-subcommittees',
+        'page',
         'normal',
         'high'
     );
 }
-add_action('add_meta_boxes', 'nrna_add_committees_meta_boxes');
 
 // Render Committees meta box with tabs
 function nrna_render_committees_meta_box($post) {
@@ -25,7 +24,7 @@ function nrna_render_committees_meta_box($post) {
         'banner2' => 'Banner 2',
     ];
 
-    echo '<div class="committees-meta-tabs">';
+    echo '<div class="home-meta-tabs">';
     echo '<div class="tab-buttons">';
     foreach ($tabs as $key => $label) {
         echo '<button type="button" class="tab-button" data-tab="' . esc_attr($key) . '">' . esc_html($label) . '</button>';
@@ -270,9 +269,9 @@ add_action('save_post', 'nrna_save_committees_meta_box');
 
 // Clean up Committees admin screen
 function nrna_remove_committees_meta_boxes() {
-    remove_meta_box('slugdiv', 'committees-taskforces-subcommittees', 'normal');
-    remove_meta_box('authordiv', 'committees-taskforces-subcommittees', 'normal');
-    remove_meta_box('commentsdiv', 'committees-taskforces-subcommittees', 'normal');
-    remove_meta_box('revisionsdiv', 'committees-taskforces-subcommittees', 'normal');
+    remove_meta_box('slugdiv', 'page', 'normal');
+    remove_meta_box('authordiv', 'page', 'normal');
+    remove_meta_box('commentsdiv', 'page', 'normal');
+    remove_meta_box('revisionsdiv', 'page', 'normal');
 }
 add_action('admin_menu', 'nrna_remove_committees_meta_boxes');

@@ -1,16 +1,16 @@
 jQuery(document).ready(function($) {
     // Tab switching for Committees meta box
-    $('.committees-meta-tabs .tab-button').on('click', function() {
+    $('.home-meta-tabs .tab-button').on('click', function() {
         var tab = $(this).data('tab');
-        $('.committees-meta-tabs .tab-button').removeClass('active');
+        $('.home-meta-tabs .tab-button').removeClass('active');
         $(this).addClass('active');
-        $('.committees-meta-tabs .tab-pane').hide();
-        $('#tab-' + tab).show();
+        $('.home-meta-tabs .tab-pane').removeClass('active');
+        $('#tab-' + tab).addClass('active');
     });
 
     // Set default active tab
-    $('.committees-meta-tabs .tab-button:first').addClass('active');
-    $('.committees-meta-tabs .tab-pane:first').show();
+    $('.home-meta-tabs .tab-button:first').addClass('active');
+    $('.home-meta-tabs .tab-pane:first').addClass('active');
 
     // Add hero image
     $(document).on('click', '.add-item[data-repeater="committees_hero_images"]', function() {

@@ -1,66 +1,129 @@
-.committees-meta-tabs .tab-buttons {
-    display: flex;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+.home-meta-tabs {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-.committees-meta-tabs .tab-button {
+.tab-buttons {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.tab-button {
     background: #f1f1f1;
-    border: 1px solid #ddd;
+    border: none;
     padding: 10px 15px;
     cursor: pointer;
     border-radius: 4px 4px 0 0;
     margin-right: 5px;
-    margin-bottom: 5px;
-    font-size: 12px;
+    transition: background-color 0.3s;
 }
 
-.committees-meta-tabs .tab-button.active {
+.tab-button:hover {
+    background: #e0e0e0;
+}
+
+.tab-button.active {
     background: #fff;
-    border-bottom: 1px solid #fff;
+    border-bottom: 2px solid #007cba;
 }
 
-.committees-meta-tabs .tab-pane {
+.tab-content {
+    padding: 20px 0;
+}
+
+.tab-pane {
     display: none;
-    border: 1px solid #ddd;
-    padding: 20px;
-    background: #fff;
 }
 
-.wide-input, .wide-textarea {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.repeater-container {
-    margin-top: 20px;
+.tab-pane.active {
+    display: block;
 }
 
 .repeater-item {
     border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
     background: #f9f9f9;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .repeater-item p {
-    margin-bottom: 10px;
+    margin: 15px 0;
+    flex-direction: column;
 }
 
-.add-item, .remove-item,
-.add-teams, .remove-teams {
-    margin: 5px 0;
-    padding: 5px 10px;
+.repeater-item label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: #23282d;
+}
+
+.repeater-item input[type="text"],
+.repeater-item input[type="url"],
+.repeater-item textarea {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.repeater-item textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.repeater-item .image-preview {
+    margin-top: 8px;
+    border-radius: 4px;
+}
+
+.image-preview {
+    max-width: 100px !important;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    display: none;
+}
+
+.image-preview.has-image {
+    display: block;
+}
+
+.wide-input {
+    width: 100%;
+}
+
+.wide-textarea {
+    width: 100%;
+}
+
+.button {
     background: #007cba;
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 3px;
+    padding: 8px 12px;
     cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
-.add-item:hover, .remove-item:hover,
-.add-teams:hover, .remove-teams:hover {
+.button:hover {
     background: #005a87;
+}
+
+.remove-item {
+    background: #dc3232;
+    margin-top: 10px;
+}
+
+.remove-item:hover {
+    background: #a00;
+}
+
+.add-item {
+    margin-top: 10px;
 }
 
 .teams-table-container {
@@ -85,10 +148,4 @@
 .teams-table input {
     width: 100%;
     box-sizing: border-box;
-}
-
-.image-preview {
-    max-width: 100px;
-    max-height: 100px;
-    margin-top: 5px;
 }
