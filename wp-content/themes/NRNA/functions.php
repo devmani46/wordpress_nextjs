@@ -60,6 +60,10 @@ require_once $inc . 'executive-committee/meta-boxes.php';
 require_once $inc . 'galleries/custom-post-type.php';
 require_once $inc . 'galleries/meta-boxes.php';
 
+// Load videos includes
+require_once $inc . 'videos/custom-post-type.php';
+require_once $inc . 'videos/meta-boxes.php';
+
 // Load committees, taskforces & subcommittees includes
 require_once $inc . 'committees-taskforces-subcommittees/index.php';
 
