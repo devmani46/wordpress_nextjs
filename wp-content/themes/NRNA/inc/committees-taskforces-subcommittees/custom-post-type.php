@@ -22,16 +22,14 @@ function nrna_register_committees_meta_fields() {
     ];
 
     foreach ($fields as $key => $args) {
-        register_meta('post', $key, array_merge($args, [
-            'object_subtype' => 'page',
+        register_post_meta('page', $key, array_merge($args, [
             'show_in_rest' => true,
             'single' => true,
         ]));
     }
 
     // Array fields
-    register_meta('post', 'committees_hero_images', [
-        'object_subtype' => 'page',
+    register_post_meta('page', 'committees_hero_images', [
         'type' => 'array',
         'items' => [
             'type' => 'object',
@@ -43,8 +41,7 @@ function nrna_register_committees_meta_fields() {
         'single' => true,
     ]);
 
-    register_meta('post', 'committees_banner1_stats', [
-        'object_subtype' => 'page',
+    register_post_meta('page', 'committees_banner1_stats', [
         'type' => 'array',
         'items' => [
             'type' => 'object',
@@ -57,8 +54,7 @@ function nrna_register_committees_meta_fields() {
         'single' => true,
     ]);
 
-    register_meta('post', 'committees_teams_members', [
-        'object_subtype' => 'page',
+    register_post_meta('page', 'committees_teams_members', [
         'type' => 'array',
         'items' => [
             'type' => 'object',
