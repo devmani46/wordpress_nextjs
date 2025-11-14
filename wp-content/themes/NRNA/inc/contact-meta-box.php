@@ -221,12 +221,11 @@ function nrna_prepare_contact_page_rest_response($response, $post, $request) {
         'map_embed'
     ];
 
-    // Filter meta to only include contact-related fields
+    // Include all contact-related meta fields, even if empty
     $filtered_meta = [];
-    foreach ($data['meta'] as $key => $value) {
-        if (in_array($key, $contact_meta_keys)) {
-            $filtered_meta[$key] = $value;
-        }
+    foreach ($contact_meta_keys as $key) {
+        $value = get_post_meta($post->ID, $key, true);
+        $filtered_meta[$key] = $value;
     }
     $data['meta'] = $filtered_meta;
 
