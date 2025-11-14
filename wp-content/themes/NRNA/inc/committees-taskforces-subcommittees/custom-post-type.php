@@ -65,6 +65,7 @@ function nrna_register_committees_meta_fields() {
             'properties' => [
                 'project' => ['type' => 'string'],
                 'name' => ['type' => 'string'],
+                'role' => ['type' => 'string'],
                 'email' => ['type' => 'string'],
             ],
         ],

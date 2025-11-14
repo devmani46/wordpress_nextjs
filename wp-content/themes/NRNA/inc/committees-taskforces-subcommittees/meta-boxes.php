@@ -150,6 +150,7 @@ function nrna_render_committees_meta_box($post) {
                             <tr>
                                 <th>Project</th>
                                 <th>Name</th>
+                                <th>Roll</th>
                                 <th>Official Email</th>
                                 <th>Actions</th>
                             </tr>
@@ -159,6 +160,7 @@ function nrna_render_committees_meta_box($post) {
                                 <tr class="teams-row">
                                     <td><input type="text" name="committees_teams_members[<?php echo $index; ?>][project]" value="<?php echo esc_attr($member['project'] ?? ''); ?>" class="wide-input"></td>
                                     <td><input type="text" name="committees_teams_members[<?php echo $index; ?>][name]" value="<?php echo esc_attr($member['name'] ?? ''); ?>" class="wide-input"></td>
+                                    <td><input type="text" name="committees_teams_members[<?php echo $index; ?>][roll]" value="<?php echo esc_attr($member['roll'] ?? ''); ?>" class="wide-input"></td>
                                     <td><input type="email" name="committees_teams_members[<?php echo $index; ?>][email]" value="<?php echo esc_attr($member['email'] ?? ''); ?>" class="wide-input"></td>
                                     <td><button type="button" class="remove-teams button">Remove</button></td>
                                 </tr>
@@ -257,6 +259,7 @@ function nrna_save_committees_meta_box($post_id) {
                 $clean = [];
                 if (isset($item['project'])) $clean['project'] = sanitize_text_field($item['project']);
                 if (isset($item['name'])) $clean['name'] = sanitize_text_field($item['name']);
+                if (isset($item['roll'])) $clean['roll'] = sanitize_text_field($item['roll']);
                 if (isset($item['email'])) $clean['email'] = sanitize_email($item['email']);
                 if (!empty($clean)) $sanitized[] = $clean;
             }
