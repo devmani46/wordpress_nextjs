@@ -7,12 +7,10 @@ get_header(); ?>
 
 <?php while (have_posts()) : the_post(); ?>
 
-<?php if (is_page_template('template-about.php')) : ?>
-
 <section class="hero">
     <?php
-    $hero_title = get_post_meta(get_the_ID(), 'about_hero_title', true);
-    $hero_description = get_post_meta(get_the_ID(), 'about_hero_description', true);
+    $hero_title = get_post_meta(get_the_ID(), 'who_we_are_hero_title', true);
+    $hero_description = get_post_meta(get_the_ID(), 'who_we_are_hero_description', true);
     ?>
     <h1><?php echo esc_html($hero_title); ?></h1>
     <p><?php echo wp_kses_post($hero_description); ?></p>
@@ -20,7 +18,7 @@ get_header(); ?>
 
 <section class="slider">
     <?php
-    $slider_items = get_post_meta(get_the_ID(), 'about_slider_items', true);
+    $slider_items = get_post_meta(get_the_ID(), 'who_we_are_slider_items', true);
     if (is_array($slider_items)) :
         foreach ($slider_items as $item) :
             ?>
@@ -37,9 +35,9 @@ get_header(); ?>
 
 <section class="vision">
     <?php
-    $vision_title = get_post_meta(get_the_ID(), 'about_vision_title', true);
-    $vision_description = get_post_meta(get_the_ID(), 'about_vision_description', true);
-    $vision_image = get_post_meta(get_the_ID(), 'about_vision_image', true);
+    $vision_title = get_post_meta(get_the_ID(), 'who_we_are_vision_title', true);
+    $vision_description = get_post_meta(get_the_ID(), 'who_we_are_vision_description', true);
+    $vision_image = get_post_meta(get_the_ID(), 'who_we_are_vision_image', true);
     ?>
     <h2><?php echo esc_html($vision_title); ?></h2>
     <p><?php echo wp_kses_post($vision_description); ?></p>
@@ -50,9 +48,9 @@ get_header(); ?>
 
 <section class="goals">
     <?php
-    $goals_title = get_post_meta(get_the_ID(), 'about_goals_title', true);
-    $goals_description = get_post_meta(get_the_ID(), 'about_goals_description', true);
-    $goals_image = get_post_meta(get_the_ID(), 'about_goals_image', true);
+    $goals_title = get_post_meta(get_the_ID(), 'who_we_are_goals_title', true);
+    $goals_description = get_post_meta(get_the_ID(), 'who_we_are_goals_description', true);
+    $goals_image = get_post_meta(get_the_ID(), 'who_we_are_goals_image', true);
     ?>
     <h2><?php echo esc_html($goals_title); ?></h2>
     <p><?php echo wp_kses_post($goals_description); ?></p>
@@ -63,9 +61,9 @@ get_header(); ?>
 
 <section class="certificate">
     <?php
-    $certificate_title = get_post_meta(get_the_ID(), 'about_certificate_title', true);
-    $certificate_description = get_post_meta(get_the_ID(), 'about_certificate_description', true);
-    $certificate_image = get_post_meta(get_the_ID(), 'about_certificate_image', true);
+    $certificate_title = get_post_meta(get_the_ID(), 'who_we_are_certificate_title', true);
+    $certificate_description = get_post_meta(get_the_ID(), 'who_we_are_certificate_description', true);
+    $certificate_image = get_post_meta(get_the_ID(), 'who_we_are_certificate_image', true);
     ?>
     <h2><?php echo esc_html($certificate_title); ?></h2>
     <p><?php echo wp_kses_post($certificate_description); ?></p>
@@ -76,11 +74,11 @@ get_header(); ?>
 
 <section class="message">
     <?php
-    $message_title = get_post_meta(get_the_ID(), 'about_message_title', true);
-    $message_description = get_post_meta(get_the_ID(), 'about_message_description', true);
-    $message_image = get_post_meta(get_the_ID(), 'about_message_image', true);
-    $representative_name = get_post_meta(get_the_ID(), 'about_message_representative_name', true);
-    $representative_role = get_post_meta(get_the_ID(), 'about_message_representative_role', true);
+    $message_title = get_post_meta(get_the_ID(), 'who_we_are_message_title', true);
+    $message_description = get_post_meta(get_the_ID(), 'who_we_are_message_description', true);
+    $message_image = get_post_meta(get_the_ID(), 'who_we_are_message_image', true);
+    $representative_name = get_post_meta(get_the_ID(), 'who_we_are_message_representative_name', true);
+    $representative_role = get_post_meta(get_the_ID(), 'who_we_are_message_representative_role', true);
     ?>
     <h2><?php echo esc_html($message_title); ?></h2>
     <p><?php echo wp_kses_post($message_description); ?></p>
@@ -93,11 +91,11 @@ get_header(); ?>
 
 <section class="team">
     <?php
-    $team_title = get_post_meta(get_the_ID(), 'about_team_title', true);
-    $team_description = get_post_meta(get_the_ID(), 'about_team_description', true);
-    $team_cta_link = get_post_meta(get_the_ID(), 'about_team_cta_link', true);
-    $team_cta_title = get_post_meta(get_the_ID(), 'about_team_cta_title', true);
-    $team_image = get_post_meta(get_the_ID(), 'about_team_image', true);
+    $team_title = get_post_meta(get_the_ID(), 'who_we_are_team_title', true);
+    $team_description = get_post_meta(get_the_ID(), 'who_we_are_team_description', true);
+    $team_cta_link = get_post_meta(get_the_ID(), 'who_we_are_team_cta_link', true);
+    $team_cta_title = get_post_meta(get_the_ID(), 'who_we_are_team_cta_title', true);
+    $team_image = get_post_meta(get_the_ID(), 'who_we_are_team_image', true);
     ?>
     <h2><?php echo esc_html($team_title); ?></h2>
     <p><?php echo wp_kses_post($team_description); ?></p>
@@ -108,14 +106,6 @@ get_header(); ?>
         <img src="<?php echo esc_url(wp_get_attachment_image_url($team_image, 'full')); ?>" alt="">
     <?php endif; ?>
 </section>
-
-<?php else : ?>
-
-<div class="entry-content">
-    <?php the_content(); ?>
-</div>
-
-<?php endif; ?>
 
 <?php endwhile; ?>
 
