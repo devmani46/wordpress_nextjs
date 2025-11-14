@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             } else if (repeater === 'information_descriptions') {
                 fieldsHTML = `
-                    <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}]" rows="4" class="wide-textarea"></textarea></p>
+                    <p><label>Information Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
+                    <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="4" class="wide-textarea"></textarea></p>
                 `;
             }
 

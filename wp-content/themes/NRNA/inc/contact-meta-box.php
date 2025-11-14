@@ -2,11 +2,11 @@
 function nrna_register_contact_meta_fields() {
     $fields = [
         'hero_title' => ['type' => 'string'],
+        'hero_description' => ['type' => 'string'],
         'hero_email' => ['type' => 'string'],
         'hero_location' => ['type' => 'string'],
         'hero_cta_link' => ['type' => 'string'],
         'hero_cta_title' => ['type' => 'string'],
-        'information_title' => ['type' => 'string'],
         'map_embed' => ['type' => 'string'],
     ];
 
@@ -27,7 +27,13 @@ function nrna_register_contact_meta_fields() {
 
     register_post_meta('page', 'information_descriptions', [
         'type' => 'array',
-        'items' => ['type' => 'string'],
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'title' => ['type' => 'string'],
+                'description' => ['type' => 'string'],
+            ],
+        ],
         'show_in_rest' => true,
         'single' => true,
     ]);
@@ -78,6 +84,7 @@ function nrna_render_contact_meta_box($post) {
         switch ($key) {
             case 'hero':
                 $title = get_post_meta($post->ID, 'hero_title', true);
+                $description = get_post_meta($post->ID, 'hero_description', true);
                 $email = get_post_meta($post->ID, 'hero_email', true);
                 $phone_numbers = get_post_meta($post->ID, 'hero_phone_numbers', true);
                 if (!is_array($phone_numbers)) $phone_numbers = [];
@@ -86,6 +93,13 @@ function nrna_render_contact_meta_box($post) {
                 $cta_title = get_post_meta($post->ID, 'hero_cta_title', true);
                 ?>
                 <p><label>Title:</label><br><input type="text" name="hero_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+                <p><label>Description:</label><br><?php wp_editor($description, 'hero_description', [
+                    'media_buttons' => true,
+                    'textarea_rows' => 10,
+                    'teeny' => false,
+                    'quicktags' => true,
+                    'textarea_name' => 'hero_description'
+                ]); ?></p>
                 <p><label>Email:</label><br><input type="email" name="hero_email" value="<?php echo esc_attr($email); ?>" class="wide-input"></p>
                 <div class="repeater-container" data-repeater="hero_phone_numbers">
                     <?php foreach ($phone_numbers as $index => $phone) : ?>
@@ -103,20 +117,25 @@ function nrna_render_contact_meta_box($post) {
                 break;
 
             case 'information':
-                $title = get_post_meta($post->ID, 'information_title', true);
                 $descriptions = get_post_meta($post->ID, 'information_descriptions', true);
                 if (!is_array($descriptions)) $descriptions = [];
                 ?>
-                <p><label>Title:</label><br><input type="text" name="information_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
                 <div class="repeater-container" data-repeater="information_descriptions">
-                    <?php foreach ($descriptions as $index => $desc) : ?>
+                    <?php foreach ($descriptions as $index => $info) : ?>
                         <div class="repeater-item">
-                            <p><label>Description:</label><br><textarea name="information_descriptions[<?php echo $index; ?>]" rows="4" class="wide-textarea"><?php echo esc_textarea($desc); ?></textarea></p>
+                            <p><label>Information Title:</label><br><input type="text" name="information_descriptions[<?php echo $index; ?>][title]" value="<?php echo esc_attr($info['title'] ?? ''); ?>" class="wide-input"></p>
+                            <p><label>Description:</label><br><?php wp_editor($info['description'] ?? '', 'information_descriptions_' . $index, [
+                                'media_buttons' => true,
+                                'textarea_rows' => 10,
+                                'teeny' => false,
+                                'quicktags' => true,
+                                'textarea_name' => 'information_descriptions[' . $index . '][description]'
+                            ]); ?></p>
                             <button type="button" class="remove-item button">Remove</button>
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <button type="button" class="add-item button" data-repeater="information_descriptions">Add Description</button>
+                <button type="button" class="add-item button" data-repeater="information_descriptions">Add Information</button>
                 <?php
                 break;
 
@@ -141,11 +160,11 @@ function nrna_save_contact_meta_box($post_id) {
 
     $fields = [
         'hero_title' => 'sanitize_text_field',
+        'hero_description' => 'wp_kses_post',
         'hero_email' => 'sanitize_email',
         'hero_location' => 'sanitize_text_field',
         'hero_cta_link' => 'esc_url_raw',
         'hero_cta_title' => 'sanitize_text_field',
-        'information_title' => 'sanitize_text_field',
         'map_embed' => 'wp_kses_post',
     ];
 
@@ -170,7 +189,10 @@ function nrna_save_contact_meta_box($post_id) {
             if ($field === 'hero_phone_numbers') {
                 $sanitized[] = sanitize_text_field($item);
             } elseif ($field === 'information_descriptions') {
-                $sanitized[] = wp_kses_post($item);
+                $sanitized[] = [
+                    'title' => sanitize_text_field($item['title'] ?? ''),
+                    'description' => wp_kses_post($item['description'] ?? ''),
+                ];
             }
         }
 

@@ -10,6 +10,7 @@ get_header(); ?>
 <section class="hero">
     <?php
     $hero_title = get_post_meta(get_the_ID(), 'hero_title', true);
+    $hero_description = get_post_meta(get_the_ID(), 'hero_description', true);
     $hero_email = get_post_meta(get_the_ID(), 'hero_email', true);
     $hero_phone_numbers = get_post_meta(get_the_ID(), 'hero_phone_numbers', true);
     $hero_location = get_post_meta(get_the_ID(), 'hero_location', true);
@@ -17,6 +18,7 @@ get_header(); ?>
     $hero_cta_title = get_post_meta(get_the_ID(), 'hero_cta_title', true);
     ?>
     <h1><?php echo esc_html($hero_title); ?></h1>
+    <div><?php echo wp_kses_post($hero_description); ?></div>
     <p><?php echo esc_html($hero_email); ?></p>
     <?php if (is_array($hero_phone_numbers)) : ?>
         <div class="phone-numbers">
@@ -33,14 +35,15 @@ get_header(); ?>
 
 <section class="information">
     <?php
-    $information_title = get_post_meta(get_the_ID(), 'information_title', true);
     $information_descriptions = get_post_meta(get_the_ID(), 'information_descriptions', true);
     ?>
-    <h2><?php echo esc_html($information_title); ?></h2>
     <?php if (is_array($information_descriptions)) : ?>
         <div class="descriptions">
-            <?php foreach ($information_descriptions as $desc) : ?>
-                <p><?php echo wp_kses_post($desc); ?></p>
+            <?php foreach ($information_descriptions as $info) : ?>
+                <div class="info-item">
+                    <h3><?php echo esc_html($info['title'] ?? ''); ?></h3>
+                    <div><?php echo wp_kses_post($info['description'] ?? ''); ?></div>
+                </div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
