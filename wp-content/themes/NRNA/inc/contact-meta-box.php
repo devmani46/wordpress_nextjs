@@ -165,7 +165,7 @@ function nrna_save_contact_meta_box($post_id) {
         'hero_location' => 'sanitize_text_field',
         'hero_cta_link' => 'esc_url_raw',
         'hero_cta_title' => 'sanitize_text_field',
-        'map_embed' => 'wp_kses_post',
+        'map_embed' => 'nrna_sanitize_map_embed',
     ];
 
     foreach ($fields as $field => $sanitize) {
@@ -199,6 +199,20 @@ function nrna_save_contact_meta_box($post_id) {
         update_post_meta($post_id, $field, $sanitized);
     }
 }
+function nrna_sanitize_map_embed($value) {
+    return wp_kses($value, array(
+        'iframe' => array(
+            'src' => array(),
+            'width' => array(),
+            'height' => array(),
+            'frameborder' => array(),
+            'style' => array(),
+            'allowfullscreen' => array(),
+            'loading' => array(),
+        ),
+    ));
+}
+
 add_action('save_post', 'nrna_save_contact_meta_box');
 
 function nrna_prepare_contact_page_rest_response($response, $post, $request) {
