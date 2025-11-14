@@ -52,11 +52,11 @@ add_action('init', 'nrna_register_about_meta_fields');
 
 function nrna_add_about_meta_box() {
     global $post;
-    if ($post && $post->ID && get_page_template_slug($post->ID) !== 'template-about.php') return;
+    if ($post && $post->ID && get_page_template_slug($post->ID) !== 'template-who-we-are.php') return;
 
     add_meta_box(
         'about_page_meta_box',
-        __('About Page Content', 'nrna'),
+        __('Who We Are Page Content', 'nrna'),
         'nrna_render_about_meta_box',
         'page',
         'normal',
@@ -66,8 +66,8 @@ function nrna_add_about_meta_box() {
 add_action('add_meta_boxes', 'nrna_add_about_meta_box');
 
 function nrna_render_about_meta_box($post) {
-    if ($post->ID != 0 && get_page_template_slug($post->ID) !== 'template-about.php') {
-        echo '<p>Please select the "About Page" template to edit these fields.</p>';
+    if ($post->ID != 0 && get_page_template_slug($post->ID) !== 'template-who-we-are.php') {
+        echo '<p>Please select the "Who We Are Page" template to edit these fields.</p>';
         return;
     }
 
@@ -307,7 +307,7 @@ function nrna_save_about_meta_box($post_id) {
 add_action('save_post', 'nrna_save_about_meta_box');
 
 function nrna_prepare_about_page_rest_response($response, $post, $request) {
-    if ($post->post_type !== 'page' || get_page_template_slug($post->ID) !== 'template-about.php') {
+    if ($post->post_type !== 'page' || get_page_template_slug($post->ID) !== 'template-who-we-are.php') {
         return $response;
     }
 

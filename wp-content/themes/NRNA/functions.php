@@ -11,12 +11,10 @@ require_once $inc . 'enqueue-scripts.php';
 // Load home meta box
 require_once $inc . 'home-meta-box.php';
 
-// Load about meta box
-require_once $inc . 'about-meta-box.php';
+// Load who-we-are meta box
+require_once $inc . 'who-we-are-meta-box.php';
 
-// Load who we are includes
-require_once $inc . 'who-we-are/custom-post-type.php';
-require_once $inc . 'who-we-are/meta-boxes.php';
+
 
 // Load projects includes
 require_once $inc . 'projects/custom-post-type.php';

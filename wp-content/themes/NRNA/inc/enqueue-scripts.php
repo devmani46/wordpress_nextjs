@@ -20,7 +20,7 @@ function nrna_enqueue_admin_assets($hook) {
         if ($post && get_page_template_slug($post->ID) === 'template-home.php') {
             wp_enqueue_script('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.js', [], false, true);
             wp_enqueue_style('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.css', [], false);
-        } elseif ($post && get_page_template_slug($post->ID) === 'template-about.php') {
+        } elseif ($post && get_page_template_slug($post->ID) === 'template-who-we-are.php') {
             wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], false, true);
             wp_enqueue_style('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.css', [], false);
         } elseif ($post && $post->post_type === 'events') {
