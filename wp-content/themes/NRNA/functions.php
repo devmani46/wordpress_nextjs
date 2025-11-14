@@ -67,6 +67,14 @@ require_once $inc . 'videos/meta-boxes.php';
 // Load committees, taskforces & subcommittees includes
 require_once $inc . 'committees-taskforces-subcommittees/index.php';
 
+// Load privacy policy includes
+require_once $inc . 'privacy-policy/custom-post-type.php';
+require_once $inc . 'privacy-policy/meta-boxes.php';
+
+// Load terms and conditions includes
+require_once $inc . 'terms-and-conditions/custom-post-type.php';
+require_once $inc . 'terms-and-conditions/meta-boxes.php';
+
 // Theme setup
 function nrna_theme_setup() {
     add_theme_support('title-tag');
