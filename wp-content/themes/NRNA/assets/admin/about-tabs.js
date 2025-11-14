@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mediaUploader.on('select', function() {
                 const attachment = mediaUploader.state().get('selection').first().toJSON();
                 imageIdInput.value = attachment.id;
-                imagePreview.src = attachment.url;
+                imagePreview.src = attachment.sizes.medium ? attachment.sizes.medium.url : attachment.url;
                 imagePreview.classList.add('has-image');
             });
 
