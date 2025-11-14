@@ -1,0 +1,112 @@
+.contact-meta-tabs {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.tab-buttons {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background: #f1f1f1;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+}
+
+.tab-button:hover {
+    background: #e0e0e0;
+}
+
+.tab-button.active {
+    background: #fff;
+    border-bottom: 2px solid #007cba;
+}
+
+.tab-content {
+    padding: 20px 0;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.repeater-item {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.repeater-item p {
+    margin: 15px 0;
+    flex-direction: column;
+}
+
+.repeater-item label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: #23282d;
+}
+
+.repeater-item input[type="text"],
+.repeater-item input[type="email"],
+.repeater-item input[type="url"],
+.repeater-item textarea {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.repeater-item textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.wide-input {
+    width: 100%;
+}
+
+.wide-textarea {
+    width: 100%;
+}
+
+.button {
+    background: #007cba;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.button:hover {
+    background: #005a87;
+}
+
+.remove-item {
+    background: #dc3232;
+    margin-top: 10px;
+}
+
+.remove-item:hover {
+    background: #a00;
+}
+
+.add-item {
+    margin-top: 10px;
+}

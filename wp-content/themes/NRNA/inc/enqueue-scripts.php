@@ -6,6 +6,7 @@ function nrna_enqueue_assets() {
     wp_enqueue_style('nrna-notice', get_template_directory_uri() . '/assets/css/notice.css', [], wp_get_theme()->get('Version'));
     wp_enqueue_style('nrna-activities', get_template_directory_uri() . '/assets/css/activities.css', [], wp_get_theme()->get('Version'));
     wp_enqueue_style('nrna-projects', get_template_directory_uri() . '/assets/css/projects.css', [], wp_get_theme()->get('Version'));
+    wp_enqueue_style('nrna-contact', get_template_directory_uri() . '/assets/css/contact.css', [], wp_get_theme()->get('Version'));
     wp_enqueue_script('nrna-main', get_template_directory_uri() . '/assets/js/main.js', [], false, true);
 }
 add_action('wp_enqueue_scripts', 'nrna_enqueue_assets');
@@ -35,6 +36,9 @@ function nrna_enqueue_admin_assets($hook) {
         } elseif ($post && get_page_template_slug($post->ID) === 'template-committees-taskforces-subcommittees.php') {
             wp_enqueue_script('nrna-committees-tabs', get_template_directory_uri() . '/assets/admin/committees-tabs.js', [], false, true);
             wp_enqueue_style('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.css', [], false);
+        } elseif ($post && get_page_template_slug($post->ID) === 'template-contact.php') {
+            wp_enqueue_script('nrna-contact-tabs', get_template_directory_uri() . '/assets/admin/contact-tabs.js', [], false, true);
+            wp_enqueue_style('nrna-contact-tabs', get_template_directory_uri() . '/assets/admin/contact-tabs.css', [], false);
         }
     }
 }

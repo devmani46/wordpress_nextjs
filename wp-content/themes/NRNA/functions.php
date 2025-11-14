@@ -17,6 +17,9 @@ require_once $inc . 'who-we-are-meta-box.php';
 // Load organizational structure meta box
 require_once $inc . 'organizational-structure-meta-box.php';
 
+// Load contact meta box
+require_once $inc . 'contact-meta-box.php';
+
 
 
 // Load projects includes
