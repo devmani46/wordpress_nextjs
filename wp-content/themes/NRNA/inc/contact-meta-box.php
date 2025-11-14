@@ -200,3 +200,37 @@ function nrna_save_contact_meta_box($post_id) {
     }
 }
 add_action('save_post', 'nrna_save_contact_meta_box');
+
+function nrna_prepare_contact_page_rest_response($response, $post, $request) {
+    if ($post->post_type !== 'page' || get_page_template_slug($post->ID) !== 'template-contact.php') {
+        return $response;
+    }
+
+    $data = $response->get_data();
+
+    // List of contact-related meta keys
+    $contact_meta_keys = [
+        'hero_title',
+        'hero_description',
+        'hero_email',
+        'hero_phone_numbers',
+        'hero_location',
+        'hero_cta_link',
+        'hero_cta_title',
+        'information_descriptions',
+        'map_embed'
+    ];
+
+    // Filter meta to only include contact-related fields
+    $filtered_meta = [];
+    foreach ($data['meta'] as $key => $value) {
+        if (in_array($key, $contact_meta_keys)) {
+            $filtered_meta[$key] = $value;
+        }
+    }
+    $data['meta'] = $filtered_meta;
+
+    $response->set_data($data);
+    return $response;
+}
+add_filter('rest_prepare_page', 'nrna_prepare_contact_page_rest_response', 10, 3);
