@@ -70,6 +70,9 @@ require_once $inc . 'videos/meta-boxes.php';
 // Load committees, taskforces & subcommittees includes
 require_once $inc . 'committees-taskforces-subcommittees/index.php';
 
+// Load ncc committees includes
+require_once $inc . 'ncc-committees/index.php';
+
 // Load privacy policy includes
 require_once $inc . 'privacy-policy/custom-post-type.php';
 require_once $inc . 'privacy-policy/meta-boxes.php';
