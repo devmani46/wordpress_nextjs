@@ -32,7 +32,19 @@ $query_committee = new WP_Query($args_committee);
               $role = get_post_meta(get_the_ID(), 'committee_role', true);
               if ($role) :
               ?>
-                <p class="text-gray-600"><?php echo esc_html($role); ?></p>
+                <p class="text-gray-600 mb-1"><?php echo esc_html($role); ?></p>
+              <?php endif; ?>
+              <?php
+              $institution = get_post_meta(get_the_ID(), 'committee_institution', true);
+              if ($institution) :
+              ?>
+                <p class="text-gray-500 text-sm mb-1"><?php echo esc_html($institution); ?></p>
+              <?php endif; ?>
+              <?php
+              $country = get_post_meta(get_the_ID(), 'committee_country', true);
+              if ($country) :
+              ?>
+                <p class="text-gray-500 text-sm"><?php echo esc_html($country); ?></p>
               <?php endif; ?>
             </div>
           </div>

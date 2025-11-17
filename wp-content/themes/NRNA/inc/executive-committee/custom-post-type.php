@@ -42,6 +42,26 @@ function nrna_register_executive_committee_meta_rest() {
         ],
     ]);
 
+    register_rest_field('executive_committee', 'committee_institution', [
+        'get_callback' => function($post) {
+            return get_post_meta($post['id'], 'committee_institution', true);
+        },
+        'schema' => [
+            'type' => 'string',
+            'description' => 'Institution',
+        ],
+    ]);
+
+    register_rest_field('executive_committee', 'committee_country', [
+        'get_callback' => function($post) {
+            return get_post_meta($post['id'], 'committee_country', true);
+        },
+        'schema' => [
+            'type' => 'string',
+            'description' => 'Country',
+        ],
+    ]);
+
     register_rest_field('executive_committee', 'hierarchy_order', [
         'get_callback' => function($post) {
             return (int) get_post_meta($post['id'], 'hierarchy_order', true);
