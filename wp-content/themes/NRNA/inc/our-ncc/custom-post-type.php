@@ -19,15 +19,15 @@ function nrna_register_ncc_committees_cpt() {
         'labels'             => $labels,
         'public'             => true,
         'show_in_rest'       => true,
-        'supports'           => ['title', 'thumbnail'],
+        'supports'           => ['thumbnail'],
         'menu_icon'          => 'dashicons-groups',
         'menu_position'      => 24,
         'has_archive'        => true,
-        'rewrite'            => ['slug' => 'ncc-committees'],
+        'rewrite'            => ['slug' => 'our-ncc'],
         'show_in_menu'       => true,
     ];
 
-    register_post_type('ncc_committees', $args);
+    register_post_type('our_ncc', $args);
 }
 add_action('init', 'nrna_register_ncc_committees_cpt');
 
@@ -46,7 +46,7 @@ function nrna_register_ncc_committees_meta_fields() {
 
     foreach ($fields as $key => $args) {
         register_meta('post', $key, array_merge($args, [
-            'object_subtype' => 'ncc_committees',
+            'object_subtype' => 'our_ncc',
             'show_in_rest' => true,
             'single' => true,
         ]));
@@ -72,7 +72,7 @@ function nrna_ncc_committees_columns($columns) {
     }
     return $new_columns;
 }
-add_filter('manage_ncc_committees_posts_columns', 'nrna_ncc_committees_columns');
+add_filter('manage_our_ncc_posts_columns', 'nrna_ncc_committees_columns');
 
 // Populate custom columns
 function nrna_ncc_committees_column_content($column, $post_id) {
@@ -100,7 +100,7 @@ function nrna_ncc_committees_column_content($column, $post_id) {
             break;
     }
 }
-add_action('manage_ncc_committees_posts_custom_column', 'nrna_ncc_committees_column_content', 10, 2);
+add_action('manage_our_ncc_posts_custom_column', 'nrna_ncc_committees_column_content', 10, 2);
 
 // Make columns sortable
 function nrna_ncc_committees_sortable_columns($columns) {
@@ -112,7 +112,7 @@ function nrna_ncc_committees_sortable_columns($columns) {
     $columns['ncc_est_date'] = 'ncc_est_date';
     return $columns;
 }
-add_filter('manage_edit-ncc_committees_sortable_columns', 'nrna_ncc_committees_sortable_columns');
+add_filter('manage_edit-our_ncc_sortable_columns', 'nrna_ncc_committees_sortable_columns');
 
 // Handle sorting
 function nrna_ncc_committees_orderby($query) {
@@ -120,7 +120,7 @@ function nrna_ncc_committees_orderby($query) {
         return;
     }
 
-    if ($query->get('post_type') === 'ncc_committees') {
+    if ($query->get('post_type') === 'our_ncc') {
         $orderby = $query->get('orderby');
 
         switch ($orderby) {
@@ -155,7 +155,7 @@ add_action('pre_get_posts', 'nrna_ncc_committees_orderby');
 
 // Prepare REST API response to include meta fields
 function nrna_prepare_ncc_committees_rest($response, $post, $request) {
-    if ($post->post_type !== 'ncc_committees') {
+    if ($post->post_type !== 'our_ncc') {
         return $response;
     }
 
@@ -179,4 +179,25 @@ function nrna_prepare_ncc_committees_rest($response, $post, $request) {
     $response->set_data($data);
     return $response;
 }
-add_filter('rest_prepare_ncc_committees', 'nrna_prepare_ncc_committees_rest', 10, 3);
+add_filter('rest_prepare_our_ncc', 'nrna_prepare_ncc_committees_rest', 10, 3);
+
+// Set post title to ncc_name on save
+function nrna_set_ncc_committees_title($post_id) {
+    if (get_post_type($post_id) !== 'our_ncc') {
+        return;
+    }
+
+    // Prevent infinite loop
+    remove_action('save_post', 'nrna_set_ncc_committees_title', 20);
+
+    $name = get_post_meta($post_id, 'ncc_name', true);
+    if (!empty($name)) {
+        wp_update_post([
+            'ID' => $post_id,
+            'post_title' => $name,
+        ]);
+    }
+
+    add_action('save_post', 'nrna_set_ncc_committees_title', 20);
+}
+add_action('save_post', 'nrna_set_ncc_committees_title', 20);

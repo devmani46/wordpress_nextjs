@@ -5,7 +5,7 @@ function nrna_add_ncc_committees_meta_boxes() {
         'ncc_committees_meta_box',
         __('Our NCC Details', 'nrna'),
         'nrna_render_ncc_committees_meta_box',
-        'ncc_committees',
+        'our_ncc',
         'normal',
         'high'
     );
@@ -106,9 +106,9 @@ add_action('save_post', 'nrna_save_ncc_committees_meta_box');
 
 // Clean up NCC Committees admin screen
 function nrna_remove_ncc_committees_meta_boxes() {
-    remove_meta_box('slugdiv', 'ncc_committees', 'normal');
-    remove_meta_box('authordiv', 'ncc_committees', 'normal');
-    remove_meta_box('commentsdiv', 'ncc_committees', 'normal');
-    remove_meta_box('revisionsdiv', 'ncc_committees', 'normal');
+    remove_meta_box('slugdiv', 'our_ncc', 'normal');
+    remove_meta_box('authordiv', 'our_ncc', 'normal');
+    remove_meta_box('commentsdiv', 'our_ncc', 'normal');
+    remove_meta_box('revisionsdiv', 'our_ncc', 'normal');
 }
 add_action('admin_menu', 'nrna_remove_ncc_committees_meta_boxes');
