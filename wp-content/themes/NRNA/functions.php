@@ -20,6 +20,9 @@ require_once $inc . 'organizational-structure-meta-box.php';
 // Load contact meta box
 require_once $inc . 'contact-meta-box.php';
 
+// Load nrna discount meta box
+require_once $inc . 'nrna-discount-meta-box.php';
+
 
 
 // Load projects includes

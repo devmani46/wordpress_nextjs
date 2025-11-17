@@ -39,6 +39,9 @@ function nrna_enqueue_admin_assets($hook) {
         } elseif ($post && get_page_template_slug($post->ID) === 'template-contact.php') {
             wp_enqueue_script('nrna-contact-tabs', get_template_directory_uri() . '/assets/admin/contact-tabs.js', [], false, true);
             wp_enqueue_style('nrna-contact-tabs', get_template_directory_uri() . '/assets/admin/contact-tabs.css', [], false);
+        } elseif ($post && get_page_template_slug($post->ID) === 'template-nrna-discount.php') {
+            wp_enqueue_script('nrna-discount-tabs', get_template_directory_uri() . '/assets/admin/discount-tabs.js', [], false, true);
+            wp_enqueue_style('nrna-discount-tabs', get_template_directory_uri() . '/assets/admin/discount-tabs.css', [], false);
         }
     }
 }
