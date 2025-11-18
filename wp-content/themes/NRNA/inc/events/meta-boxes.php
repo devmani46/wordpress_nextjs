@@ -464,8 +464,8 @@ function nrna_save_events_meta_box($post_id) {
     $fields = [
         'event_hero_title' => 'sanitize_text_field',
         'event_location' => 'sanitize_text_field',
-        'event_start_date' => 'sanitize_text_field', // Keep as string for date
-        'event_end_date' => 'sanitize_text_field', // Keep as string for date
+        'event_start_date' => 'sanitize_text_field', 
+        'event_end_date' => 'sanitize_text_field', 
         'event_countdown_days' => 'sanitize_text_field',
         'event_countdown_hours' => 'sanitize_text_field',
         'event_countdown_minutes' => 'sanitize_text_field',

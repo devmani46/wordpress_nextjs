@@ -36,8 +36,8 @@ function nrna_register_events_meta_fields() {
     $fields = [
         'event_hero_title' => ['type' => 'string'],
         'event_location' => ['type' => 'string'],
-        'event_start_date' => ['type' => 'string'], // Store as YYYY-MM-DD
-        'event_end_date' => ['type' => 'string'], // Store as YYYY-MM-DD
+        'event_start_date' => ['type' => 'string'], 
+        'event_end_date' => ['type' => 'string'], 
         'event_countdown_days' => ['type' => 'string'],
         'event_countdown_hours' => ['type' => 'string'],
         'event_countdown_minutes' => ['type' => 'string'],

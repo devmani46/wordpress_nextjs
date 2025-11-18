@@ -43,7 +43,7 @@ function nrna_render_notice_related_meta_box($post) {
     $notices_query = new WP_Query([
         'post_type' => 'notices',
         'posts_per_page' => -1,
-        'post__not_in' => [$post->ID], // Exclude current post
+        'post__not_in' => [$post->ID], 
         'orderby' => 'title',
         'order' => 'ASC',
     ]);

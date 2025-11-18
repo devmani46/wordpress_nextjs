@@ -91,7 +91,7 @@ function nrna_save_ncc_committees_meta_box($post_id) {
         'ncc_country_name' => 'sanitize_text_field',
         'ncc_name' => 'sanitize_text_field',
         'ncc_role' => 'sanitize_text_field',
-        'ncc_est_date' => 'sanitize_text_field', // Keep as string for date
+        'ncc_est_date' => 'sanitize_text_field', 
         'ncc_official_email' => 'sanitize_email',
         'ncc_website' => 'esc_url_raw',
     ];

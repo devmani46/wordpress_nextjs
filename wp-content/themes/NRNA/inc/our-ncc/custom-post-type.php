@@ -39,7 +39,7 @@ function nrna_register_ncc_committees_meta_fields() {
         'ncc_country_name' => ['type' => 'string'],
         'ncc_name' => ['type' => 'string'],
         'ncc_role' => ['type' => 'string'],
-        'ncc_est_date' => ['type' => 'string'], // Store as YYYY-MM-DD
+        'ncc_est_date' => ['type' => 'string'],
         'ncc_official_email' => ['type' => 'string'],
         'ncc_website' => ['type' => 'string'],
     ];
