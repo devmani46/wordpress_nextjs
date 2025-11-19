@@ -330,49 +330,18 @@ function nrna_save_home_meta_box($post_id) {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
     $fields = [
-        'hero_title' => 'sanitize_text_field',
-        'hero_description' => 'wp_kses_post',
-        'hero_cta_link' => 'esc_url_raw',
-        'hero_cta_title' => 'sanitize_text_field',
-        'banner_title' => 'sanitize_text_field',
-        'banner_description' => 'wp_kses_post',
-        'banner_cta_link' => 'esc_url_raw',
-        'banner_cta_title' => 'sanitize_text_field',
-
-        'about_title' => 'sanitize_text_field',
-        'about_image_1' => 'intval',
-        'about_image_2' => 'intval',
-        'about_image_3' => 'intval',
-
-        'why_title' => 'sanitize_text_field',
-        'why_description' => 'wp_kses_post',
-        'why_cta_link' => 'esc_url_raw',
-        'why_cta_title' => 'sanitize_text_field',
-        'why_video_link' => 'esc_url_raw',
-        'why_years_of_services' => 'intval',
-
-        'involved_title' => 'sanitize_text_field',
-        'involved_description' => 'wp_kses_post',
-
-        'stay_updated_title' => 'sanitize_text_field',
-        'stay_updated_description' => 'wp_kses_post',
-
-        'latest_news_title' => 'sanitize_text_field',
-        'latest_news_description' => 'wp_kses_post',
-
-        'our_initiatives_title' => 'sanitize_text_field',
-        'our_initiatives_description' => 'wp_kses_post',
-
-        'journey_title' => 'sanitize_text_field',
-        'journey_description' => 'wp_kses_post',
-        'journey_cta_link' => 'esc_url_raw',
-        'journey_cta_title' => 'sanitize_text_field',
+        'hero_title' => 'sanitize_text_field', 'hero_description' => 'wp_kses_post', 'hero_cta_link' => 'esc_url_raw', 'hero_cta_title' => 'sanitize_text_field',
+        'banner_title' => 'sanitize_text_field', 'banner_description' => 'wp_kses_post', 'banner_cta_link' => 'esc_url_raw', 'banner_cta_title' => 'sanitize_text_field',
+        'about_title' => 'sanitize_text_field', 'about_image_1' => 'intval', 'about_image_2' => 'intval', 'about_image_3' => 'intval',
+        'why_title' => 'sanitize_text_field', 'why_description' => 'wp_kses_post', 'why_cta_link' => 'esc_url_raw', 'why_cta_title' => 'sanitize_text_field',
+        'why_video_link' => 'esc_url_raw', 'why_years_of_services' => 'intval', 'involved_title' => 'sanitize_text_field', 'involved_description' => 'wp_kses_post',
+        'stay_updated_title' => 'sanitize_text_field', 'stay_updated_description' => 'wp_kses_post', 'latest_news_title' => 'sanitize_text_field',
+        'latest_news_description' => 'wp_kses_post', 'our_initiatives_title' => 'sanitize_text_field', 'our_initiatives_description' => 'wp_kses_post',
+        'journey_title' => 'sanitize_text_field', 'journey_description' => 'wp_kses_post', 'journey_cta_link' => 'esc_url_raw', 'journey_cta_title' => 'sanitize_text_field',
     ];
 
     foreach ($fields as $field => $sanitize) {
-        if (isset($_POST[$field])) {
-            update_post_meta($post_id, $field, call_user_func($sanitize, $_POST[$field]));
-        }
+        if (isset($_POST[$field])) update_post_meta($post_id, $field, call_user_func($sanitize, $_POST[$field]));
     }
 
     $array_fields = ['slider_items', 'about_stats', 'why_features', 'involved_actions', 'why_images'];
@@ -382,36 +351,27 @@ function nrna_save_home_meta_box($post_id) {
             delete_post_meta($post_id, $field);
             continue;
         }
-
         $data = $_POST[$field];
-        $sanitized = [];
-
         if ($field === 'why_images') {
-            for ($i = 0; $i < 5; $i++) {
-                $sanitized[$i] = intval($data[$i] ?? 0);
-            }
-
+            $sanitized = array_map('intval', array_slice($data, 0, 5));
         } elseif ($field === 'involved_actions') {
-            for ($i = 0; $i < 3; $i++) {
-                $item = $data[$i] ?? [];
-                $sanitized[$i] = [
+            $sanitized = array_map(function($item) {
+                return [
                     'title' => sanitize_text_field($item['title'] ?? ''),
                     'description' => wp_kses_post($item['description'] ?? ''),
                     'cta_link' => esc_url_raw($item['cta_link'] ?? ''),
                     'cta_title' => sanitize_text_field($item['cta_title'] ?? ''),
                 ];
-            }
-
+            }, array_slice($data, 0, 3));
         } else {
-            foreach ((array)$data as $item) {
+            $sanitized = array_filter(array_map(function($item) {
                 $clean = [];
                 if (isset($item['title'])) $clean['title'] = sanitize_text_field($item['title']);
                 if (isset($item['description'])) $clean['description'] = wp_kses_post($item['description']);
                 if (isset($item['image'])) $clean['image'] = intval($item['image']);
-                if (!empty($clean)) $sanitized[] = $clean;
-            }
+                return !empty($clean) ? $clean : null;
+            }, (array)$data));
         }
-
         update_post_meta($post_id, $field, $sanitized);
     }
 }
@@ -424,7 +384,6 @@ function nrna_prepare_page_rest_response($response, $post, $request) {
 
     $data = $response->get_data();
 
-    // Whitelist of allowed home meta keys
     $allowed_meta_keys = [
         'hero_title', 'hero_description', 'hero_cta_link', 'hero_cta_title',
         'banner_title', 'banner_description', 'banner_cta_link', 'banner_cta_title',
@@ -438,14 +397,7 @@ function nrna_prepare_page_rest_response($response, $post, $request) {
         'slider_items', 'about_stats', 'why_images', 'why_features', 'involved_actions'
     ];
 
-    // Filter meta fields to only include home-related fields
-    $filtered_meta = [];
-    foreach ($data['meta'] as $key => $value) {
-        if (in_array($key, $allowed_meta_keys)) {
-            $filtered_meta[$key] = $value;
-        }
-    }
-    $data['meta'] = $filtered_meta;
+    $data['meta'] = array_intersect_key($data['meta'], array_flip($allowed_meta_keys));
 
     // Add about_title outside meta
     $about_title = get_post_meta($post->ID, 'about_title', true);
@@ -494,4 +446,5 @@ function nrna_prepare_page_rest_response($response, $post, $request) {
     return $response;
 }
 add_filter('rest_prepare_page', 'nrna_prepare_page_rest_response', 10, 3);
+?>
 
