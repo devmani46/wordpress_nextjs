@@ -424,10 +424,24 @@ function nrna_prepare_page_rest_response($response, $post, $request) {
 
     $data = $response->get_data();
 
-    // Filter meta fields to only include home-related fields (exclude about_ prefixed)
+    // Whitelist of allowed home meta keys
+    $allowed_meta_keys = [
+        'hero_title', 'hero_description', 'hero_cta_link', 'hero_cta_title',
+        'banner_title', 'banner_description', 'banner_cta_link', 'banner_cta_title',
+        'about_title', 'about_image_1', 'about_image_2', 'about_image_3',
+        'why_title', 'why_description', 'why_cta_link', 'why_cta_title', 'why_video_link', 'why_years_of_services',
+        'involved_title', 'involved_description',
+        'stay_updated_title', 'stay_updated_description',
+        'latest_news_title', 'latest_news_description',
+        'our_initiatives_title', 'our_initiatives_description',
+        'journey_title', 'journey_description', 'journey_cta_link', 'journey_cta_title',
+        'slider_items', 'about_stats', 'why_images', 'why_features', 'involved_actions'
+    ];
+
+    // Filter meta fields to only include home-related fields
     $filtered_meta = [];
     foreach ($data['meta'] as $key => $value) {
-        if (strpos($key, 'about_') !== 0) {
+        if (in_array($key, $allowed_meta_keys)) {
             $filtered_meta[$key] = $value;
         }
     }
