@@ -54,6 +54,8 @@ function nrna_register_notice_category_taxonomy() {
         'query_var'         => true,
         'rewrite'           => ['slug' => 'notice-category'],
         'show_in_rest'      => true,
+        'show_in_nav_menus' => true,
+        'public'            => true,
     ];
 
     register_taxonomy('notice_category', ['notices'], $args);

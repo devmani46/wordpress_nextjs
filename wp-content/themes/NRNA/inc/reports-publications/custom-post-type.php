@@ -51,12 +51,14 @@ function nrna_register_reports_publications_category_taxonomy() {
     $args = [
         'hierarchical'          => true,
         'labels'                => $labels,
+        'public'                => true,
         'show_ui'               => true,
         'show_admin_column'     => true,
         'query_var'             => true,
         'rewrite'               => ['slug' => 'reports-publications-category'],
         'show_in_rest'          => true,
         'show_in_quick_edit'    => true,
+        'show_in_nav_menus'     => true,
     ];
 
     register_taxonomy('reports_publications_category', ['reports_publications'], $args);
