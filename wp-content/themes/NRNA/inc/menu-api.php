@@ -7,7 +7,7 @@
 add_action('rest_api_init', 'nrna_register_menu_api');
 
 function nrna_register_menu_api() {
-    register_rest_route('nrna/v1', '/menu/(?P<location>[a-zA-Z0-9-_]+)', array(
+    register_rest_route('wp/v1', '/menu/(?P<location>[a-zA-Z0-9-_]+)', array(
         'methods' => 'GET',
         'callback' => 'nrna_get_menu_items',
         'permission_callback' => '__return_true', // Public access
