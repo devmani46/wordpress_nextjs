@@ -14,6 +14,7 @@ function nrna_register_privacy_policy_cpt() {
         'labels'             => $labels,
         'public'             => true,
         'show_in_rest'       => true,
+        'show_in_nav_menus'  => false,
         'supports'           => ['title'],
         'menu_icon'          => 'dashicons-privacy',
         'menu_position'      => 21,

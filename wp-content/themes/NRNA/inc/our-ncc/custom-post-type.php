@@ -25,6 +25,8 @@ function nrna_register_ncc_committees_cpt() {
         'has_archive'        => true,
         'rewrite'            => ['slug' => 'our-ncc'],
         'show_in_menu'       => true,
+        'show_in_nav_menus'  => false,
+
     ];
 
     register_post_type('our_ncc', $args);

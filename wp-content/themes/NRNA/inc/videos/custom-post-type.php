@@ -25,6 +25,8 @@ function nrna_register_videos_cpt() {
         'has_archive'        => true,
         'rewrite'            => ['slug' => 'videos'],
         'show_in_menu'       => 'gallery-menu',
+        'show_in_nav_menus'  => false,
+
     ];
 
     register_post_type('videos', $args);
@@ -39,6 +41,7 @@ function nrna_register_videos_meta_rest() {
         'description' => 'YouTube Video URL',
         'single' => true,
         'show_in_rest' => true,
+        
     ));
 }
 add_action('init', 'nrna_register_videos_meta_rest');

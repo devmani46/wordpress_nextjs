@@ -25,6 +25,7 @@ function nrna_register_galleries_cpt() {
         'has_archive'        => true,
         'rewrite'            => ['slug' => 'galleries'],
         'show_in_menu'       => 'gallery-menu',
+        'show_in_nav_menus'  => false,
     ];
 
     register_post_type('galleries', $args);

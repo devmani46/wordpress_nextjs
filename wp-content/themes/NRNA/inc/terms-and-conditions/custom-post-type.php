@@ -17,6 +17,8 @@ function nrna_register_terms_and_conditions_cpt() {
         'supports'           => ['title'],
         'menu_icon'          => 'dashicons-admin-page',
         'menu_position'      => 22,
+        'show_in_nav_menus'  => false,
+        'rewrite'            => ['slug' => 'terms-and-conditions'],
     ];
 
     register_post_type('terms-and-conditions', $args);
