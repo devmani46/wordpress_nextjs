@@ -24,6 +24,7 @@ function nrna_register_executive_committee_cpt() {
         'menu_position'      => 25,
         'has_archive'        => false,
         'rewrite'            => ['slug' => 'executive-committee'],
+        'show_in_menu'       => false,
     ];
 
     register_post_type('executive_committee', $args);
