@@ -1,6 +1,7 @@
 <?php
 // Register Privacy Policy custom post type
-function nrna_register_privacy_policy_cpt() {
+function nrna_register_privacy_policy_cpt()
+{
     $labels = [
         'name'               => _x('Privacy Policies', 'Post Type General Name', 'nrna'),
         'singular_name'      => _x('Privacy Policy', 'Post Type Singular Name', 'nrna'),
@@ -14,7 +15,7 @@ function nrna_register_privacy_policy_cpt() {
         'labels'             => $labels,
         'public'             => true,
         'show_in_rest'       => true,
-        'show_in_nav_menus'  => false,
+        'show_in_menu'       => 'nrna-area-menu',
         'supports'           => ['title'],
         'menu_icon'          => 'dashicons-privacy',
         'menu_position'      => 21,

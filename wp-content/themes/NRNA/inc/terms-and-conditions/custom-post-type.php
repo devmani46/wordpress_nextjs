@@ -1,6 +1,7 @@
 <?php
 // Register Terms and Conditions custom post type
-function nrna_register_terms_and_conditions_cpt() {
+function nrna_register_terms_and_conditions_cpt()
+{
     $labels = [
         'name'               => _x('Terms and Conditions', 'Post Type General Name', 'nrna'),
         'singular_name'      => _x('Terms and Conditions', 'Post Type Singular Name', 'nrna'),
@@ -17,6 +18,7 @@ function nrna_register_terms_and_conditions_cpt() {
         'supports'           => ['title'],
         'menu_icon'          => 'dashicons-admin-page',
         'menu_position'      => 22,
+        'show_in_menu'       => 'nrna-area-menu',
         'show_in_nav_menus'  => false,
         'rewrite'            => ['slug' => 'terms-and-conditions'],
     ];

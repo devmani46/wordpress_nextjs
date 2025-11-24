@@ -147,3 +147,63 @@ function nrna_add_about_us_menu()
     remove_submenu_page('about-us-menu', 'about-us-menu');
 }
 add_action('admin_menu', 'nrna_add_about_us_menu');
+
+// Add NRNA Area parent menu
+function nrna_add_nrna_area_menu()
+{
+    add_menu_page(
+        'NRNA Area',
+        'NRNA Area',
+        'manage_options',
+        'nrna-area-menu',
+        '',
+        'dashicons-networking',
+        22
+    );
+
+    // 1. Contact Us (Page)
+    // Find page by template
+    $contact_us_page = get_pages([
+        'meta_key' => '_wp_page_template',
+        'meta_value' => 'template-contact.php',
+        'number' => 1
+    ]);
+
+    $contact_us_link = 'post-new.php?post_type=page'; // Default fallback
+    if (!empty($contact_us_page)) {
+        $contact_us_link = 'post.php?post=' . $contact_us_page[0]->ID . '&action=edit';
+    }
+
+    add_submenu_page(
+        'nrna-area-menu',
+        'Contact Us',
+        'Contact Us',
+        'manage_options',
+        $contact_us_link
+    );
+
+    // 3. NRNA Discount (Page)
+    // Find page by template
+    $nrna_discount_page = get_pages([
+        'meta_key' => '_wp_page_template',
+        'meta_value' => 'template-nrna-discount.php',
+        'number' => 1
+    ]);
+
+    $nrna_discount_link = 'post-new.php?post_type=page'; // Default fallback
+    if (!empty($nrna_discount_page)) {
+        $nrna_discount_link = 'post.php?post=' . $nrna_discount_page[0]->ID . '&action=edit';
+    }
+
+    add_submenu_page(
+        'nrna-area-menu',
+        'NRNA Discount',
+        'NRNA Discount',
+        'manage_options',
+        $nrna_discount_link
+    );
+
+    // Remove the default "NRNA Area" submenu created by add_menu_page
+    remove_submenu_page('nrna-area-menu', 'nrna-area-menu');
+}
+add_action('admin_menu', 'nrna_add_nrna_area_menu');
