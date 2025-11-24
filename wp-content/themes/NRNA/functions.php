@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NRNA Theme Functions
  */
@@ -10,7 +11,8 @@ $inc = get_template_directory() . '/inc/';
 require_once $inc . 'index.php';
 
 // Theme setup
-function nrna_theme_setup() {
+function nrna_theme_setup()
+{
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     register_nav_menus([
@@ -20,7 +22,8 @@ function nrna_theme_setup() {
 add_action('after_setup_theme', 'nrna_theme_setup');
 
 // Add News & Events parent menu
-function nrna_add_news_events_menu() {
+function nrna_add_news_events_menu()
+{
     add_menu_page(
         'News & Events',
         'News & Events',
@@ -34,7 +37,8 @@ function nrna_add_news_events_menu() {
 add_action('admin_menu', 'nrna_add_news_events_menu');
 
 // Add Gallery parent menu
-function nrna_add_gallery_menu() {
+function nrna_add_gallery_menu()
+{
     add_menu_page(
         'Gallery',
         'Gallery',
@@ -48,7 +52,8 @@ function nrna_add_gallery_menu() {
 add_action('admin_menu', 'nrna_add_gallery_menu');
 
 // Add About Us parent menu
-function nrna_add_about_us_menu() {
+function nrna_add_about_us_menu()
+{
     add_menu_page(
         'About Us',
         'About Us',
@@ -66,7 +71,7 @@ function nrna_add_about_us_menu() {
         'meta_value' => 'template-who-we-are.php',
         'number' => 1
     ]);
-    
+
     $who_we_are_link = 'post-new.php?post_type=page'; // Default fallback
     if (!empty($who_we_are_page)) {
         $who_we_are_link = 'post.php?post=' . $who_we_are_page[0]->ID . '&action=edit';
@@ -137,5 +142,8 @@ function nrna_add_about_us_menu() {
         'manage_options',
         $org_structure_link
     );
+
+    // Remove the default "About Us" submenu created by add_menu_page
+    remove_submenu_page('about-us-menu', 'about-us-menu');
 }
 add_action('admin_menu', 'nrna_add_about_us_menu');
