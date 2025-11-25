@@ -51,6 +51,41 @@ function nrna_add_gallery_menu()
 }
 add_action('admin_menu', 'nrna_add_gallery_menu');
 
+// Add Home page parent menu
+function nrna_add_home_menu()
+{
+    add_menu_page(
+        'Home Page',
+        'Home Page',
+        'manage_options',
+        'home-page-menu',
+        '',
+        'dashicons-admin-home',
+        19
+    );
+    // home page
+    $home_page = get_pages([
+        'meta_key' => '_wp_page_template',
+        'meta_value' => 'template-home.php',
+        'number' => 1
+    ]);
+
+    if (!empty($home_page)) {
+        $home_link = 'post.php?post=' . $home_page[0]->ID . '&action=edit';
+    }
+
+    add_submenu_page(
+        'home-page-menu',
+        'Home Page',
+        'Home Page',
+        'manage_options',
+        $home_link
+    );
+    // Remove the default "Home Page" submenu created by add_menu_page
+    remove_submenu_page('home-page-menu', 'home-page-menu');
+}
+add_action('admin_menu', 'nrna_add_home_menu');
+
 // Add About Us parent menu
 function nrna_add_about_us_menu()
 {
@@ -72,7 +107,6 @@ function nrna_add_about_us_menu()
         'number' => 1
     ]);
 
-    $who_we_are_link = 'post-new.php?post_type=page'; // Default fallback
     if (!empty($who_we_are_page)) {
         $who_we_are_link = 'post.php?post=' . $who_we_are_page[0]->ID . '&action=edit';
     }
