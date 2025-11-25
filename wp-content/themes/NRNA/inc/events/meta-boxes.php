@@ -46,10 +46,6 @@ function nrna_render_events_meta_box($post) {
                 $location = get_post_meta($post->ID, 'event_location', true);
                 $start_date = get_post_meta($post->ID, 'event_start_date', true);
                 $end_date = get_post_meta($post->ID, 'event_end_date', true);
-                $countdown_days = get_post_meta($post->ID, 'event_countdown_days', true);
-                $countdown_hours = get_post_meta($post->ID, 'event_countdown_hours', true);
-                $countdown_minutes = get_post_meta($post->ID, 'event_countdown_minutes', true);
-                $countdown_seconds = get_post_meta($post->ID, 'event_countdown_seconds', true);
                 $sub_title = get_post_meta($post->ID, 'event_sub_title', true);
                 $cta_link = get_post_meta($post->ID, 'event_cta_link', true);
                 $cta_title = get_post_meta($post->ID, 'event_cta_title', true);
@@ -62,12 +58,6 @@ function nrna_render_events_meta_box($post) {
                 <p><label>Sub Title:</label><br><input type="text" name="event_sub_title" value="<?php echo esc_attr($sub_title); ?>" class="wide-input"></p>
                 <p><label>CTA Link:</label><br><input type="url" name="event_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="event_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
-                <p><label>Countdown:</label><br>
-                    <input type="number" name="event_countdown_days" value="<?php echo esc_attr($countdown_days); ?>" placeholder="Days" min="0" style="width:80px;"> Days
-                    <input type="number" name="event_countdown_hours" value="<?php echo esc_attr($countdown_hours); ?>" placeholder="Hours" min="0" max="23" style="width:80px;"> Hours
-                    <input type="number" name="event_countdown_minutes" value="<?php echo esc_attr($countdown_minutes); ?>" placeholder="Minutes" min="0" max="59" style="width:80px;"> Minutes
-                    <input type="number" name="event_countdown_seconds" value="<?php echo esc_attr($countdown_seconds); ?>" placeholder="Seconds" min="0" max="59" style="width:80px;"> Seconds
-                </p>
                 <p><label>Description:</label><br><?php
                 wp_editor(get_post_meta($post->ID, 'event_description', true), 'event_description', array(
                     'media_buttons' => true,
@@ -466,10 +456,6 @@ function nrna_save_events_meta_box($post_id) {
         'event_location' => 'sanitize_text_field',
         'event_start_date' => 'sanitize_text_field', 
         'event_end_date' => 'sanitize_text_field', 
-        'event_countdown_days' => 'sanitize_text_field',
-        'event_countdown_hours' => 'sanitize_text_field',
-        'event_countdown_minutes' => 'sanitize_text_field',
-        'event_countdown_seconds' => 'sanitize_text_field',
         'event_sub_title' => 'sanitize_text_field',
         'event_cta_link' => 'esc_url_raw',
         'event_cta_title' => 'sanitize_text_field',
