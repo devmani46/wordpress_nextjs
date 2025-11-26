@@ -42,6 +42,7 @@ function nrna_build_menu_tree($menu_items) {
 
     // Index items by ID
     foreach ($menu_items as $item) {
+        $slug = ($item->object == 'page') ? get_post_field('post_name', $item->object_id) : '';
         $menu_items_by_id[$item->ID] = array(
             'id' => $item->ID,
             'title' => $item->title,
@@ -50,6 +51,7 @@ function nrna_build_menu_tree($menu_items) {
             'description' => $item->description,
             'classes' => $item->classes,
             'menu_item_parent' => $item->menu_item_parent,
+            'slug' => $slug,
             'children' => array(),
         );
     }
