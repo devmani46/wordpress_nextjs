@@ -237,6 +237,27 @@ function nrna_add_nrna_area_menu()
         $nrna_discount_link
     );
 
+    // 3. Privacy Policy (Page)
+    // Find page by template
+    $privacy_policy_page = get_pages([
+        'meta_key' => '_wp_page_template',
+        'meta_value' => 'template-privacy-policy.php',
+        'number' => 1
+    ]);
+
+    $privacy_policy_link = 'post-new.php?post_type=page'; // Default fallback
+    if (!empty($privacy_policy_page)) {
+        $privacy_policy_link = 'post.php?post=' . $privacy_policy_page[0]->ID . '&action=edit';
+    }
+
+    add_submenu_page(
+        'nrna-area-menu',
+        'Privacy Policy',
+        'Privacy Policy',
+        'manage_options',
+        $privacy_policy_link
+    );
+
     // Remove the default "NRNA Area" submenu created by add_menu_page
     remove_submenu_page('nrna-area-menu', 'nrna-area-menu');
 }

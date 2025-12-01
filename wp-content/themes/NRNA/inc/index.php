@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NRNA Theme Includes
  */
@@ -63,8 +64,8 @@ require_once 'committees-taskforces-subcommittees/index.php';
 // Load our ncc includes
 require_once 'our-ncc/index.php';
 
-// Load privacy policy includes
-require_once 'privacy-policy/index.php';
+// Load privacy policy meta box
+require_once 'privacy-policy-meta-box.php';
 
 // Load terms and conditions includes
 require_once 'terms-and-conditions/index.php';
