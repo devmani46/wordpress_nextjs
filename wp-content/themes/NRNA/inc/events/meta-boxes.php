@@ -1,6 +1,7 @@
 <?php
 // Add Events meta boxes
-function nrna_add_events_meta_boxes() {
+function nrna_add_events_meta_boxes()
+{
     add_meta_box(
         'events_meta_box',
         __('Event Content', 'nrna'),
@@ -13,7 +14,8 @@ function nrna_add_events_meta_boxes() {
 add_action('add_meta_boxes', 'nrna_add_events_meta_boxes');
 
 // Render Events meta box with tabs
-function nrna_render_events_meta_box($post) {
+function nrna_render_events_meta_box($post)
+{
     wp_nonce_field('nrna_events_meta_box', 'nrna_events_meta_box_nonce');
 
     $tabs = [
@@ -50,7 +52,7 @@ function nrna_render_events_meta_box($post) {
                 $cta_link = get_post_meta($post->ID, 'event_cta_link', true);
                 $cta_title = get_post_meta($post->ID, 'event_cta_title', true);
                 $description = get_post_meta($post->ID, 'event_description', true);
-                ?>
+?>
                 <p><label>Hero Title:</label><br><input type="text" name="event_hero_title" value="<?php echo esc_attr($hero_title); ?>" class="wide-input"></p>
                 <p><label>Location:</label><br><input type="text" name="event_location" value="<?php echo esc_attr($location); ?>" class="wide-input"></p>
                 <p><label>Start Date:</label><br><input type="date" name="event_start_date" value="<?php echo esc_attr($start_date); ?>" class="wide-input"></p>
@@ -59,14 +61,14 @@ function nrna_render_events_meta_box($post) {
                 <p><label>CTA Link:</label><br><input type="url" name="event_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="event_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
                 <p><label>Description:</label><br><?php
-                wp_editor(get_post_meta($post->ID, 'event_description', true), 'event_description', array(
-                    'media_buttons' => true,
-                    'textarea_rows' => 10,
-                    'teeny' => false,
-                    'quicktags' => true,
-                ));
-                ?></p>
-                <?php
+                                                    wp_editor(get_post_meta($post->ID, 'event_description', true), 'event_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
+            <?php
                 break;
 
             case 'objective':
@@ -74,19 +76,19 @@ function nrna_render_events_meta_box($post) {
                 $obj_description = get_post_meta($post->ID, 'event_objective_description', true);
                 $obj_cta_link = get_post_meta($post->ID, 'event_objective_cta_link', true);
                 $obj_cta_title = get_post_meta($post->ID, 'event_objective_cta_title', true);
-                ?>
+            ?>
                 <p><label>Title:</label><br><input type="text" name="event_objective_title" value="<?php echo esc_attr($obj_title); ?>" class="wide-input"></p>
                 <p><label>Description:</label><br><?php
-                wp_editor(get_post_meta($post->ID, 'event_objective_description', true), 'event_objective_description', array(
-                    'media_buttons' => true,
-                    'textarea_rows' => 10,
-                    'teeny' => false,
-                    'quicktags' => true,
-                ));
-                ?></p>
+                                                    wp_editor(get_post_meta($post->ID, 'event_objective_description', true), 'event_objective_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="event_objective_cta_link" value="<?php echo esc_attr($obj_cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="event_objective_cta_title" value="<?php echo esc_attr($obj_cta_title); ?>" class="wide-input"></p>
-                <?php
+            <?php
                 break;
 
             case 'schedule':
@@ -94,16 +96,16 @@ function nrna_render_events_meta_box($post) {
                 $schedule_description = get_post_meta($post->ID, 'event_schedule_description', true);
                 $schedule_dates = get_post_meta($post->ID, 'event_schedule_dates', true);
                 if (!is_array($schedule_dates)) $schedule_dates = [];
-                ?>
+            ?>
                 <p><label>Title:</label><br><input type="text" name="event_schedule_title" value="<?php echo esc_attr($schedule_title); ?>" class="wide-input"></p>
                 <p><label>Description:</label><br><?php
-                wp_editor(get_post_meta($post->ID, 'event_schedule_description', true), 'event_schedule_description', array(
-                    'media_buttons' => true,
-                    'textarea_rows' => 10,
-                    'teeny' => false,
-                    'quicktags' => true,
-                ));
-                ?></p>
+                                                    wp_editor(get_post_meta($post->ID, 'event_schedule_description', true), 'event_schedule_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
                 <div class="repeater-container" data-repeater="event_schedule_dates">
                     <?php foreach ($schedule_dates as $date_index => $date_item): ?>
                         <div class="date-item">
@@ -118,13 +120,13 @@ function nrna_render_events_meta_box($post) {
                                             <p><label>End Time:</label><br><input type="time" name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][end_time]" value="<?php echo esc_attr($session['end_time'] ?? ''); ?>" class="wide-input"></p>
                                             <p><label>Title:</label><br><input type="text" name="event_schedule_dates[<?php echo $date_index; ?>][sessions][<?php echo $session_index; ?>][title]" value="<?php echo esc_attr($session['title'] ?? ''); ?>" class="wide-input"></p>
                                             <p><label>Description:</label><br><?php
-                                            wp_editor($session['description'] ?? '', "event_schedule_dates_{$date_index}_sessions_{$session_index}_description", array(
-                                                'media_buttons' => true,
-                                                'textarea_rows' => 10,
-                                                'teeny' => false,
-                                                'quicktags' => true,
-                                            ));
-                                            ?></p>
+                                                                                wp_editor($session['description'] ?? '', "event_schedule_dates_{$date_index}_sessions_{$session_index}_description", array(
+                                                                                    'media_buttons' => true,
+                                                                                    'textarea_rows' => 10,
+                                                                                    'teeny' => false,
+                                                                                    'quicktags' => true,
+                                                                                ));
+                                                                                ?></p>
                                             <button type="button" class="remove-session button">Remove Session</button>
                                         </div>
                                     <?php endforeach; ?>
@@ -136,7 +138,7 @@ function nrna_render_events_meta_box($post) {
                     <?php endforeach; ?>
                 </div>
                 <button type="button" class="add-date button" data-repeater="event_schedule_dates">Add Date</button>
-                <?php
+            <?php
                 break;
 
             case 'sponsorship':
@@ -144,16 +146,16 @@ function nrna_render_events_meta_box($post) {
                 $sponsorship_description = get_post_meta($post->ID, 'event_sponsorship_description', true);
                 $sponsorships = get_post_meta($post->ID, 'event_sponsorships', true);
                 if (!is_array($sponsorships)) $sponsorships = [];
-                ?>
+            ?>
                 <p><label>Title:</label><br><input type="text" name="event_sponsorship_title" value="<?php echo esc_attr($sponsorship_title); ?>" class="wide-input"></p>
                 <p><label>Description:</label><br><?php
-                wp_editor(get_post_meta($post->ID, 'event_sponsorship_description', true), 'event_sponsorship_description', array(
-                    'media_buttons' => true,
-                    'textarea_rows' => 10,
-                    'teeny' => false,
-                    'quicktags' => true,
-                ));
-                ?></p>
+                                                    wp_editor(get_post_meta($post->ID, 'event_sponsorship_description', true), 'event_sponsorship_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
                 <div class="sponsorship-table-container">
                     <table class="sponsorship-table">
                         <thead>
@@ -175,7 +177,7 @@ function nrna_render_events_meta_box($post) {
                     </table>
                     <button type="button" class="add-sponsorship button">Add Sponsorship Category</button>
                 </div>
-                <?php
+            <?php
                 break;
 
             case 'venue':
@@ -184,16 +186,16 @@ function nrna_render_events_meta_box($post) {
                 $venue_map = get_post_meta($post->ID, 'event_venue_map', true);
                 $venue_details = get_post_meta($post->ID, 'event_venue_details', true);
                 if (!is_array($venue_details)) $venue_details = [];
-                ?>
+            ?>
                 <p><label>Title:</label><br><input type="text" name="event_venue_title" value="<?php echo esc_attr($venue_title); ?>" class="wide-input"></p>
                 <p><label>Description:</label><br><?php
-                wp_editor(get_post_meta($post->ID, 'event_venue_description', true), 'event_venue_description', array(
-                    'media_buttons' => true,
-                    'textarea_rows' => 10,
-                    'teeny' => false,
-                    'quicktags' => true,
-                ));
-                ?></p>
+                                                    wp_editor(get_post_meta($post->ID, 'event_venue_description', true), 'event_venue_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
                 <p><label>Map Embed Code:</label><br><textarea name="event_venue_map" rows="4" class="wide-textarea"><?php echo esc_textarea($venue_map); ?></textarea></p>
                 <div class="venue-details-container">
                     <h4>Venue Details</h4>
@@ -202,27 +204,27 @@ function nrna_render_events_meta_box($post) {
                             <div class="venue-detail-item">
                                 <p><label>Title:</label><br><input type="text" name="event_venue_details[<?php echo $index; ?>][title]" value="<?php echo esc_attr($detail['title'] ?? ''); ?>" class="wide-input"></p>
                                 <p><label>Description:</label><br><?php
-                                wp_editor($detail['description'] ?? '', "event_venue_details_{$index}_description", array(
-                                    'media_buttons' => true,
-                                    'textarea_rows' => 5,
-                                    'teeny' => false,
-                                    'quicktags' => true,
-                                ));
-                                ?></p>
+                                                                    wp_editor($detail['description'] ?? '', "event_venue_details_{$index}_description", array(
+                                                                        'media_buttons' => true,
+                                                                        'textarea_rows' => 5,
+                                                                        'teeny' => false,
+                                                                        'quicktags' => true,
+                                                                    ));
+                                                                    ?></p>
                                 <button type="button" class="remove-venue-detail button">Remove Detail</button>
                             </div>
                         <?php endforeach; ?>
                     </div>
                     <button type="button" class="add-venue-detail button">Add Venue Detail</button>
                 </div>
-                <?php
+            <?php
                 break;
 
             case 'organizing-committee':
                 $organizing_committee_title = get_post_meta($post->ID, 'event_organizing_committee_title', true);
                 $organizing_committee = get_post_meta($post->ID, 'event_organizing_committee', true);
                 if (!is_array($organizing_committee)) $organizing_committee = [];
-                ?>
+            ?>
                 <p><label>Title:</label><br><input type="text" name="event_organizing_committee_title" value="<?php echo esc_attr($organizing_committee_title); ?>" class="wide-input"></p>
                 <div class="committee-table-container">
                     <table class="committee-table">
@@ -257,14 +259,14 @@ function nrna_render_events_meta_box($post) {
                     </table>
                     <button type="button" class="add-committee button">Add Committee Member</button>
                 </div>
-                <?php
+            <?php
                 break;
 
             case 'sponsors':
                 $sponsors_title = get_post_meta($post->ID, 'event_sponsors_title', true);
                 $sponsors = get_post_meta($post->ID, 'event_sponsors', true);
                 if (!is_array($sponsors)) $sponsors = [];
-                ?>
+            ?>
                 <p><label>Title:</label><br><input type="text" name="event_sponsors_title" value="<?php echo esc_attr($sponsors_title); ?>" class="wide-input"></p>
                 <div class="sponsors-table-container">
                     <table class="sponsors-table">
@@ -298,13 +300,13 @@ function nrna_render_events_meta_box($post) {
                     </table>
                     <button type="button" class="add-sponsor button">Add Sponsor</button>
                 </div>
-                <?php
+            <?php
                 break;
 
             case 'partners':
                 $partners = get_post_meta($post->ID, 'event_partners', true);
                 if (!is_array($partners)) $partners = [];
-                ?>
+            ?>
                 <div class="partners-container">
                     <h4>Gold Partners</h4>
                     <div class="partners-section" data-category="gold">
@@ -318,7 +320,7 @@ function nrna_render_events_meta_box($post) {
                             </thead>
                             <tbody>
                                 <?php
-                                $gold_partners = array_filter($partners, function($partner) {
+                                $gold_partners = array_filter($partners, function ($partner) {
                                     return isset($partner['category']) && $partner['category'] === 'gold';
                                 });
                                 foreach ($gold_partners as $index => $partner): ?>
@@ -354,7 +356,7 @@ function nrna_render_events_meta_box($post) {
                             </thead>
                             <tbody>
                                 <?php
-                                $silver_partners = array_filter($partners, function($partner) {
+                                $silver_partners = array_filter($partners, function ($partner) {
                                     return isset($partner['category']) && $partner['category'] === 'silver';
                                 });
                                 foreach ($silver_partners as $index => $partner): ?>
@@ -390,7 +392,7 @@ function nrna_render_events_meta_box($post) {
                             </thead>
                             <tbody>
                                 <?php
-                                $airlines_partners = array_filter($partners, function($partner) {
+                                $airlines_partners = array_filter($partners, function ($partner) {
                                     return isset($partner['category']) && $partner['category'] === 'airlines';
                                 });
                                 foreach ($airlines_partners as $index => $partner): ?>
@@ -414,7 +416,7 @@ function nrna_render_events_meta_box($post) {
                         <button type="button" class="add-partner button" data-category="airlines">Add Airlines Partner</button>
                     </div>
                 </div>
-                <?php
+            <?php
                 break;
 
             case 'banner':
@@ -422,19 +424,19 @@ function nrna_render_events_meta_box($post) {
                 $banner_description = get_post_meta($post->ID, 'event_banner_description', true);
                 $banner_cta_link = get_post_meta($post->ID, 'event_banner_cta_link', true);
                 $banner_cta_title = get_post_meta($post->ID, 'event_banner_cta_title', true);
-                ?>
+            ?>
                 <p><label>Title:</label><br><input type="text" name="event_banner_title" value="<?php echo esc_attr($banner_title); ?>" class="wide-input"></p>
                 <p><label>Description:</label><br><?php
-                wp_editor(get_post_meta($post->ID, 'event_banner_description', true), 'event_banner_description', array(
-                    'media_buttons' => true,
-                    'textarea_rows' => 10,
-                    'teeny' => false,
-                    'quicktags' => true,
-                ));
-                ?></p>
+                                                    wp_editor(get_post_meta($post->ID, 'event_banner_description', true), 'event_banner_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="event_banner_cta_link" value="<?php echo esc_attr($banner_cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="event_banner_cta_title" value="<?php echo esc_attr($banner_cta_title); ?>" class="wide-input"></p>
-                <?php
+<?php
                 break;
         }
 
@@ -446,7 +448,8 @@ function nrna_render_events_meta_box($post) {
 }
 
 // Save Events meta box
-function nrna_save_events_meta_box($post_id) {
+function nrna_save_events_meta_box($post_id)
+{
     if (!isset($_POST['nrna_events_meta_box_nonce']) || !wp_verify_nonce($_POST['nrna_events_meta_box_nonce'], 'nrna_events_meta_box')) return;
     if (!current_user_can('edit_post', $post_id)) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
@@ -454,8 +457,8 @@ function nrna_save_events_meta_box($post_id) {
     $fields = [
         'event_hero_title' => 'sanitize_text_field',
         'event_location' => 'sanitize_text_field',
-        'event_start_date' => 'sanitize_text_field', 
-        'event_end_date' => 'sanitize_text_field', 
+        'event_start_date' => 'sanitize_text_field',
+        'event_end_date' => 'sanitize_text_field',
         'event_sub_title' => 'sanitize_text_field',
         'event_cta_link' => 'esc_url_raw',
         'event_cta_title' => 'sanitize_text_field',
@@ -490,21 +493,23 @@ function nrna_save_events_meta_box($post_id) {
         $schedule_data = $_POST['event_schedule_dates'];
         $sanitized_schedule = [];
 
-        foreach ((array)$schedule_data as $date_item) {
+        foreach ((array)$schedule_data as $date_index => $date_item) {
             $clean_date = [];
             if (isset($date_item['date'])) $clean_date['date'] = sanitize_text_field($date_item['date']);
 
             $clean_sessions = [];
             if (isset($date_item['sessions']) && is_array($date_item['sessions'])) {
-                foreach ($date_item['sessions'] as $session) {
+                foreach ($date_item['sessions'] as $session_index => $session) {
                     $clean_session = [];
                     if (isset($session['start_time'])) $clean_session['start_time'] = sanitize_text_field($session['start_time']);
                     if (isset($session['end_time'])) $clean_session['end_time'] = sanitize_text_field($session['end_time']);
                     if (isset($session['title'])) $clean_session['title'] = sanitize_text_field($session['title']);
                     // Handle wp_editor content for session descriptions
-                    $session_desc_key = 'event_schedule_dates_' . array_search($date_item, $schedule_data) . '_sessions_' . array_search($session, $date_item['sessions']) . '_description';
+                    $session_desc_key = 'event_schedule_dates_' . $date_index . '_sessions_' . $session_index . '_description';
                     if (isset($_POST[$session_desc_key])) {
                         $clean_session['description'] = wp_kses_post($_POST[$session_desc_key]);
+                    } elseif (isset($session['description'])) {
+                        $clean_session['description'] = wp_kses_post($session['description']);
                     }
                     if (!empty($clean_session)) $clean_sessions[] = $clean_session;
                 }
@@ -540,13 +545,15 @@ function nrna_save_events_meta_box($post_id) {
         $venue_data = $_POST['event_venue_details'];
         $sanitized_venue_details = [];
 
-        foreach ((array)$venue_data as $detail) {
+        foreach ((array)$venue_data as $index => $detail) {
             $clean_detail = [];
             if (isset($detail['title'])) $clean_detail['title'] = sanitize_text_field($detail['title']);
             // Handle wp_editor content for venue detail descriptions
-            $detail_desc_key = 'event_venue_details_' . array_search($detail, $venue_data) . '_description';
+            $detail_desc_key = 'event_venue_details_' . $index . '_description';
             if (isset($_POST[$detail_desc_key])) {
                 $clean_detail['description'] = wp_kses_post($_POST[$detail_desc_key]);
+            } elseif (isset($detail['description'])) {
+                $clean_detail['description'] = wp_kses_post($detail['description']);
             }
             if (!empty($clean_detail)) $sanitized_venue_details[] = $clean_detail;
         }
@@ -617,7 +624,8 @@ function nrna_save_events_meta_box($post_id) {
 add_action('save_post', 'nrna_save_events_meta_box');
 
 // Clean up Events admin screen
-function nrna_remove_events_meta_boxes() {
+function nrna_remove_events_meta_boxes()
+{
     remove_meta_box('slugdiv', 'events', 'normal');
     remove_meta_box('authordiv', 'events', 'normal');
     remove_meta_box('commentsdiv', 'events', 'normal');

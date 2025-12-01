@@ -181,4 +181,87 @@ jQuery(document).ready(function($) {
             button.text('Change Image');
         }).open();
     });
+
+    // Add Date
+    $(document).on('click', '.add-date', function() {
+        var dateCount = $('.date-item').length;
+        var newDate = '<div class="date-item">' +
+            '<h4>Date ' + (dateCount + 1) + '</h4>' +
+            '<p><label>Date:</label><br><input type="date" name="event_schedule_dates[' + dateCount + '][date]" class="wide-input"></p>' +
+            '<div class="sessions-container" data-repeater="sessions"></div>' +
+            '<button type="button" class="add-session button" data-date-index="' + dateCount + '">Add Session</button>' +
+            '<button type="button" class="remove-date button">Remove Date</button>' +
+            '</div>';
+        $('.repeater-container[data-repeater="event_schedule_dates"]').append(newDate);
+    });
+
+    // Remove Date
+    $(document).on('click', '.remove-date', function() {
+        $(this).closest('.date-item').remove();
+        // Re-index dates
+        $('.date-item').each(function(index) {
+            $(this).find('h4').first().text('Date ' + (index + 1));
+            $(this).find('.add-session').attr('data-date-index', index);
+            
+            // Update all inputs
+            $(this).find('input, textarea, select').each(function() {
+                var name = $(this).attr('name');
+                if (name) {
+                    // Update array-based names: event_schedule_dates[OLD]...
+                    if (name.match(/event_schedule_dates\[\d+\]/)) {
+                        name = name.replace(/event_schedule_dates\[\d+\]/, 'event_schedule_dates[' + index + ']');
+                        $(this).attr('name', name);
+                    }
+                    // Update wp_editor names: event_schedule_dates_OLD_...
+                    if (name.match(/^event_schedule_dates_\d+_/)) {
+                        name = name.replace(/^event_schedule_dates_\d+_/, 'event_schedule_dates_' + index + '_');
+                        $(this).attr('name', name);
+                    }
+                }
+            });
+        });
+    });
+
+    // Add Session
+    $(document).on('click', '.add-session', function() {
+        var dateIndex = $(this).closest('.date-item').index();
+        var container = $(this).siblings('.sessions-container');
+        var sessionCount = container.find('.session-item').length;
+        
+        var newSession = '<div class="session-item">' +
+            '<h5>Session ' + (sessionCount + 1) + '</h5>' +
+            '<p><label>Start Time:</label><br><input type="time" name="event_schedule_dates[' + dateIndex + '][sessions][' + sessionCount + '][start_time]" class="wide-input"></p>' +
+            '<p><label>End Time:</label><br><input type="time" name="event_schedule_dates[' + dateIndex + '][sessions][' + sessionCount + '][end_time]" class="wide-input"></p>' +
+            '<p><label>Title:</label><br><input type="text" name="event_schedule_dates[' + dateIndex + '][sessions][' + sessionCount + '][title]" class="wide-input"></p>' +
+            '<p><label>Description:</label><br><textarea name="event_schedule_dates[' + dateIndex + '][sessions][' + sessionCount + '][description]" rows="5" class="wide-textarea"></textarea></p>' +
+            '<button type="button" class="remove-session button">Remove Session</button>' +
+            '</div>';
+        container.append(newSession);
+    });
+
+    // Remove Session
+    $(document).on('click', '.remove-session', function() {
+        var container = $(this).closest('.sessions-container');
+        $(this).closest('.session-item').remove();
+        
+        // Re-index sessions within this date
+        container.find('.session-item').each(function(index) {
+            $(this).find('h5').text('Session ' + (index + 1));
+            $(this).find('input, textarea, select').each(function() {
+                var name = $(this).attr('name');
+                if (name) {
+                    // Update array-based names: ...[sessions][OLD]...
+                    if (name.match(/\[sessions\]\[\d+\]/)) {
+                        name = name.replace(/\[sessions\]\[\d+\]/, '[sessions][' + index + ']');
+                        $(this).attr('name', name);
+                    }
+                    // Update wp_editor names: ..._sessions_OLD_description
+                    if (name.match(/_sessions_\d+_description$/)) {
+                        name = name.replace(/_sessions_\d+_description$/, '_sessions_' + index + '_description');
+                        $(this).attr('name', name);
+                    }
+                }
+            });
+        });
+    });
 });
