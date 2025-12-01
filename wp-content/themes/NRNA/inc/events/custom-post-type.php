@@ -1,6 +1,7 @@
 <?php
 // Register Events custom post type
-function nrna_register_events_cpt() {
+function nrna_register_events_cpt()
+{
     $labels = [
         'name'               => _x('Events', 'Post Type General Name', 'nrna'),
         'singular_name'      => _x('Event', 'Post Type Singular Name', 'nrna'),
@@ -32,12 +33,13 @@ function nrna_register_events_cpt() {
 add_action('init', 'nrna_register_events_cpt');
 
 // Register meta fields for Events
-function nrna_register_events_meta_fields() {
+function nrna_register_events_meta_fields()
+{
     $fields = [
         'event_hero_title' => ['type' => 'string'],
         'event_location' => ['type' => 'string'],
-        'event_start_date' => ['type' => 'string'], 
-        'event_end_date' => ['type' => 'string'], 
+        'event_start_date' => ['type' => 'string'],
+        'event_end_date' => ['type' => 'string'],
         'event_sub_title' => ['type' => 'string'],
         'event_cta_link' => ['type' => 'string'],
         'event_cta_title' => ['type' => 'string'],
@@ -46,6 +48,8 @@ function nrna_register_events_meta_fields() {
         'event_objective_description' => ['type' => 'string'],
         'event_objective_cta_link' => ['type' => 'string'],
         'event_objective_cta_title' => ['type' => 'string'],
+        'event_overview_title' => ['type' => 'string'],
+        'event_overview_description' => ['type' => 'string'],
         'event_schedule_title' => ['type' => 'string'],
         'event_schedule_description' => ['type' => 'string'],
         'event_sponsorship_title' => ['type' => 'string'],
@@ -175,7 +179,8 @@ function nrna_register_events_meta_fields() {
 add_action('init', 'nrna_register_events_meta_fields');
 
 // Prepare REST API response to include meta fields
-function nrna_prepare_events_rest($response, $post, $request) {
+function nrna_prepare_events_rest($response, $post, $request)
+{
     if ($post->post_type !== 'events') {
         return $response;
     }
@@ -195,6 +200,8 @@ function nrna_prepare_events_rest($response, $post, $request) {
         'event_objective_description',
         'event_objective_cta_link',
         'event_objective_cta_title',
+        'event_overview_title',
+        'event_overview_description',
         'event_schedule_title',
         'event_schedule_description',
         'event_sponsorship_title',

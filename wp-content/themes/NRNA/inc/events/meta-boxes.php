@@ -21,6 +21,7 @@ function nrna_render_events_meta_box($post)
     $tabs = [
         'hero' => 'Hero Section',
         'objective' => 'Objective Section',
+        'overview' => 'Overview Section',
         'schedule' => 'Event Schedule',
         'sponsorship' => 'Sponsorship',
         'venue' => 'Venue',
@@ -88,6 +89,22 @@ function nrna_render_events_meta_box($post)
                                                     ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="event_objective_cta_link" value="<?php echo esc_attr($obj_cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="event_objective_cta_title" value="<?php echo esc_attr($obj_cta_title); ?>" class="wide-input"></p>
+            <?php
+                break;
+
+            case 'overview':
+                $overview_title = get_post_meta($post->ID, 'event_overview_title', true);
+                $overview_description = get_post_meta($post->ID, 'event_overview_description', true);
+            ?>
+                <p><label>Title:</label><br><input type="text" name="event_overview_title" value="<?php echo esc_attr($overview_title); ?>" class="wide-input"></p>
+                <p><label>Description:</label><br><?php
+                                                    wp_editor(get_post_meta($post->ID, 'event_overview_description', true), 'event_overview_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
             <?php
                 break;
 
@@ -462,6 +479,8 @@ function nrna_save_events_meta_box($post_id)
         'event_sub_title' => 'sanitize_text_field',
         'event_cta_link' => 'esc_url_raw',
         'event_cta_title' => 'sanitize_text_field',
+        'event_overview_title' => 'sanitize_text_field',
+        'event_overview_description' => 'wp_kses_post',
         'event_description' => 'wp_kses_post',
         'event_objective_title' => 'sanitize_text_field',
         'event_objective_description' => 'wp_kses_post',
