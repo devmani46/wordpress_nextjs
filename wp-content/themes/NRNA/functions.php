@@ -258,6 +258,27 @@ function nrna_add_nrna_area_menu()
         $privacy_policy_link
     );
 
+    // 4. Terms and Conditions (Page)
+    // Find page by template
+    $terms_page = get_pages([
+        'meta_key' => '_wp_page_template',
+        'meta_value' => 'template-terms-and-conditions.php',
+        'number' => 1
+    ]);
+
+    $terms_link = 'post-new.php?post_type=page'; // Default fallback
+    if (!empty($terms_page)) {
+        $terms_link = 'post.php?post=' . $terms_page[0]->ID . '&action=edit';
+    }
+
+    add_submenu_page(
+        'nrna-area-menu',
+        'Terms and Conditions',
+        'Terms and Conditions',
+        'manage_options',
+        $terms_link
+    );
+
     // Remove the default "NRNA Area" submenu created by add_menu_page
     remove_submenu_page('nrna-area-menu', 'nrna-area-menu');
 }

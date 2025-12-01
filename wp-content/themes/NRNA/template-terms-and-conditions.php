@@ -1,16 +1,14 @@
 <?php
+
 /**
  * Template Name: Terms and Conditions
  */
 
 get_header();
 
-$terms_and_conditions = get_posts([
-    'post_type' => 'terms-and-conditions',
-    'posts_per_page' => -1,
-    'orderby' => 'menu_order',
-    'order' => 'ASC',
-]);
+// Get terms items from page meta
+$terms_items = get_post_meta(get_the_ID(), 'terms_items', true);
+if (!is_array($terms_items)) $terms_items = [];
 
 ?>
 
@@ -18,13 +16,13 @@ $terms_and_conditions = get_posts([
     <div class="container">
         <h1><?php the_title(); ?></h1>
 
-        <?php if (!empty($terms_and_conditions)): ?>
+        <?php if (!empty($terms_items)): ?>
             <div class="terms-and-conditions-list">
-                <?php foreach ($terms_and_conditions as $term): ?>
+                <?php foreach ($terms_items as $term): ?>
                     <div class="terms-and-conditions-item">
-                        <h2><?php echo esc_html($term->post_title); ?></h2>
+                        <h2><?php echo esc_html($term['title'] ?? ''); ?></h2>
                         <div class="terms-and-conditions-description">
-                            <?php echo wp_kses_post(get_post_meta($term->ID, 'description', true)); ?>
+                            <?php echo wp_kses_post($term['description'] ?? ''); ?>
                         </div>
                     </div>
                 <?php endforeach; ?>

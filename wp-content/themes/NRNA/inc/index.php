@@ -67,5 +67,5 @@ require_once 'our-ncc/index.php';
 // Load privacy policy meta box
 require_once 'privacy-policy-meta-box.php';
 
-// Load terms and conditions includes
-require_once 'terms-and-conditions/index.php';
+// Load terms and conditions meta box
+require_once 'terms-and-conditions-meta-box.php';

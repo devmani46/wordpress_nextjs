@@ -88,6 +88,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
                     <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="6" class="wide-textarea"></textarea></p>
                 `;
+      } else if (repeater === "terms_items") {
+        fieldsHTML = `
+                    <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
+                    <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="6" class="wide-textarea"></textarea></p>
+                `;
       } else if (repeater === "why_features") {
         fieldsHTML = `
                     <p><label>Feature Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
