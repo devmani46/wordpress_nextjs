@@ -71,6 +71,7 @@ jQuery(document).ready(function($) {
         var newRow = '<tr class="teams-row">' +
             '<td><input type="text" name="committees_teams_members[' + rowCount + '][project]" class="wide-input"></td>' +
             '<td><input type="text" name="committees_teams_members[' + rowCount + '][name]" class="wide-input"></td>' +
+            '<td><input type="text" name="committees_teams_members[' + rowCount + '][role]" class="wide-input"></td>' +
             '<td><input type="email" name="committees_teams_members[' + rowCount + '][email]" class="wide-input"></td>' +
             '<td><button type="button" class="remove-teams button">Remove</button></td>' +
             '</tr>';

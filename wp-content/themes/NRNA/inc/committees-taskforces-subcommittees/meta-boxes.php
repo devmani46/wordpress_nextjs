@@ -131,6 +131,7 @@ function nrna_render_committees_meta_box($post) {
                                 'textarea_rows' => 5,
                                 'teeny' => false,
                                 'quicktags' => true,
+                                'textarea_name' => 'committees_banner1_stats[' . $index . '][description]',
                             ]); ?></p>
                             <button type="button" class="remove-item button">Remove</button>
                         </div>
