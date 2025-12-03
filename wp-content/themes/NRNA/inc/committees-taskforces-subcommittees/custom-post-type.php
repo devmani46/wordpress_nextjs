@@ -70,3 +70,48 @@ function nrna_register_committees_meta_fields() {
     ]);
 }
 add_action('init', 'nrna_register_committees_meta_fields');
+
+// Customize REST API response for Committees page
+function nrna_custom_committees_rest_response($response, $post, $request) {
+    if ($post->post_type === 'page' && get_page_template_slug($post->ID) === 'template-committees-taskforces-subcommittees.php') {
+        $data = [
+            'hero' => [
+                'title' => get_post_meta($post->ID, 'committees_hero_title', true),
+                'description' => get_post_meta($post->ID, 'committees_hero_description', true),
+                'images' => get_post_meta($post->ID, 'committees_hero_images', true) ?: [],
+            ],
+            'why' => [
+                'title' => get_post_meta($post->ID, 'committees_why_title', true),
+                'description' => get_post_meta($post->ID, 'committees_why_description', true),
+                'image' => get_post_meta($post->ID, 'committees_why_image', true),
+            ],
+            'how' => [
+                'title' => get_post_meta($post->ID, 'committees_how_title', true),
+                'description' => get_post_meta($post->ID, 'committees_how_description', true),
+                'image' => get_post_meta($post->ID, 'committees_how_image', true),
+            ],
+            'banner1' => [
+                'title' => get_post_meta($post->ID, 'committees_banner1_title', true),
+                'description' => get_post_meta($post->ID, 'committees_banner1_description', true),
+                'cta_link' => get_post_meta($post->ID, 'committees_banner1_cta_link', true),
+                'cta_title' => get_post_meta($post->ID, 'committees_banner1_cta_title', true),
+                'stats' => get_post_meta($post->ID, 'committees_banner1_stats', true) ?: [],
+            ],
+            'teams' => [
+                'title' => get_post_meta($post->ID, 'committees_teams_title', true),
+                'members' => get_post_meta($post->ID, 'committees_teams_members', true) ?: [],
+            ],
+            'banner2' => [
+                'title' => get_post_meta($post->ID, 'committees_banner2_title', true),
+                'description' => get_post_meta($post->ID, 'committees_banner2_description', true),
+                'cta_link' => get_post_meta($post->ID, 'committees_banner2_cta_link', true),
+                'cta_title' => get_post_meta($post->ID, 'committees_banner2_cta_title', true),
+            ],
+        ];
+
+        $response->set_data($data);
+    }
+
+    return $response;
+}
+add_filter('rest_prepare_page', 'nrna_custom_committees_rest_response', 10, 3);
