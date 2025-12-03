@@ -77,3 +77,45 @@ function nrna_add_resource_category_metabox_back() {
     );
 }
 add_action('add_meta_boxes_resources', 'nrna_add_resource_category_metabox_back');
+
+// Register resource_files meta for REST API
+function nrna_register_resource_files_rest_field() {
+    register_rest_field( 'resources', 'resource_files', array(
+        'get_callback' => function( $post ) {
+            $files = get_post_meta( $post['id'], 'resource_files', true );
+            if ( ! is_array( $files ) ) {
+                $files = [];
+            }
+            $file_data = [];
+            foreach ( $files as $file_id ) {
+                $file_url = wp_get_attachment_url( $file_id );
+                $file_name = basename( $file_url );
+                $file_data[] = array(
+                    'id' => $file_id,
+                    'url' => $file_url,
+                    'filename' => $file_name,
+                );
+            }
+            return $file_data;
+        },
+        'schema' => array(
+            'description' => 'Resource files',
+            'type' => 'array',
+            'items' => array(
+                'type' => 'object',
+                'properties' => array(
+                    'id' => array(
+                        'type' => 'integer',
+                    ),
+                    'url' => array(
+                        'type' => 'string',
+                    ),
+                    'filename' => array(
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+        ),
+    ) );
+}
+add_action( 'rest_api_init', 'nrna_register_resource_files_rest_field' );
