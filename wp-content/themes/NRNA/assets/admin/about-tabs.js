@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mediaUploader.on('select', function() {
                 const attachment = mediaUploader.state().get('selection').first().toJSON();
                 imageIdInput.value = attachment.id;
-                imagePreview.src = attachment.sizes.medium ? attachment.sizes.medium.url : attachment.url;
+                imagePreview.src = attachment.url;
                 imagePreview.classList.add('has-image');
             });
 
@@ -69,33 +69,42 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const button = e.target;
             const repeater = button.getAttribute('data-repeater');
-            if (repeater !== 'about_slider_items' && repeater !== 'who_we_are_slider_items') return; // Handle about_slider_items and who_we_are_slider_items
-
             const container = document.querySelector(`.repeater-container[data-repeater="${repeater}"]`);
             const itemCount = container.querySelectorAll('.repeater-item').length;
 
             const newItem = document.createElement('div');
             newItem.className = 'repeater-item';
 
-            newItem.innerHTML = `
-                <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
-                <p><label>Image:</label><br>
-                <input type="hidden" name="${repeater}[${itemCount}][image]" class="image-id">
-                <img src="" class="image-preview">
-                <button type="button" class="upload-image button">Upload Image</button></p>
-                <button type="button" class="remove-item button">Remove</button>
-            `;
+            let fieldsHTML = '';
 
+            if (repeater === 'who_we_are_join_points') {
+                fieldsHTML = `
+                    <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
+                `;
+            } else if (repeater === 'who_we_are_join_stats') {
+                fieldsHTML = `
+                    <p><label>Stat Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
+                    <p><label>Stat Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
+                `;
+            } else if (repeater === 'about_slider_items' || repeater === 'who_we_are_slider_items') {
+                fieldsHTML = `
+                    <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
+                    <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
+                    <p><label>Image:</label><br>
+                    <input type="hidden" name="${repeater}[${itemCount}][image]" class="image-id">
+                    <img src="" class="image-preview">
+                    <button type="button" class="upload-image button">Upload Image</button></p>
+                `;
+            }
+
+            newItem.innerHTML = fieldsHTML + '<button type="button" class="remove-item button">Remove</button>';
             container.appendChild(newItem);
         }
 
         if (e.target.classList.contains('remove-item')) {
             e.preventDefault();
             const item = e.target.closest('.repeater-item');
-            const container = item.closest('.repeater-container');
             item.remove();
-            reindexRepeater(container);
         }
     });
 });

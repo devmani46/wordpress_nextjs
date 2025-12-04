@@ -22,6 +22,10 @@ function nrna_register_about_meta_fields() {
         'who_we_are_team_cta_link' => ['type' => 'string'],
         'who_we_are_team_cta_title' => ['type' => 'string'],
         'who_we_are_team_image' => ['type' => 'integer'],
+        'who_we_are_join_title' => ['type' => 'string'],
+        'who_we_are_join_description' => ['type' => 'string'],
+        'who_we_are_join_cta_link' => ['type' => 'string'],
+        'who_we_are_join_cta_title' => ['type' => 'string'],
     ];
 
     foreach ($fields as $key => $args) {
@@ -39,6 +43,31 @@ function nrna_register_about_meta_fields() {
             'properties' => [
                 'title' => ['type' => 'string'],
                 'image' => ['type' => 'integer'],
+                'description' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    register_post_meta('page', 'who_we_are_join_points', [
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'title' => ['type' => 'string'],
+            ],
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    register_post_meta('page', 'who_we_are_join_stats', [
+        'type' => 'array',
+        'items' => [
+            'type' => 'object',
+            'properties' => [
+                'title' => ['type' => 'string'],
                 'description' => ['type' => 'string'],
             ],
         ],
@@ -80,7 +109,8 @@ function nrna_render_about_meta_box($post) {
         'goals' => 'Turning Goals into Reality',
         'certificate' => 'Certificate',
         'message' => 'Message',
-        'team' => 'The Team'
+        'team' => 'The Team',
+        'join-nrna' => 'Join NRNA'
     ];
 
     echo '<div class="about-meta-tabs">';
@@ -239,6 +269,42 @@ function nrna_render_about_meta_box($post) {
         <button type="button" class="upload-image button">Upload Image</button></p>
         <?php
         break;
+
+    case 'join-nrna':
+        $title = get_post_meta($post->ID, 'who_we_are_join_title', true);
+        $description = get_post_meta($post->ID, 'who_we_are_join_description', true);
+        $points = get_post_meta($post->ID, 'who_we_are_join_points', true);
+        if (!is_array($points)) $points = [];
+        $cta_link = get_post_meta($post->ID, 'who_we_are_join_cta_link', true);
+        $cta_title = get_post_meta($post->ID, 'who_we_are_join_cta_title', true);
+        $stats = get_post_meta($post->ID, 'who_we_are_join_stats', true);
+        if (!is_array($stats)) $stats = [];
+        ?>
+        <p><label>Title:</label><br><input type="text" name="who_we_are_join_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+        <p><label>Description:</label><br><textarea name="who_we_are_join_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+        <div class="repeater-container" data-repeater="who_we_are_join_points">
+            <?php foreach ($points as $index => $point): ?>
+                <div class="repeater-item">
+                    <p><label>Title:</label><br><input type="text" name="who_we_are_join_points[<?php echo $index; ?>][title]" value="<?php echo esc_attr($point['title'] ?? ''); ?>" class="wide-input"></p>
+                    <button type="button" class="remove-item button">Remove</button>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <button type="button" class="add-item button" data-repeater="who_we_are_join_points">Add Point</button>
+        <p><label>CTA Link:</label><br><input type="url" name="who_we_are_join_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
+        <p><label>CTA Title:</label><br><input type="text" name="who_we_are_join_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
+        <div class="repeater-container" data-repeater="who_we_are_join_stats">
+            <?php foreach ($stats as $index => $stat): ?>
+                <div class="repeater-item">
+                    <p><label>Stat Title:</label><br><input type="text" name="who_we_are_join_stats[<?php echo $index; ?>][title]" value="<?php echo esc_attr($stat['title'] ?? ''); ?>" class="wide-input"></p>
+                    <p><label>Stat Description:</label><br><textarea name="who_we_are_join_stats[<?php echo $index; ?>][description]" rows="3" class="wide-textarea"><?php echo esc_textarea($stat['description'] ?? ''); ?></textarea></p>
+                    <button type="button" class="remove-item button">Remove</button>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <button type="button" class="add-item button" data-repeater="who_we_are_join_stats">Add Stat</button>
+        <?php
+        break;
 }
         echo '</div>';
     }
@@ -274,6 +340,10 @@ function nrna_save_about_meta_box($post_id) {
         'who_we_are_team_cta_link' => 'esc_url_raw',
         'who_we_are_team_cta_title' => 'sanitize_text_field',
         'who_we_are_team_image' => 'intval',
+        'who_we_are_join_title' => 'sanitize_text_field',
+        'who_we_are_join_description' => 'wp_kses_post',
+        'who_we_are_join_cta_link' => 'esc_url_raw',
+        'who_we_are_join_cta_title' => 'sanitize_text_field',
     ];
 
     foreach ($fields as $field => $sanitize) {
@@ -282,7 +352,30 @@ function nrna_save_about_meta_box($post_id) {
         }
     }
 
-    $array_fields = ['who_we_are_slider_items'];
+    // Handle slider items separately due to wp_editor usage
+    if (isset($_POST['who_we_are_slider_items'])) {
+        $slider_data = $_POST['who_we_are_slider_items'];
+        $sanitized_slider = [];
+
+        foreach ((array)$slider_data as $index => $item) {
+            $clean = [];
+            if (isset($item['title'])) $clean['title'] = sanitize_text_field($item['title']);
+            // Get description from wp_editor field
+            $desc_key = 'who_we_are_slider_items_' . $index . '_description';
+            if (isset($_POST[$desc_key])) {
+                $clean['description'] = wp_kses_post($_POST[$desc_key]);
+            }
+            if (isset($item['image'])) $clean['image'] = intval($item['image']);
+            if (!empty($clean)) $sanitized_slider[] = $clean;
+        }
+
+        update_post_meta($post_id, 'who_we_are_slider_items', $sanitized_slider);
+    } else {
+        delete_post_meta($post_id, 'who_we_are_slider_items');
+    }
+
+    // Handle other array fields
+    $array_fields = ['who_we_are_join_points', 'who_we_are_join_stats'];
 
     foreach ($array_fields as $field) {
         if (!isset($_POST[$field])) {
@@ -297,7 +390,6 @@ function nrna_save_about_meta_box($post_id) {
             $clean = [];
             if (isset($item['title'])) $clean['title'] = sanitize_text_field($item['title']);
             if (isset($item['description'])) $clean['description'] = wp_kses_post($item['description']);
-            if (isset($item['image'])) $clean['image'] = intval($item['image']);
             if (!empty($clean)) $sanitized[] = $clean;
         }
 
