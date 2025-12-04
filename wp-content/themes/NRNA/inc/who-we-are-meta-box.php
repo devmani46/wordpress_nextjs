@@ -440,6 +440,17 @@ function nrna_prepare_about_page_rest_response($response, $post, $request) {
         }
     }
 
+    // Ensure array fields are included in REST response
+    $array_fields = ['who_we_are_join_points', 'who_we_are_join_stats'];
+    foreach ($array_fields as $field) {
+        $items = get_post_meta($post->ID, $field, true);
+        if (is_array($items)) {
+            $data[$field] = $items;
+        } else {
+            $data[$field] = [];
+        }
+    }
+
     $response->set_data($data);
     return $response;
 }
