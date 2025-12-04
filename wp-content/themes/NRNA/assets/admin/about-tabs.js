@@ -40,71 +40,81 @@ document.addEventListener('DOMContentLoaded', function() {
             if (imageInput) imageInput.name = `${repeater}[${index}][image]`;
         });
     }
+});
 
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('upload-image')) {
-            e.preventDefault();
-            const button = e.target;
-            const container = button.closest('p');
-            const imageIdInput = container.querySelector('.image-id');
-            const imagePreview = container.querySelector('.image-preview');
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('upload-image')) {
+        e.preventDefault();
+        const button = e.target;
+        const container = button.closest('p');
+        const imageIdInput = container.querySelector('.image-id');
+        const imagePreview = container.querySelector('.image-preview');
 
-            const mediaUploader = wp.media({
-                title: 'Choose Image',
-                button: { text: 'Choose Image' },
-                multiple: false
-            });
+        const mediaUploader = wp.media({
+            title: 'Choose Image',
+            button: { text: 'Choose Image' },
+            multiple: false
+        });
 
-            mediaUploader.on('select', function() {
-                const attachment = mediaUploader.state().get('selection').first().toJSON();
-                imageIdInput.value = attachment.id;
-                imagePreview.src = attachment.url;
-                imagePreview.classList.add('has-image');
-            });
+        mediaUploader.on('select', function() {
+            const attachment = mediaUploader.state().get('selection').first().toJSON();
+            imageIdInput.value = attachment.id;
+            imagePreview.src = attachment.url;
+            imagePreview.classList.add('has-image');
+        });
 
-            mediaUploader.open();
+        mediaUploader.open();
+    }
+
+    if (e.target.classList.contains('add-item')) {
+        e.preventDefault();
+        const button = e.target;
+        const repeater = button.getAttribute('data-repeater');
+        const container = document.querySelector(`.repeater-container[data-repeater="${repeater}"]`);
+        
+        if (!container) {
+            console.error('Container not found for repeater:', repeater);
+            return;
         }
 
-        if (e.target.classList.contains('add-item')) {
-            e.preventDefault();
-            const button = e.target;
-            const repeater = button.getAttribute('data-repeater');
-            const container = document.querySelector(`.repeater-container[data-repeater="${repeater}"]`);
-            const itemCount = container.querySelectorAll('.repeater-item').length;
+        const itemCount = container.querySelectorAll('.repeater-item').length;
 
-            const newItem = document.createElement('div');
-            newItem.className = 'repeater-item';
+        const newItem = document.createElement('div');
+        newItem.className = 'repeater-item';
 
-            let fieldsHTML = '';
+        let fieldsHTML = '';
 
-            if (repeater === 'who_we_are_join_points') {
-                fieldsHTML = `
-                    <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
-                `;
-            } else if (repeater === 'who_we_are_join_stats') {
-                fieldsHTML = `
-                    <p><label>Stat Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
-                    <p><label>Stat Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
-                `;
-            } else if (repeater === 'about_slider_items' || repeater === 'who_we_are_slider_items') {
-                fieldsHTML = `
-                    <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
-                    <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
-                    <p><label>Image:</label><br>
-                    <input type="hidden" name="${repeater}[${itemCount}][image]" class="image-id">
-                    <img src="" class="image-preview">
-                    <button type="button" class="upload-image button">Upload Image</button></p>
-                `;
-            }
+        if (repeater === 'who_we_are_join_points') {
+            fieldsHTML = `
+                <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
+            `;
+        } else if (repeater === 'who_we_are_join_stats') {
+            fieldsHTML = `
+                <p><label>Stat Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
+                <p><label>Stat Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
+            `;
+        } else if (repeater === 'about_slider_items' || repeater === 'who_we_are_slider_items') {
+            fieldsHTML = `
+                <p><label>Title:</label><br><input type="text" name="${repeater}[${itemCount}][title]" class="wide-input"></p>
+                <p><label>Description:</label><br><textarea name="${repeater}[${itemCount}][description]" rows="3" class="wide-textarea"></textarea></p>
+                <p><label>Image:</label><br>
+                <input type="hidden" name="${repeater}[${itemCount}][image]" class="image-id">
+                <img src="" class="image-preview">
+                <button type="button" class="upload-image button">Upload Image</button></p>
+            `;
+        } else {
+            console.warn('Unknown repeater type:', repeater);
+        }
 
+        if (fieldsHTML) {
             newItem.innerHTML = fieldsHTML + '<button type="button" class="remove-item button">Remove</button>';
             container.appendChild(newItem);
         }
+    }
 
-        if (e.target.classList.contains('remove-item')) {
-            e.preventDefault();
-            const item = e.target.closest('.repeater-item');
-            item.remove();
-        }
-    });
+    if (e.target.classList.contains('remove-item')) {
+        e.preventDefault();
+        const item = e.target.closest('.repeater-item');
+        item.remove();
+    }
 });

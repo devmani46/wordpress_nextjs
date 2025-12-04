@@ -22,16 +22,16 @@ function nrna_enqueue_admin_assets($hook) {
             wp_enqueue_script('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.js', [], false, true);
             wp_enqueue_style('nrna-home-tabs', get_template_directory_uri() . '/assets/admin/home-tabs.css', [], false);
         } elseif ($post && get_page_template_slug($post->ID) === 'template-who-we-are.php') {
-            wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], false, true);
+            wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], '1.0.1', true);
             wp_enqueue_style('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.css', [], false);
         } elseif ($post && get_page_template_slug($post->ID) === 'template-organizational-structure.php') {
-            wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], false, true);
+            wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], '1.0.1', true);
             wp_enqueue_style('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.css', [], false);
         } elseif ($post && $post->post_type === 'events') {
             wp_enqueue_script('nrna-events-tabs', get_template_directory_uri() . '/assets/admin/events-tabs.js', [], false, true);
             wp_enqueue_style('nrna-events-tabs', get_template_directory_uri() . '/assets/admin/events-tabs.css', [], false);
         } elseif ($post && $post->post_type === 'who-we-are') {
-            wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], false, true);
+            wp_enqueue_script('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.js', [], '1.0.1', true);
             wp_enqueue_style('nrna-about-tabs', get_template_directory_uri() . '/assets/admin/about-tabs.css', [], false);
         } elseif ($post && get_page_template_slug($post->ID) === 'template-committees-taskforces-subcommittees.php') {
             wp_enqueue_script('nrna-committees-tabs', get_template_directory_uri() . '/assets/admin/committees-tabs.js', [], false, true);
