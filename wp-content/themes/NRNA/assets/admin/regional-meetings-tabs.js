@@ -203,4 +203,58 @@ jQuery(document).ready(function($) {
             button.text('Change Image');
         }).open();
     });
+
+    // Add download
+    $(document).on('click', '.add-download', function() {
+        var downloadCount = $('.download-row').length;
+        var newRow = '<tr class="download-row">' +
+            '<td><input type="text" name="rm_downloads[' + downloadCount + '][title]" class="wide-input"></td>' +
+            '<td>' +
+                '<div class="file-preview-container">' +
+                    '<input type="hidden" name="rm_downloads[' + downloadCount + '][file]" class="download-file-id">' +
+                    '<button type="button" class="select-download-file button">Select File</button>' +
+                '</div>' +
+            '</td>' +
+            '<td><button type="button" class="remove-download button">Remove</button></td>' +
+            '</tr>';
+        $('.downloads-table tbody').append(newRow);
+    });
+
+    // Remove download
+    $(document).on('click', '.remove-download', function() {
+        $(this).closest('.download-row').remove();
+        // Re-index the remaining rows
+        $('.download-row').each(function(index) {
+            $(this).find('input[name*="rm_downloads"]').each(function() {
+                var name = $(this).attr('name');
+                name = name.replace(/\[\d+\]/, '[' + index + ']');
+                $(this).attr('name', name);
+            });
+        });
+    });
+
+    // Select download file
+    $(document).on('click', '.select-download-file', function(e) {
+        e.preventDefault();
+        var button = $(this);
+        var container = button.closest('.file-preview-container');
+        var input = container.find('.download-file-id');
+        var custom_uploader = wp.media({
+            title: 'Select File',
+            button: {
+                text: 'Use this file'
+            },
+            multiple: false
+        }).on('select', function() {
+            var attachment = custom_uploader.state().get('selection').first().toJSON();
+            input.val(attachment.id);
+            var link = container.find('.file-link');
+            if (link.length === 0) {
+                container.prepend('<a href="' + attachment.url + '" target="_blank" class="file-link">' + attachment.filename + '</a> ');
+            } else {
+                link.attr('href', attachment.url).text(attachment.filename);
+            }
+            button.text('Change File');
+        }).open();
+    });
 });
