@@ -397,6 +397,42 @@ function nrna_render_events_meta_box($post)
                         <button type="button" class="add-partner button" data-category="silver">Add Silver Partner</button>
                     </div>
 
+                    <h4>Event Partners</h4>
+                    <div class="partners-section" data-category="event">
+                        <table class="partners-table">
+                            <thead>
+                                <tr>
+                                    <th>Logo</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $event_partners = array_filter($partners, function ($partner) {
+                                    return isset($partner['category']) && $partner['category'] === 'event';
+                                });
+                                foreach ($event_partners as $index => $partner): ?>
+                                    <tr class="partner-row">
+                                        <td>
+                                            <div class="image-preview-container">
+                                                <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
+                                                <img src="<?php echo esc_url($partner['logo'] ?? ''); ?>" alt="Logo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($partner['logo']) ? 'display: none;' : ''; ?>">
+                                                <button type="button" class="select-image button"><?php echo empty($partner['logo']) ? 'Select Image' : 'Change Image'; ?></button>
+                                            </div>
+                                        </td>
+                                        <td><input type="text" name="event_partners[<?php echo $index; ?>][name]" value="<?php echo esc_attr($partner['name'] ?? ''); ?>" class="wide-input"></td>
+                                        <td>
+                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][category]" value="event">
+                                            <button type="button" class="remove-partner button">Remove</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <button type="button" class="add-partner button" data-category="event">Add Event Partner</button>
+                    </div>
+
                     <h4>Airlines Partners</h4>
                     <div class="partners-section" data-category="airlines">
                         <table class="partners-table">

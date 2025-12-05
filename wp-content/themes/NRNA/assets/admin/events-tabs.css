@@ -1,41 +1,46 @@
 .events-meta-tabs .tab-buttons {
-    display: flex;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
 }
 
 .events-meta-tabs .tab-button {
     background: #f1f1f1;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
+    border-bottom: none;
     padding: 10px 15px;
     cursor: pointer;
-    border-radius: 4px 4px 0 0;
     margin-right: 5px;
-    margin-bottom: 5px;
-    font-size: 12px;
+    outline: none;
 }
 
 .events-meta-tabs .tab-button.active {
     background: #fff;
     border-bottom: 1px solid #fff;
+    margin-bottom: -1px;
+    font-weight: bold;
+}
+
+.events-meta-tabs .tab-content {
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
 }
 
 .events-meta-tabs .tab-pane {
     display: none;
-    border: 1px solid #ddd;
-    padding: 20px;
-    background: #fff;
 }
 
 .wide-input, .wide-textarea {
     width: 100%;
-    box-sizing: border-box;
+    max-width: 600px;
 }
 
+/* Table Styles */
 .sponsorship-table, .committee-table, .sponsors-table, .partners-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
 .sponsorship-table th, .sponsorship-table td,
@@ -51,33 +56,43 @@
     background-color: #f2f2f2;
 }
 
-.sponsorship-table input, .committee-table input, .sponsors-table input, .partners-table input {
-    width: 100%;
-    box-sizing: border-box;
+.image-preview-container {
+    margin-top: 5px;
 }
 
-.add-sponsorship, .remove-sponsorship,
-.add-committee, .remove-committee,
-.add-sponsor, .remove-sponsor,
-.add-venue-detail, .remove-venue-detail,
-.add-partner, .remove-partner {
-    margin: 5px 0;
-    padding: 5px 10px;
-    background: #007cba;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
+.committee-photo-preview {
+    display: block;
+    margin-bottom: 5px;
 }
 
-.add-sponsorship:hover, .remove-sponsorship:hover,
-.add-committee:hover, .remove-committee:hover,
-.add-sponsor:hover, .remove-sponsor:hover,
-.add-venue-detail:hover, .remove-venue-detail:hover,
-.add-partner:hover, .remove-partner:hover {
-    background: #005a87;
+/* Gallery Styles */
+.gallery-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
+.gallery-item {
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background: #f9f9f9;
+}
+
+.gallery-item img {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.video-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+/* Venue Details */
 .venue-details-container {
     margin-top: 20px;
 }
@@ -93,27 +108,24 @@
     margin-bottom: 10px;
 }
 
-.partners-container {
-    margin-top: 20px;
-}
-
-.partners-section {
-    margin-bottom: 30px;
-}
-
-.partner-item {
-    border: 1px solid #ddd;
+/* Date/Session Styles (Specific to Events) */
+.date-item {
+    border: 1px solid #ccc;
     padding: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    background: #fff;
+}
+
+.sessions-container {
+    margin-left: 20px;
+    margin-top: 10px;
+    border-left: 2px solid #eee;
+    padding-left: 15px;
+}
+
+.session-item {
     background: #f9f9f9;
-}
-
-.partner-item p {
+    padding: 10px;
     margin-bottom: 10px;
-}
-
-.partners-container h4 {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    color: #23282d;
+    border: 1px solid #eee;
 }

@@ -1,4 +1,0 @@
-- [ ] Update nrna_register_about_meta_fields() to add new meta fields for Join NRNA section
-- [ ] Update $tabs array in nrna_render_about_meta_box() to include 'join-nrna' => 'Join NRNA' after 'team'
-- [ ] Add 'join-nrna' case in the switch statement of nrna_render_about_meta_box()
-- [ ] Update nrna_save_about_meta_box() to handle saving the new fields
