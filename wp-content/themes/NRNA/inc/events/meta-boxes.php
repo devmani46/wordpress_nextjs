@@ -610,7 +610,6 @@ function nrna_save_events_meta_box($post_id)
         'event_sponsorship_description' => 'wp_kses_post',
         'event_venue_title' => 'sanitize_text_field',
         'event_venue_description' => 'wp_kses_post',
-        'event_venue_map' => 'wp_kses_post',
         'event_organizing_committee_title' => 'sanitize_text_field',
         'event_sponsors_title' => 'sanitize_text_field',
         'event_banner_title' => 'sanitize_text_field',
@@ -624,6 +623,26 @@ function nrna_save_events_meta_box($post_id)
         if (isset($_POST[$field])) {
             update_post_meta($post_id, $field, call_user_func($sanitize, $_POST[$field]));
         }
+    }
+
+    // Handle event_venue_map separately to allow iframe embeds
+    if (isset($_POST['event_venue_map'])) {
+        $allowed_html = array(
+            'iframe' => array(
+                'src' => array(),
+                'width' => array(),
+                'height' => array(),
+                'frameborder' => array(),
+                'style' => array(),
+                'allowfullscreen' => array(),
+                'loading' => array(),
+                'referrerpolicy' => array(),
+                'title' => array(),
+                'aria-label' => array(),
+            ),
+        );
+        $sanitized_map = wp_kses($_POST['event_venue_map'], $allowed_html);
+        update_post_meta($post_id, 'event_venue_map', $sanitized_map);
     }
 
     // Save schedule dates array
