@@ -175,6 +175,28 @@ function nrna_register_events_meta_fields()
         'show_in_rest' => true,
         'single' => true,
     ]);
+
+    // Image Gallery
+    register_meta('post', 'event_image_gallery', [
+        'object_subtype' => 'events',
+        'type' => 'array',
+        'items' => [
+            'type' => 'string', // URL of the image
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
+
+    // Video Gallery
+    register_meta('post', 'event_video_gallery', [
+        'object_subtype' => 'events',
+        'type' => 'array',
+        'items' => [
+            'type' => 'string', // YouTube URL
+        ],
+        'show_in_rest' => true,
+        'single' => true,
+    ]);
 }
 add_action('init', 'nrna_register_events_meta_fields');
 
@@ -227,6 +249,8 @@ function nrna_prepare_events_rest($response, $post, $request)
     $data['event_organizing_committee'] = get_post_meta($post->ID, 'event_organizing_committee', true);
     $data['event_sponsors'] = get_post_meta($post->ID, 'event_sponsors', true);
     $data['event_partners'] = get_post_meta($post->ID, 'event_partners', true);
+    $data['event_image_gallery'] = get_post_meta($post->ID, 'event_image_gallery', true);
+    $data['event_video_gallery'] = get_post_meta($post->ID, 'event_video_gallery', true);
 
     $response->set_data($data);
     return $response;

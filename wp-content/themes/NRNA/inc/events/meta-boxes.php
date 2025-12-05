@@ -28,6 +28,8 @@ function nrna_render_events_meta_box($post)
         'organizing-committee' => 'Organizing Committee',
         'sponsors' => 'Our Sponsors',
         'partners' => 'Partners',
+        'image-gallery' => 'Image Gallery',
+        'video-gallery' => 'Video Gallery',
         'banner' => 'Banner',
     ];
 
@@ -472,6 +474,45 @@ function nrna_render_events_meta_box($post)
             <?php
                 break;
 
+            case 'image-gallery':
+                $image_gallery = get_post_meta($post->ID, 'event_image_gallery', true);
+                if (!is_array($image_gallery)) $image_gallery = [];
+            ?>
+                <div class="image-gallery-container">
+                    <div class="gallery-items">
+                        <?php foreach ($image_gallery as $index => $image_url): ?>
+                            <div class="gallery-item">
+                                <input type="hidden" name="event_image_gallery[]" value="<?php echo esc_attr($image_url); ?>">
+                                <img src="<?php echo esc_url($image_url); ?>" alt="Gallery Image" style="max-width: 100px; max-height: 100px;">
+                                <button type="button" class="remove-gallery-image button">Remove</button>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="add-gallery-image button">Add Images</button>
+                </div>
+            <?php
+                break;
+
+            case 'video-gallery':
+                $video_gallery = get_post_meta($post->ID, 'event_video_gallery', true);
+                if (!is_array($video_gallery)) $video_gallery = [];
+            ?>
+                <div class="video-gallery-container">
+                    <div class="video-items">
+                        <?php foreach ($video_gallery as $index => $video_url): ?>
+                            <div class="video-item">
+                                <p><label>YouTube URL:</label><br>
+                                    <input type="url" name="event_video_gallery[]" value="<?php echo esc_attr($video_url); ?>" class="wide-input">
+                                    <button type="button" class="remove-video-link button">Remove</button>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="add-video-link button">Add Video Link</button>
+                </div>
+            <?php
+                break;
+
             case 'banner':
                 $banner_title = get_post_meta($post->ID, 'event_banner_title', true);
                 $banner_description = get_post_meta($post->ID, 'event_banner_description', true);
@@ -674,6 +715,22 @@ function nrna_save_events_meta_box($post_id)
         update_post_meta($post_id, 'event_partners', $sanitized_partners);
     } else {
         delete_post_meta($post_id, 'event_partners');
+    }
+
+    // Save image gallery
+    if (isset($_POST['event_image_gallery'])) {
+        $image_gallery = array_map('esc_url_raw', $_POST['event_image_gallery']);
+        update_post_meta($post_id, 'event_image_gallery', $image_gallery);
+    } else {
+        delete_post_meta($post_id, 'event_image_gallery');
+    }
+
+    // Save video gallery
+    if (isset($_POST['event_video_gallery'])) {
+        $video_gallery = array_map('esc_url_raw', $_POST['event_video_gallery']);
+        update_post_meta($post_id, 'event_video_gallery', $video_gallery);
+    } else {
+        delete_post_meta($post_id, 'event_video_gallery');
     }
 }
 add_action('save_post', 'nrna_save_events_meta_box');

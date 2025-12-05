@@ -161,6 +161,53 @@ jQuery(document).ready(function($) {
         });
     });
 
+    // Add Gallery Image
+    $(document).on('click', '.add-gallery-image', function(e) {
+        e.preventDefault();
+        var button = $(this);
+        var container = button.siblings('.gallery-items');
+        var custom_uploader = wp.media({
+            title: 'Select Images',
+            button: {
+                text: 'Add to Gallery'
+            },
+            multiple: true
+        }).on('select', function() {
+            var selection = custom_uploader.state().get('selection');
+            selection.map(function(attachment) {
+                attachment = attachment.toJSON();
+                var newItem = '<div class="gallery-item">' +
+                    '<input type="hidden" name="event_image_gallery[]" value="' + attachment.url + '">' +
+                    '<img src="' + attachment.url + '" alt="Gallery Image" style="max-width: 100px; max-height: 100px;">' +
+                    '<button type="button" class="remove-gallery-image button">Remove</button>' +
+                    '</div>';
+                container.append(newItem);
+            });
+        }).open();
+    });
+
+    // Remove Gallery Image
+    $(document).on('click', '.remove-gallery-image', function() {
+        $(this).closest('.gallery-item').remove();
+    });
+
+    // Add Video Link
+    $(document).on('click', '.add-video-link', function() {
+        var container = $(this).siblings('.video-items');
+        var newItem = '<div class="video-item">' +
+            '<p><label>YouTube URL:</label><br>' +
+            '<input type="url" name="event_video_gallery[]" class="wide-input">' +
+            '<button type="button" class="remove-video-link button">Remove</button>' +
+            '</p>' +
+            '</div>';
+        container.append(newItem);
+    });
+
+    // Remove Video Link
+    $(document).on('click', '.remove-video-link', function() {
+        $(this).closest('.video-item').remove();
+    });
+
     // Image selection for committee members
     $(document).on('click', '.select-image', function(e) {
         e.preventDefault();
