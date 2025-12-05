@@ -28,9 +28,9 @@ function nrna_render_events_meta_box($post)
         'organizing-committee' => 'Organizing Committee',
         'sponsors' => 'Our Sponsors',
         'partners' => 'Partners',
+        'banner' => 'Banner',
         'image-gallery' => 'Image Gallery',
         'video-gallery' => 'Video Gallery',
-        'banner' => 'Banner',
     ];
 
     echo '<div class="events-meta-tabs">';
@@ -576,6 +576,7 @@ function nrna_save_events_meta_box($post_id)
         'event_banner_description' => 'wp_kses_post',
         'event_banner_cta_link' => 'esc_url_raw',
         'event_banner_cta_title' => 'sanitize_text_field',
+
     ];
 
     foreach ($fields as $field => $sanitize) {
