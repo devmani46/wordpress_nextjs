@@ -228,6 +228,9 @@ function nrna_prepare_events_rest($response, $post, $request)
         'event_schedule_description',
         'event_sponsorship_title',
         'event_sponsorship_description',
+        'event_venue_title',
+        'event_venue_description',
+        'event_venue_map',
         'event_organizing_committee_title',
         'event_sponsors_title',
         'event_banner_title',
@@ -240,16 +243,9 @@ function nrna_prepare_events_rest($response, $post, $request)
         $data[$field] = get_post_meta($post->ID, $field, true);
     }
 
-    // Structure venue data as a proper JSON object
-    $data['venue'] = [
-        'title' => get_post_meta($post->ID, 'event_venue_title', true),
-        'description' => get_post_meta($post->ID, 'event_venue_description', true),
-        'map' => get_post_meta($post->ID, 'event_venue_map', true),
-        'details' => get_post_meta($post->ID, 'event_venue_details', true) ?: [],
-    ];
-
     $data['event_schedule_dates'] = get_post_meta($post->ID, 'event_schedule_dates', true);
     $data['event_sponsorships'] = get_post_meta($post->ID, 'event_sponsorships', true);
+    $data['event_venue_details'] = get_post_meta($post->ID, 'event_venue_details', true);
     $data['event_organizing_committee'] = get_post_meta($post->ID, 'event_organizing_committee', true);
     $data['event_sponsors'] = get_post_meta($post->ID, 'event_sponsors', true);
     $data['event_partners'] = get_post_meta($post->ID, 'event_partners', true);
