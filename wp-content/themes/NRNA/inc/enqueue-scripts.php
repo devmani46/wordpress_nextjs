@@ -1,6 +1,7 @@
 <?php
 // Enqueue theme styles and scripts
-function nrna_enqueue_assets() {
+function nrna_enqueue_assets()
+{
     wp_enqueue_style('nrna-style', get_stylesheet_uri(), [], wp_get_theme()->get('Version'));
     wp_enqueue_style('nrna-faq', get_template_directory_uri() . '/assets/css/faq.css', [], wp_get_theme()->get('Version'));
     wp_enqueue_style('nrna-notice', get_template_directory_uri() . '/assets/css/notice.css', [], wp_get_theme()->get('Version'));
@@ -12,7 +13,8 @@ function nrna_enqueue_assets() {
 add_action('wp_enqueue_scripts', 'nrna_enqueue_assets');
 
 // Enqueue admin scripts for meta boxes
-function nrna_enqueue_admin_assets($hook) {
+function nrna_enqueue_admin_assets($hook)
+{
     if ($hook == 'post.php' || $hook == 'post-new.php') {
         wp_enqueue_script('jquery');
         wp_enqueue_media();
@@ -42,6 +44,9 @@ function nrna_enqueue_admin_assets($hook) {
         } elseif ($post && get_page_template_slug($post->ID) === 'template-nrna-discount.php') {
             wp_enqueue_script('nrna-discount-tabs', get_template_directory_uri() . '/assets/admin/discount-tabs.js', [], false, true);
             wp_enqueue_style('nrna-discount-tabs', get_template_directory_uri() . '/assets/admin/discount-tabs.css', [], false);
+        } elseif ($post && $post->post_type === 'regional_meetings') {
+            wp_enqueue_script('nrna-regional-meetings-tabs', get_template_directory_uri() . '/assets/admin/regional-meetings-tabs.js', [], false, true);
+            wp_enqueue_style('nrna-regional-meetings-tabs', get_template_directory_uri() . '/assets/admin/regional-meetings-tabs.css', [], false);
         }
     }
 }

@@ -65,8 +65,8 @@ jQuery(document).ready(function($) {
         var memberCount = $('.committee-row').length;
         var newRow = '<tr class="committee-row">' +
             '<td>' +
-                '<input type="hidden" name="event_organizing_committee[' + memberCount + '][photo]" class="committee-photo-url">' +
                 '<div class="image-preview-container">' +
+                    '<input type="hidden" name="event_organizing_committee[' + memberCount + '][photo]" class="committee-photo-url">' +
                     '<img src="" alt="Photo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; display: none;">' +
                     '<button type="button" class="select-image button">Select Image</button>' +
                 '</div>' +
@@ -98,8 +98,8 @@ jQuery(document).ready(function($) {
         var sponsorCount = $('.sponsor-row').length;
         var newRow = '<tr class="sponsor-row">' +
             '<td>' +
-                '<input type="hidden" name="event_sponsors[' + sponsorCount + '][photo]" class="committee-photo-url">' +
                 '<div class="image-preview-container">' +
+                    '<input type="hidden" name="event_sponsors[' + sponsorCount + '][photo]" class="committee-photo-url">' +
                     '<img src="" alt="Photo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; display: none;">' +
                     '<button type="button" class="select-image button">Select Image</button>' +
                 '</div>' +
@@ -133,8 +133,8 @@ jQuery(document).ready(function($) {
         var categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
         var newRow = '<tr class="partner-row">' +
             '<td>' +
-                '<input type="hidden" name="event_partners[' + partnerCount + '][logo]" class="committee-photo-url">' +
                 '<div class="image-preview-container">' +
+                    '<input type="hidden" name="event_partners[' + partnerCount + '][logo]" class="committee-photo-url">' +
                     '<img src="" alt="Logo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; display: none;">' +
                     '<button type="button" class="select-image button">Select Image</button>' +
                 '</div>' +

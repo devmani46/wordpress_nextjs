@@ -64,6 +64,9 @@ require_once 'committees-taskforces-subcommittees/index.php';
 // Load our ncc includes
 require_once 'our-ncc/index.php';
 
+// Load regional meetings includes
+require_once 'regional-meetings/index.php';
+
 // Load privacy policy meta box
 require_once 'privacy-policy-meta-box.php';
 

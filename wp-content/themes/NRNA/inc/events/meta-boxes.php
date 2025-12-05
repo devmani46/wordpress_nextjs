@@ -259,8 +259,8 @@ function nrna_render_events_meta_box($post)
                             <?php foreach ($organizing_committee as $index => $member): ?>
                                 <tr class="committee-row">
                                     <td>
-                                        <input type="hidden" name="event_organizing_committee[<?php echo $index; ?>][photo]" value="<?php echo esc_attr($member['photo'] ?? ''); ?>" class="committee-photo-url">
                                         <div class="image-preview-container">
+                                            <input type="hidden" name="event_organizing_committee[<?php echo $index; ?>][photo]" value="<?php echo esc_attr($member['photo'] ?? ''); ?>" class="committee-photo-url">
                                             <img src="<?php echo esc_url($member['photo'] ?? ''); ?>" alt="Photo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($member['photo']) ? 'display: none;' : ''; ?>">
                                             <button type="button" class="select-image button"><?php echo empty($member['photo']) ? 'Select Image' : 'Change Image'; ?></button>
                                         </div>
@@ -301,8 +301,8 @@ function nrna_render_events_meta_box($post)
                             <?php foreach ($sponsors as $index => $sponsor): ?>
                                 <tr class="sponsor-row">
                                     <td>
-                                        <input type="hidden" name="event_sponsors[<?php echo $index; ?>][photo]" value="<?php echo esc_attr($sponsor['photo'] ?? ''); ?>" class="committee-photo-url">
                                         <div class="image-preview-container">
+                                            <input type="hidden" name="event_sponsors[<?php echo $index; ?>][photo]" value="<?php echo esc_attr($sponsor['photo'] ?? ''); ?>" class="committee-photo-url">
                                             <img src="<?php echo esc_url($sponsor['photo'] ?? ''); ?>" alt="Photo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($sponsor['photo']) ? 'display: none;' : ''; ?>">
                                             <button type="button" class="select-image button"><?php echo empty($sponsor['photo']) ? 'Select Image' : 'Change Image'; ?></button>
                                         </div>
@@ -343,8 +343,8 @@ function nrna_render_events_meta_box($post)
                                 foreach ($gold_partners as $index => $partner): ?>
                                     <tr class="partner-row">
                                         <td>
-                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
                                             <div class="image-preview-container">
+                                                <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
                                                 <img src="<?php echo esc_url($partner['logo'] ?? ''); ?>" alt="Logo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($partner['logo']) ? 'display: none;' : ''; ?>">
                                                 <button type="button" class="select-image button"><?php echo empty($partner['logo']) ? 'Select Image' : 'Change Image'; ?></button>
                                             </div>
@@ -379,8 +379,8 @@ function nrna_render_events_meta_box($post)
                                 foreach ($silver_partners as $index => $partner): ?>
                                     <tr class="partner-row">
                                         <td>
-                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
                                             <div class="image-preview-container">
+                                                <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
                                                 <img src="<?php echo esc_url($partner['logo'] ?? ''); ?>" alt="Logo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($partner['logo']) ? 'display: none;' : ''; ?>">
                                                 <button type="button" class="select-image button"><?php echo empty($partner['logo']) ? 'Select Image' : 'Change Image'; ?></button>
                                             </div>
@@ -415,8 +415,8 @@ function nrna_render_events_meta_box($post)
                                 foreach ($airlines_partners as $index => $partner): ?>
                                     <tr class="partner-row">
                                         <td>
-                                            <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
                                             <div class="image-preview-container">
+                                                <input type="hidden" name="event_partners[<?php echo $index; ?>][logo]" value="<?php echo esc_attr($partner['logo'] ?? ''); ?>" class="committee-photo-url">
                                                 <img src="<?php echo esc_url($partner['logo'] ?? ''); ?>" alt="Logo Preview" class="committee-photo-preview" style="max-width: 50px; max-height: 50px; <?php echo empty($partner['logo']) ? 'display: none;' : ''; ?>">
                                                 <button type="button" class="select-image button"><?php echo empty($partner['logo']) ? 'Select Image' : 'Change Image'; ?></button>
                                             </div>
@@ -589,7 +589,7 @@ function nrna_save_events_meta_box($post_id)
 
         foreach ((array)$committee_data as $member) {
             $clean_member = [];
-            if (isset($member['photo'])) $clean_member['photo'] = sanitize_text_field($member['photo']);
+            if (isset($member['photo'])) $clean_member['photo'] = esc_url_raw($member['photo']);
             if (isset($member['name'])) $clean_member['name'] = sanitize_text_field($member['name']);
             if (isset($member['role'])) $clean_member['role'] = sanitize_text_field($member['role']);
             if (isset($member['service'])) $clean_member['service'] = sanitize_text_field($member['service']);
@@ -609,7 +609,7 @@ function nrna_save_events_meta_box($post_id)
 
         foreach ((array)$sponsors_data as $sponsor) {
             $clean_sponsor = [];
-            if (isset($sponsor['photo'])) $clean_sponsor['photo'] = sanitize_text_field($sponsor['photo']);
+            if (isset($sponsor['photo'])) $clean_sponsor['photo'] = esc_url_raw($sponsor['photo']);
             if (isset($sponsor['name'])) $clean_sponsor['name'] = sanitize_text_field($sponsor['name']);
             if (isset($sponsor['role'])) $clean_sponsor['role'] = sanitize_text_field($sponsor['role']);
             if (isset($sponsor['service'])) $clean_sponsor['service'] = sanitize_text_field($sponsor['service']);
@@ -630,7 +630,7 @@ function nrna_save_events_meta_box($post_id)
         foreach ((array)$partners_data as $partner) {
             $clean_partner = [];
             if (isset($partner['category'])) $clean_partner['category'] = sanitize_text_field($partner['category']);
-            if (isset($partner['logo'])) $clean_partner['logo'] = sanitize_text_field($partner['logo']);
+            if (isset($partner['logo'])) $clean_partner['logo'] = esc_url_raw($partner['logo']);
             if (isset($partner['name'])) $clean_partner['name'] = sanitize_text_field($partner['name']);
             if (!empty($clean_partner)) $sanitized_partners[] = $clean_partner;
         }

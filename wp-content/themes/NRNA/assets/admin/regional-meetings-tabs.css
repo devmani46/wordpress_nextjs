@@ -1,0 +1,104 @@
+.regional-meetings-meta-tabs .tab-buttons {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+
+.regional-meetings-meta-tabs .tab-button {
+  background: #f1f1f1;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-right: 5px;
+  outline: none;
+}
+
+.regional-meetings-meta-tabs .tab-button.active {
+  background: #fff;
+  border-bottom: 1px solid #fff;
+  margin-bottom: -1px;
+  font-weight: bold;
+}
+
+.regional-meetings-meta-tabs .tab-content {
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.regional-meetings-meta-tabs .tab-pane {
+  display: none;
+}
+
+.wide-input,
+.wide-textarea {
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Table Styles */
+.sponsorship-table,
+.committee-table,
+.sponsors-table,
+.partners-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.sponsorship-table th,
+.sponsorship-table td,
+.committee-table th,
+.committee-table td,
+.sponsors-table th,
+.sponsors-table td,
+.partners-table th,
+.partners-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.sponsorship-table th,
+.committee-table th,
+.sponsors-table th,
+.partners-table th {
+  background-color: #f2f2f2;
+}
+
+.image-preview-container {
+  margin-top: 5px;
+}
+
+.committee-photo-preview {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Gallery Styles */
+.gallery-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.gallery-item {
+  position: relative;
+  border: 1px solid #ddd;
+  padding: 5px;
+  background: #f9f9f9;
+}
+
+.gallery-item img {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.video-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+}
