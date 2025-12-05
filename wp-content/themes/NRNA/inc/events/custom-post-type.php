@@ -256,3 +256,61 @@ function nrna_prepare_events_rest($response, $post, $request)
     return $response;
 }
 add_filter('rest_prepare_events', 'nrna_prepare_events_rest', 10, 3);
+
+// Register event_downloads REST field with file metadata
+function nrna_register_event_downloads_rest_field()
+{
+    register_rest_field('events', 'event_downloads', array(
+        'get_callback' => function ($post) {
+            $downloads = get_post_meta($post['id'], 'event_downloads', true);
+            if (! is_array($downloads)) {
+                $downloads = [];
+            }
+            $downloads_data = [];
+            foreach ($downloads as $download) {
+                $download_item = [
+                    'title' => $download['title'] ?? '',
+                ];
+                if (! empty($download['file'])) {
+                    $file_id = $download['file'];
+                    $file_url = wp_get_attachment_url($file_id);
+                    $file_name = basename($file_url);
+                    $download_item['file'] = [
+                        'id' => $file_id,
+                        'url' => $file_url,
+                        'filename' => $file_name,
+                    ];
+                }
+                $downloads_data[] = $download_item;
+            }
+            return $downloads_data;
+        },
+        'schema' => array(
+            'description' => 'Event downloads',
+            'type' => 'array',
+            'items' => array(
+                'type' => 'object',
+                'properties' => array(
+                    'title' => array(
+                        'type' => 'string',
+                    ),
+                    'file' => array(
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'type' => 'integer',
+                            ),
+                            'url' => array(
+                                'type' => 'string',
+                            ),
+                            'filename' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    ));
+}
+add_action('rest_api_init', 'nrna_register_event_downloads_rest_field');

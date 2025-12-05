@@ -31,6 +31,7 @@ function nrna_render_events_meta_box($post)
         'banner' => 'Banner',
         'image-gallery' => 'Image Gallery',
         'video-gallery' => 'Video Gallery',
+        'downloads' => 'Downloads',
     ];
 
     echo '<div class="events-meta-tabs">';
@@ -530,6 +531,46 @@ function nrna_render_events_meta_box($post)
                                                     ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="event_banner_cta_link" value="<?php echo esc_attr($banner_cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="event_banner_cta_title" value="<?php echo esc_attr($banner_cta_title); ?>" class="wide-input"></p>
+            <?php
+                break;
+
+            case 'downloads':
+                $downloads = get_post_meta($post->ID, 'event_downloads', true);
+                if (!is_array($downloads)) $downloads = [];
+            ?>
+                <div class="downloads-table-container">
+                    <table class="downloads-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>File</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($downloads as $index => $download): ?>
+                                <tr class="download-row">
+                                    <td><input type="text" name="event_downloads[<?php echo $index; ?>][title]" value="<?php echo esc_attr($download['title'] ?? ''); ?>" class="wide-input"></td>
+                                    <td>
+                                        <div class="file-preview-container">
+                                            <input type="hidden" name="event_downloads[<?php echo $index; ?>][file]" value="<?php echo esc_attr($download['file'] ?? ''); ?>" class="download-file-id">
+                                            <?php if (!empty($download['file'])): ?>
+                                                <?php
+                                                $file_url = wp_get_attachment_url($download['file']);
+                                                $file_name = basename($file_url);
+                                                ?>
+                                                <a href="<?php echo esc_url($file_url); ?>" target="_blank" class="file-link"><?php echo esc_html($file_name); ?></a>
+                                            <?php endif; ?>
+                                            <button type="button" class="select-download-file button"><?php echo empty($download['file']) ? 'Select File' : 'Change File'; ?></button>
+                                        </div>
+                                    </td>
+                                    <td><button type="button" class="remove-download button">Remove</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <button type="button" class="add-download button">Add Download</button>
+                </div>
 <?php
                 break;
         }
@@ -732,6 +773,23 @@ function nrna_save_events_meta_box($post_id)
         update_post_meta($post_id, 'event_video_gallery', $video_gallery);
     } else {
         delete_post_meta($post_id, 'event_video_gallery');
+    }
+
+    // Save downloads array
+    if (isset($_POST['event_downloads'])) {
+        $downloads_data = $_POST['event_downloads'];
+        $sanitized_downloads = [];
+
+        foreach ((array)$downloads_data as $download) {
+            $clean_download = [];
+            if (isset($download['title'])) $clean_download['title'] = sanitize_text_field($download['title']);
+            if (isset($download['file'])) $clean_download['file'] = intval($download['file']);
+            if (!empty($clean_download)) $sanitized_downloads[] = $clean_download;
+        }
+
+        update_post_meta($post_id, 'event_downloads', $sanitized_downloads);
+    } else {
+        delete_post_meta($post_id, 'event_downloads');
     }
 }
 add_action('save_post', 'nrna_save_events_meta_box');
