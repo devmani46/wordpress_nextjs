@@ -1,0 +1,95 @@
+.projects-meta-tabs .tab-buttons {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.projects-meta-tabs .tab-button {
+    background: #f1f1f1;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    outline: none;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.projects-meta-tabs .tab-button:hover {
+    background: #e8e8e8;
+}
+
+.projects-meta-tabs .tab-button.active {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+    margin-bottom: -1px;
+    font-weight: bold;
+    color: #0073aa;
+}
+
+.projects-meta-tabs .tab-content {
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.projects-meta-tabs .tab-pane {
+    display: none;
+}
+
+.wide-input, .wide-textarea {
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Table Styles */
+.downloads-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.downloads-table th, .downloads-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.downloads-table th {
+    background-color: #f2f2f2;
+}
+
+/* Gallery Styles */
+.gallery-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.gallery-item {
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background: #f9f9f9;
+}
+
+.gallery-item img {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Location Items */
+.location-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+}
+
+.location-item p {
+    margin-bottom: 10px;
+}

@@ -47,6 +47,9 @@ function nrna_enqueue_admin_assets($hook)
         } elseif ($post && $post->post_type === 'regional_meetings') {
             wp_enqueue_script('nrna-regional-meetings-tabs', get_template_directory_uri() . '/assets/admin/regional-meetings-tabs.js', [], false, true);
             wp_enqueue_style('nrna-regional-meetings-tabs', get_template_directory_uri() . '/assets/admin/regional-meetings-tabs.css', [], false);
+        } elseif ($post && $post->post_type === 'projects') {
+            wp_enqueue_script('nrna-projects-tabs', get_template_directory_uri() . '/assets/admin/projects-tabs.js', [], false, true);
+            wp_enqueue_style('nrna-projects-tabs', get_template_directory_uri() . '/assets/admin/projects-tabs.css', [], false);
         }
     }
 }
