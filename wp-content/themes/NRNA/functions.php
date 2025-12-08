@@ -375,16 +375,116 @@ function nrna_handle_contact_submission($request)
         ['%s', '%s', '%s', '%s', '%s']
     );
 
-    if ($email_sent) {
-        return new WP_REST_Response([
-            'success' => true,
-            'message' => 'Thank you! Your message has been sent successfully.',
-        ], 200);
+    // Debug logging
+    error_log('Contact form - Insert ID: ' . $wpdb->insert_id);
+    error_log('Contact form - Email sent: ' . ($email_sent ? 'yes' : 'no'));
+    error_log('Contact form - WP DB Error: ' . $wpdb->last_error);
+
+    // Check if database insert was successful
+    if ($wpdb->insert_id) {
+        // Submission saved successfully
+        if ($email_sent) {
+            return new WP_REST_Response([
+                'success' => true,
+                'message' => 'Thank you! Your message has been sent successfully.',
+            ], 200);
+        } else {
+            // Email failed but submission was saved
+            return new WP_REST_Response([
+                'success' => true,
+                'message' => 'Thank you! Your message has been received.',
+            ], 200);
+        }
     } else {
         return new WP_Error(
-            'email_failed',
-            'Failed to send email. Please try again later.',
+            'submission_failed',
+            'Failed to save your message. Please try again later.',
             ['status' => 500]
         );
     }
+}
+
+/**
+ * Add Contact Submissions admin menu page
+ */
+function nrna_add_contact_submissions_menu()
+{
+    add_menu_page(
+        'Contact Submissions',           // Page title
+        'Contact Submissions',           // Menu title
+        'manage_options',                // Capability
+        'contact-submissions',           // Menu slug
+        'nrna_contact_submissions_page', // Callback function
+        'dashicons-email',               // Icon
+        26                               // Position
+    );
+}
+add_action('admin_menu', 'nrna_add_contact_submissions_menu');
+
+/**
+ * Display contact submissions admin page
+ */
+function nrna_contact_submissions_page()
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'contact_submissions';
+
+    // Get all submissions, ordered by most recent first
+    $submissions = $wpdb->get_results(
+        "SELECT * FROM $table_name ORDER BY submitted_at DESC"
+    );
+
+?>
+    <div class="wrap">
+        <h1>Contact Form Submissions</h1>
+
+        <?php if (empty($submissions)) : ?>
+            <p>No submissions yet.</p>
+        <?php else : ?>
+            <table class="wp-list-table widefat fixed striped">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">ID</th>
+                        <th style="width: 12%;">Name</th>
+                        <th style="width: 15%;">Email</th>
+                        <th style="width: 12%;">Phone</th>
+                        <th style="width: 36%;">Message</th>
+                        <th style="width: 15%;">Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($submissions as $submission) : ?>
+                        <tr>
+                            <td><?php echo esc_html($submission->id); ?></td>
+                            <td><?php echo esc_html($submission->first_name . ' ' . $submission->last_name); ?></td>
+                            <td>
+                                <a href="mailto:<?php echo esc_attr($submission->email); ?>">
+                                    <?php echo esc_html($submission->email); ?>
+                                </a>
+                            </td>
+                            <td><?php echo esc_html($submission->phone ?: 'N/A'); ?></td>
+                            <td style="white-space: pre-wrap;"><?php echo esc_html($submission->message); ?></td>
+                            <td><?php echo esc_html(date('M j, Y g:i A', strtotime($submission->submitted_at))); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <p style="margin-top: 20px;">
+                <strong>Total Submissions:</strong> <?php echo count($submissions); ?>
+            </p>
+        <?php endif; ?>
+    </div>
+
+    <style>
+        .wrap table td {
+            vertical-align: top;
+            padding: 10px;
+        }
+
+        .wrap table th {
+            font-weight: 600;
+        }
+    </style>
+<?php
 }
