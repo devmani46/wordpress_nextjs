@@ -60,11 +60,11 @@ function nrna_handle_contact_submission($request)
 
     // Store submission in database (optional)
     global $wpdb;
-    $table_name = $wpdb->prefix . 'contact_submissions';
+    $table_name = $wpdb->prefix . 'contact_submissions_v2';
 
     // Create table if it doesn't exist
     $charset_collate = $wpdb->get_charset_collate();
-    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+    $sql = "CREATE TABLE $table_name (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         first_name varchar(100) NOT NULL,
         last_name varchar(100) NOT NULL,
@@ -116,7 +116,7 @@ function nrna_handle_contact_submission($request)
     } else {
         return new WP_Error(
             'submission_failed',
-            'Failed to save your message. Please try again later.',
+            'Failed to save your message. DB Error: ' . $wpdb->last_error,
             ['status' => 500]
         );
     }
@@ -128,7 +128,7 @@ function nrna_handle_contact_submission($request)
 function nrna_add_contact_submissions_menu()
 {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'contact_submissions';
+    $table_name = $wpdb->prefix . 'contact_submissions_v2';
 
     // Count new submissions
     // Check if table exists first to avoid errors on fresh install before first submission
@@ -161,7 +161,7 @@ add_action('admin_menu', 'nrna_add_contact_submissions_menu');
 function nrna_contact_submissions_page()
 {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'contact_submissions';
+    $table_name = $wpdb->prefix . 'contact_submissions_v2';
 
     // Check for actions
     $action = isset($_GET['action']) ? $_GET['action'] : 'list';
