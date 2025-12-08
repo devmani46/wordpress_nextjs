@@ -115,7 +115,7 @@ jQuery(document).ready(function($) {
                 // User Requirement: "store attachment IDs as an array".
                 // So I must use attachment.id
                 var newItem = '<div class="gallery-item">' +
-                    '<input type="hidden" name="project_image_gallery[]" value="' + attachment.id + '">' +
+                    '<input type="hidden" name="project_image_gallery[]" value="' + attachment.url + '">' +
                     '<img src="' + attachment.url + '" alt="Gallery Image" style="max-width: 100px; max-height: 100px;">' +
                     '<button type="button" class="remove-gallery-image button">Remove</button>' +
                     '</div>';

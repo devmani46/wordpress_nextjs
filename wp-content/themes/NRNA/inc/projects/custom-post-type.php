@@ -81,7 +81,7 @@ function nrna_register_projects_meta_fields()
         'object_subtype' => 'projects',
         'type' => 'array',
         'items' => [
-            'type' => 'integer', // Attachment IDs
+            'type' => 'string', // Image URLs
         ],
         'show_in_rest' => true,
         'single' => true,
@@ -120,7 +120,27 @@ function nrna_prepare_projects_rest($response, $post, $request)
     }
 
     $data['project_locations'] = get_post_meta($post->ID, 'project_locations', true);
-    $data['project_image_gallery'] = get_post_meta($post->ID, 'project_image_gallery', true);
+
+    // Project Image Gallery - convert IDs to URLs if needed (backward compatibility)
+    $image_gallery = get_post_meta($post->ID, 'project_image_gallery', true);
+    if (!is_array($image_gallery)) {
+        $image_gallery = [];
+    }
+    $gallery_urls = [];
+    foreach ($image_gallery as $item) {
+        // Check if it's a numeric ID (old format) or already a URL (new format)
+        if (is_numeric($item)) {
+            // Convert attachment ID to URL
+            $url = wp_get_attachment_url($item);
+            if ($url) {
+                $gallery_urls[] = $url;
+            }
+        } else {
+            // Already a URL, use as-is
+            $gallery_urls[] = $item;
+        }
+    }
+    $data['project_image_gallery'] = $gallery_urls;
 
     // Project Downloads
     $downloads = get_post_meta($post->ID, 'project_downloads', true);

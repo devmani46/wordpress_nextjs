@@ -173,12 +173,9 @@ function nrna_render_projects_meta_box($post)
             ?>
                 <div class="image-gallery-container">
                     <div class="gallery-items">
-                        <?php foreach ($image_gallery as $index => $image_id):
-                            $image_url = wp_get_attachment_url($image_id);
-                            if (!$image_url) continue;
-                        ?>
+                        <?php foreach ($image_gallery as $index => $image_url): ?>
                             <div class="gallery-item">
-                                <input type="hidden" name="project_image_gallery[]" value="<?php echo esc_attr($image_id); ?>">
+                                <input type="hidden" name="project_image_gallery[]" value="<?php echo esc_attr($image_url); ?>">
                                 <img src="<?php echo esc_url($image_url); ?>" alt="Gallery Image" style="max-width: 100px; max-height: 100px;">
                                 <button type="button" class="remove-gallery-image button">Remove</button>
                             </div>
@@ -262,7 +259,7 @@ function nrna_save_projects_meta_box($post_id)
 
     // Save Image Gallery
     if (isset($_POST['project_image_gallery'])) {
-        $gallery = array_map('intval', $_POST['project_image_gallery']);
+        $gallery = array_map('esc_url_raw', $_POST['project_image_gallery']);
         update_post_meta($post_id, 'project_image_gallery', $gallery);
     } else {
         delete_post_meta($post_id, 'project_image_gallery');
