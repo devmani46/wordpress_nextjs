@@ -1,34 +1,11 @@
 <?php
 // Add Projects meta boxes
-function nrna_add_projects_meta_boxes() {
+function nrna_add_projects_meta_boxes()
+{
     add_meta_box(
-        'project_subtitle_box',
-        __('Project Subtitle', 'nrna'),
-        'nrna_render_project_subtitle_meta_box',
-        'projects',
-        'normal',
-        'high'
-    );
-    add_meta_box(
-        'project_description_box',
-        __('Project Description', 'nrna'),
-        'nrna_render_project_description_meta_box',
-        'projects',
-        'normal',
-        'high'
-    );
-    add_meta_box(
-        'project_objective_box',
-        __('Project Objective', 'nrna'),
-        'nrna_render_project_objective_meta_box',
-        'projects',
-        'normal',
-        'high'
-    );
-    add_meta_box(
-        'project_locations_box',
-        __('Project Locations', 'nrna'),
-        'nrna_render_project_locations_meta_box',
+        'projects_meta_box',
+        __('Project Content', 'nrna'),
+        'nrna_render_projects_meta_box',
         'projects',
         'normal',
         'high'
@@ -36,175 +13,276 @@ function nrna_add_projects_meta_boxes() {
 }
 add_action('add_meta_boxes', 'nrna_add_projects_meta_boxes');
 
-// Render Subtitle meta box
-function nrna_render_project_subtitle_meta_box($post) {
-    $subtitle = get_post_meta($post->ID, 'project_subtitle', true);
-    echo '<label for="project_subtitle" style="display:block; font-weight:bold; margin-bottom:8px;">Subtitle:</label>';
-    echo '<input type="text" id="project_subtitle" name="project_subtitle" value="' . esc_attr($subtitle) . '" style="width:100%;" />';
-}
+// Render Projects meta box with tabs
+function nrna_render_projects_meta_box($post)
+{
+    wp_nonce_field('nrna_projects_meta_box', 'nrna_projects_meta_box_nonce');
 
-// Render Description meta box
-function nrna_render_project_description_meta_box($post) {
-    $description = get_post_meta($post->ID, 'project_description', true);
-    echo '<label for="project_description" style="display:block; font-weight:bold; margin-bottom:8px;">Description:</label>';
-    wp_editor($description, 'project_description', [
-        'textarea_name' => 'project_description',
-        'media_buttons' => true,
-        'textarea_rows' => 10,
-        'teeny' => false,
-        'quicktags' => true,
-    ]);
-}
+    $tabs = [
+        'hero' => 'Hero Section',
+        'objectives' => 'Objectives',
+        'locations' => 'Project Location',
+        'banner' => 'Banner',
+        'downloads' => 'Downloads',
+        'image-gallery' => 'Image Gallery',
+    ];
 
-// Render Objective meta box
-function nrna_render_project_objective_meta_box($post) {
-    $objective = get_post_meta($post->ID, 'project_objective', true);
-    echo '<label for="project_objective" style="display:block; font-weight:bold; margin-bottom:8px;">Objective:</label>';
-    wp_editor($objective, 'project_objective', [
-        'textarea_name' => 'project_objective',
-        'media_buttons' => true,
-        'textarea_rows' => 10,
-        'teeny' => false,
-        'quicktags' => true,
-    ]);
-}
-
-// Render Locations meta box (repeatable)
-function nrna_render_project_locations_meta_box($post) {
-    $locations = get_post_meta($post->ID, 'project_locations', true);
-    if (!is_array($locations)) {
-        $locations = [];
+    echo '<div class="projects-meta-tabs">';
+    echo '<div class="tab-buttons">';
+    foreach ($tabs as $key => $label) {
+        echo '<button type="button" class="tab-button" data-tab="' . esc_attr($key) . '">' . esc_html($label) . '</button>';
     }
+    echo '</div>';
 
-    echo '<div id="project-locations-container">';
-    echo '<p class="description">Add locations where the project is being conducted.</p>';
+    echo '<div class="tab-content">';
 
-    if (!empty($locations)) {
-        foreach ($locations as $index => $location) {
-            echo '<div class="location-item" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd;">';
-            echo '<label>Place:</label><br>';
-            echo '<input type="text" name="project_locations[' . $index . '][place]" value="' . esc_attr($location['place'] ?? '') . '" style="width:100%; margin-bottom:5px;" /><br>';
-            echo '<label>Date:</label><br>';
-            echo '<input type="text" name="project_locations[' . $index . '][date]" value="' . esc_attr($location['date'] ?? '') . '" style="width:100%; margin-bottom:5px;" placeholder="e.g., 2025" /><br>';
-            echo '<label>Description:</label><br>';
-            echo '<textarea name="project_locations[' . $index . '][description]" rows="3" style="width:100%;">' . esc_textarea($location['description'] ?? '') . '</textarea>';
-            echo '<button type="button" class="remove-location-button button" style="margin-top: 5px;">Remove Location</button>';
-            echo '</div>';
+    foreach ($tabs as $key => $label) {
+        echo '<div class="tab-pane" id="tab-' . esc_attr($key) . '">';
+
+        switch ($key) {
+            case 'hero':
+                $hero_title = get_post_meta($post->ID, 'project_hero_title', true);
+                $date = get_post_meta($post->ID, 'project_date', true);
+                $sub_title = get_post_meta($post->ID, 'project_sub_title', true);
+                $cta_link_1 = get_post_meta($post->ID, 'project_cta_link_1', true);
+                $cta_title_1 = get_post_meta($post->ID, 'project_cta_title_1', true);
+                $cta_link_2 = get_post_meta($post->ID, 'project_cta_link_2', true);
+                $cta_title_2 = get_post_meta($post->ID, 'project_cta_title_2', true);
+                $description = get_post_meta($post->ID, 'project_description', true);
+                $hero_image = get_post_meta($post->ID, 'project_hero_image', true);
+
+                $hero_image_url = $hero_image ? wp_get_attachment_url($hero_image) : '';
+?>
+                <p><label>Title:</label><br><input type="text" name="project_hero_title" value="<?php echo esc_attr($hero_title); ?>" class="wide-input"></p>
+                <p><label>Date:</label><br><input type="text" name="project_date" value="<?php echo esc_attr($date); ?>" class="wide-input"></p>
+                <p><label>Sub Title:</label><br><input type="text" name="project_sub_title" value="<?php echo esc_attr($sub_title); ?>" class="wide-input"></p>
+                <p><label>CTA Link 1:</label><br><input type="url" name="project_cta_link_1" value="<?php echo esc_attr($cta_link_1); ?>" class="wide-input"></p>
+                <p><label>CTA Title 1:</label><br><input type="text" name="project_cta_title_1" value="<?php echo esc_attr($cta_title_1); ?>" class="wide-input"></p>
+                <p><label>CTA Title 2:</label><br><input type="text" name="project_cta_title_2" value="<?php echo esc_attr($cta_title_2); ?>" class="wide-input"></p>
+                <p><label>CTA Link 2:</label><br><input type="url" name="project_cta_link_2" value="<?php echo esc_attr($cta_link_2); ?>" class="wide-input"></p>
+
+                <div class="image-preview-container">
+                    <label>Featured Image:</label><br>
+                    <input type="hidden" name="project_hero_image" value="<?php echo esc_attr($hero_image); ?>" class="download-file-id">
+                    <img src="<?php echo esc_url($hero_image_url); ?>" style="max-width: 200px; display: <?php echo $hero_image ? 'block' : 'none'; ?>;" class="committee-photo-preview">
+                    <button type="button" class="select-download-file button"><?php echo $hero_image ? 'Change Image' : 'Select Image'; ?></button>
+                </div>
+
+                <p><label>Description:</label><br><?php
+                                                    wp_editor(get_post_meta($post->ID, 'project_description', true), 'project_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
+            <?php
+                break;
+
+            case 'objectives':
+                $obj_title = get_post_meta($post->ID, 'project_objective_title', true);
+            ?>
+                <p><label>Title:</label><br><input type="text" name="project_objective_title" value="<?php echo esc_attr($obj_title); ?>" class="wide-input"></p>
+                <p><label>Description:</label><br><?php
+                                                    wp_editor(get_post_meta($post->ID, 'project_objective_description', true), 'project_objective_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
+            <?php
+                break;
+
+            case 'locations':
+                $locations = get_post_meta($post->ID, 'project_locations', true);
+                if (!is_array($locations)) $locations = [];
+            ?>
+                <div class="locations-container">
+                    <?php foreach ($locations as $index => $location): ?>
+                        <div class="location-item">
+                            <p><label>Place:</label><br><input type="text" name="project_locations[<?php echo $index; ?>][place]" value="<?php echo esc_attr($location['place'] ?? ''); ?>" class="wide-input"></p>
+                            <p><label>Date:</label><br><input type="text" name="project_locations[<?php echo $index; ?>][date]" value="<?php echo esc_attr($location['date'] ?? ''); ?>" class="wide-input"></p>
+                            <p><label>Description:</label><br>
+                                <textarea name="project_locations[<?php echo $index; ?>][description]" rows="5" class="wide-textarea"><?php echo esc_textarea($location['description'] ?? ''); ?></textarea>
+                            </p>
+                            <p><label>CTA Link:</label><br><input type="url" name="project_locations[<?php echo $index; ?>][cta_link]" value="<?php echo esc_attr($location['cta_link'] ?? ''); ?>" class="wide-input"></p>
+                            <p><label>CTA Title:</label><br><input type="text" name="project_locations[<?php echo $index; ?>][cta_title]" value="<?php echo esc_attr($location['cta_title'] ?? ''); ?>" class="wide-input"></p>
+                            <button type="button" class="remove-location button">Remove Location</button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <button type="button" class="add-location button">Add Location</button>
+            <?php
+                break;
+
+            case 'banner':
+                $banner_title = get_post_meta($post->ID, 'project_banner_title', true);
+                $banner_cta_link = get_post_meta($post->ID, 'project_banner_cta_link', true);
+                $banner_cta_title = get_post_meta($post->ID, 'project_banner_cta_title', true);
+            ?>
+                <p><label>Title:</label><br><input type="text" name="project_banner_title" value="<?php echo esc_attr($banner_title); ?>" class="wide-input"></p>
+                <p><label>Description:</label><br><?php
+                                                    wp_editor(get_post_meta($post->ID, 'project_banner_description', true), 'project_banner_description', array(
+                                                        'media_buttons' => true,
+                                                        'textarea_rows' => 10,
+                                                        'teeny' => false,
+                                                        'quicktags' => true,
+                                                    ));
+                                                    ?></p>
+                <p><label>CTA Link:</label><br><input type="url" name="project_banner_cta_link" value="<?php echo esc_attr($banner_cta_link); ?>" class="wide-input"></p>
+                <p><label>CTA Title:</label><br><input type="text" name="project_banner_cta_title" value="<?php echo esc_attr($banner_cta_title); ?>" class="wide-input"></p>
+            <?php
+                break;
+
+            case 'downloads':
+                $downloads = get_post_meta($post->ID, 'project_downloads', true);
+                if (!is_array($downloads)) $downloads = [];
+            ?>
+                <div class="downloads-table-container">
+                    <table class="downloads-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>File</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($downloads as $index => $download): ?>
+                                <tr class="download-row">
+                                    <td><input type="text" name="project_downloads[<?php echo $index; ?>][title]" value="<?php echo esc_attr($download['title'] ?? ''); ?>" class="wide-input"></td>
+                                    <td>
+                                        <div class="file-preview-container">
+                                            <input type="hidden" name="project_downloads[<?php echo $index; ?>][file]" value="<?php echo esc_attr($download['file'] ?? ''); ?>" class="download-file-id">
+                                            <?php if (!empty($download['file'])): ?>
+                                                <?php
+                                                $file_url = wp_get_attachment_url($download['file']);
+                                                $file_name = basename($file_url);
+                                                ?>
+                                                <a href="<?php echo esc_url($file_url); ?>" target="_blank" class="file-link"><?php echo esc_html($file_name); ?></a>
+                                            <?php endif; ?>
+                                            <button type="button" class="select-download-file button"><?php echo empty($download['file']) ? 'Select File' : 'Change File'; ?></button>
+                                        </div>
+                                    </td>
+                                    <td><button type="button" class="remove-download button">Remove</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <button type="button" class="add-download button">Add Download</button>
+                </div>
+            <?php
+                break;
+
+            case 'image-gallery':
+                $image_gallery = get_post_meta($post->ID, 'project_image_gallery', true);
+                if (!is_array($image_gallery)) $image_gallery = [];
+            ?>
+                <div class="image-gallery-container">
+                    <div class="gallery-items">
+                        <?php foreach ($image_gallery as $index => $image_id):
+                            $image_url = wp_get_attachment_url($image_id);
+                            if (!$image_url) continue;
+                        ?>
+                            <div class="gallery-item">
+                                <input type="hidden" name="project_image_gallery[]" value="<?php echo esc_attr($image_id); ?>">
+                                <img src="<?php echo esc_url($image_url); ?>" alt="Gallery Image" style="max-width: 100px; max-height: 100px;">
+                                <button type="button" class="remove-gallery-image button">Remove</button>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="add-gallery-image button">Add Images</button>
+                </div>
+<?php
+                break;
         }
+
+        echo '</div>';
     }
 
     echo '</div>';
-    echo '<button type="button" id="add-location-button" class="button">Add Location</button>';
-
-    ?>
-    <script>
-    jQuery(document).ready(function($) {
-        var locationIndex = <?php echo count($locations); ?>;
-
-        $('#add-location-button').on('click', function() {
-            var html = '<div class="location-item" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd;">' +
-                '<label>Place:</label><br>' +
-                '<input type="text" name="project_locations[' + locationIndex + '][place]" style="width:100%; margin-bottom:5px;" /><br>' +
-                '<label>Date:</label><br>' +
-                '<input type="text" name="project_locations[' + locationIndex + '][date]" style="width:100%; margin-bottom:5px;" placeholder="e.g., 2025" /><br>' +
-                '<label>Description:</label><br>' +
-                '<textarea name="project_locations[' + locationIndex + '][description]" rows="3" style="width:100%;"></textarea>' +
-                '<button type="button" class="remove-location-button button" style="margin-top: 5px;">Remove Location</button>' +
-                '</div>';
-            $('#project-locations-container').append(html);
-            locationIndex++;
-        });
-
-        $(document).on('click', '.remove-location-button', function() {
-            $(this).closest('.location-item').remove();
-        });
-    });
-    </script>
-    <?php
+    echo '</div>';
 }
 
-// Save Projects meta
-function nrna_save_projects_meta_boxes($post_id) {
-    if (array_key_exists('project_subtitle', $_POST)) {
-        update_post_meta($post_id, 'project_subtitle', sanitize_text_field($_POST['project_subtitle']));
-    }
-    if (array_key_exists('project_description', $_POST)) {
-        update_post_meta($post_id, 'project_description', wp_kses_post($_POST['project_description']));
-    }
-    if (array_key_exists('project_objective', $_POST)) {
-        update_post_meta($post_id, 'project_objective', wp_kses_post($_POST['project_objective']));
-    }
-    if (array_key_exists('project_locations', $_POST)) {
-        $locations = [];
-        foreach ($_POST['project_locations'] as $location) {
-            if (!empty($location['place']) || !empty($location['date']) || !empty($location['description'])) {
-                $locations[] = [
-                    'place' => sanitize_text_field($location['place']),
-                    'date' => sanitize_text_field($location['date']),
-                    'description' => sanitize_textarea_field($location['description']),
-                ];
-            }
+// Save Projects meta box
+function nrna_save_projects_meta_box($post_id)
+{
+    if (!isset($_POST['nrna_projects_meta_box_nonce']) || !wp_verify_nonce($_POST['nrna_projects_meta_box_nonce'], 'nrna_projects_meta_box')) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+    $fields = [
+        'project_hero_title' => 'sanitize_text_field',
+        'project_date' => 'sanitize_text_field',
+        'project_sub_title' => 'sanitize_text_field',
+        'project_cta_link_1' => 'esc_url_raw',
+        'project_cta_title_1' => 'sanitize_text_field',
+        'project_cta_link_2' => 'esc_url_raw',
+        'project_cta_title_2' => 'sanitize_text_field',
+        'project_description' => 'wp_kses_post',
+        'project_objective_title' => 'sanitize_text_field',
+        'project_objective_description' => 'wp_kses_post',
+        'project_banner_title' => 'sanitize_text_field',
+        'project_banner_description' => 'wp_kses_post',
+        'project_banner_cta_link' => 'esc_url_raw',
+        'project_banner_cta_title' => 'sanitize_text_field',
+        'project_hero_image' => 'intval',
+    ];
+
+    foreach ($fields as $field => $sanitize) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, call_user_func($sanitize, $_POST[$field]));
         }
-        update_post_meta($post_id, 'project_locations', $locations);
+    }
+
+    // Save Locations
+    if (isset($_POST['project_locations'])) {
+        $locations = $_POST['project_locations'];
+        $sanitized_locations = [];
+        foreach ((array)$locations as $location) {
+            $clean = [];
+            if (isset($location['place'])) $clean['place'] = sanitize_text_field($location['place']);
+            if (isset($location['date'])) $clean['date'] = sanitize_text_field($location['date']);
+            if (isset($location['description'])) $clean['description'] = wp_kses_post($location['description']);
+            if (isset($location['cta_link'])) $clean['cta_link'] = esc_url_raw($location['cta_link']);
+            if (isset($location['cta_title'])) $clean['cta_title'] = sanitize_text_field($location['cta_title']);
+            if (!empty($clean)) $sanitized_locations[] = $clean;
+        }
+        update_post_meta($post_id, 'project_locations', $sanitized_locations);
     } else {
         delete_post_meta($post_id, 'project_locations');
     }
-}
-add_action('save_post', 'nrna_save_projects_meta_boxes');
 
-// Clean up Projects admin screen
-function nrna_remove_projects_meta_boxes() {
-    remove_meta_box('slugdiv', 'projects', 'normal');
-    remove_meta_box('authordiv', 'projects', 'normal');
-    remove_meta_box('commentsdiv', 'projects', 'normal');
-    remove_meta_box('revisionsdiv', 'projects', 'normal');
-}
-add_action('admin_menu', 'nrna_remove_projects_meta_boxes');
-
-// Prepare Projects REST response to include all meta fields
-function nrna_prepare_projects_rest_response($response, $post, $request) {
-    $data = $response->get_data();
-
-    // Add meta fields
-    $data['project_subtitle'] = get_post_meta($post->ID, 'project_subtitle', true);
-    $data['project_description'] = get_post_meta($post->ID, 'project_description', true);
-    $data['project_objective'] = get_post_meta($post->ID, 'project_objective', true);
-    $data['project_locations'] = get_post_meta($post->ID, 'project_locations', true);
-
-    // Add featured image URL if exists
-    if (has_post_thumbnail($post->ID)) {
-        $data['featured_image_url'] = get_the_post_thumbnail_url($post->ID, 'full');
+    // Save Downloads
+    if (isset($_POST['project_downloads'])) {
+        $downloads = $_POST['project_downloads'];
+        $sanitized_downloads = [];
+        foreach ((array)$downloads as $dl) {
+            $clean = [];
+            if (isset($dl['title'])) $clean['title'] = sanitize_text_field($dl['title']);
+            if (isset($dl['file'])) $clean['file'] = intval($dl['file']);
+            if (!empty($clean)) $sanitized_downloads[] = $clean;
+        }
+        update_post_meta($post_id, 'project_downloads', $sanitized_downloads);
+    } else {
+        delete_post_meta($post_id, 'project_downloads');
     }
 
-    $response->set_data($data);
-    return $response;
-}
-add_filter('rest_prepare_projects', 'nrna_prepare_projects_rest_response', 10, 3);
-
-// Register Projects meta fields for REST API
-function nrna_register_projects_meta_fields() {
-    $fields = [
-        'project_subtitle' => ['type' => 'string'],
-        'project_description' => ['type' => 'string'],
-        'project_objective' => ['type' => 'string'],
-        'project_locations' => [
-            'type' => 'array',
-            'items' => [
-                'type' => 'object',
-                'properties' => [
-                    'place' => ['type' => 'string'],
-                    'date' => ['type' => 'string'],
-                    'description' => ['type' => 'string'],
-                ],
-            ],
-        ],
-    ];
-
-    foreach ($fields as $key => $args) {
-        register_post_meta('projects', $key, array_merge($args, [
-            'show_in_rest' => true,
-            'single' => true,
-        ]));
+    // Save Image Gallery
+    if (isset($_POST['project_image_gallery'])) {
+        $gallery = array_map('intval', $_POST['project_image_gallery']);
+        update_post_meta($post_id, 'project_image_gallery', $gallery);
+    } else {
+        delete_post_meta($post_id, 'project_image_gallery');
     }
 }
-add_action('init', 'nrna_register_projects_meta_fields');
+add_action('save_post', 'nrna_save_projects_meta_box');
+
+// Clean up Projects admin screen (remove standard boxes if needed, currently only removing generic ones)
+function nrna_remove_projects_extra_boxes()
+{
+    // remove_meta_box('slugdiv', 'projects', 'normal'); // slugs are useful
+    // remove_meta_box('postcustom', 'projects', 'normal');
+}
+// add_action('admin_menu', 'nrna_remove_projects_extra_boxes');
