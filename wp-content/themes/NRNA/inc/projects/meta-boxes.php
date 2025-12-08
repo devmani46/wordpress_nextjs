@@ -49,9 +49,7 @@ function nrna_render_projects_meta_box($post)
                 $cta_link_2 = get_post_meta($post->ID, 'project_cta_link_2', true);
                 $cta_title_2 = get_post_meta($post->ID, 'project_cta_title_2', true);
                 $description = get_post_meta($post->ID, 'project_description', true);
-                $hero_image = get_post_meta($post->ID, 'project_hero_image', true);
 
-                $hero_image_url = $hero_image ? wp_get_attachment_url($hero_image) : '';
 ?>
                 <p><label>Title:</label><br><input type="text" name="project_hero_title" value="<?php echo esc_attr($hero_title); ?>" class="wide-input"></p>
                 <p><label>Date:</label><br><input type="date" name="project_date" value="<?php echo esc_attr($date); ?>" class="wide-input"></p>
@@ -61,12 +59,6 @@ function nrna_render_projects_meta_box($post)
                 <p><label>CTA Title 2:</label><br><input type="text" name="project_cta_title_2" value="<?php echo esc_attr($cta_title_2); ?>" class="wide-input"></p>
                 <p><label>CTA Link 2:</label><br><input type="url" name="project_cta_link_2" value="<?php echo esc_attr($cta_link_2); ?>" class="wide-input"></p>
 
-                <div class="image-preview-container">
-                    <label>Featured Image:</label><br>
-                    <input type="hidden" name="project_hero_image" value="<?php echo esc_attr($hero_image); ?>" class="download-file-id">
-                    <img src="<?php echo esc_url($hero_image_url); ?>" style="max-width: 200px; display: <?php echo $hero_image ? 'block' : 'none'; ?>;" class="committee-photo-preview">
-                    <button type="button" class="select-download-file button"><?php echo $hero_image ? 'Change Image' : 'Select Image'; ?></button>
-                </div>
 
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'project_description', true), 'project_description', array(
@@ -227,7 +219,6 @@ function nrna_save_projects_meta_box($post_id)
         'project_banner_description' => 'wp_kses_post',
         'project_banner_cta_link' => 'esc_url_raw',
         'project_banner_cta_title' => 'sanitize_text_field',
-        'project_hero_image' => 'intval',
     ];
 
     foreach ($fields as $field => $sanitize) {

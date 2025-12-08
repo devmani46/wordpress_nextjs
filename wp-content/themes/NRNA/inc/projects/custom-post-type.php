@@ -49,7 +49,6 @@ function nrna_register_projects_meta_fields()
         'project_banner_description' => ['type' => 'string'],
         'project_banner_cta_link' => ['type' => 'string'],
         'project_banner_cta_title' => ['type' => 'string'],
-        'project_hero_image' => ['type' => 'integer'], // Attachment ID
     ];
 
     foreach ($fields as $key => $args) {
@@ -139,10 +138,6 @@ function nrna_prepare_projects_rest($response, $post, $request)
             ];
         }
         $data['project_downloads'][] = $item;
-    }
-
-    if (!empty($data['project_hero_image'])) {
-        $data['project_hero_image_url'] = wp_get_attachment_url($data['project_hero_image']);
     }
 
     $response->set_data($data);
