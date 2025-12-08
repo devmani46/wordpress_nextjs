@@ -51,6 +51,7 @@ function nrna_render_projects_meta_box($post)
                 $description = get_post_meta($post->ID, 'project_description', true);
 
 ?>
+                <p><label>Title:</label><br><input type="text" name="project_hero_title" value="<?php echo esc_attr($hero_title); ?>" class="wide-input"></p>
                 <p><label>Date:</label><br><input type="date" name="project_date" value="<?php echo esc_attr($date); ?>" class="wide-input"></p>
                 <p><label>Sub Title:</label><br><input type="text" name="project_sub_title" value="<?php echo esc_attr($sub_title); ?>" class="wide-input"></p>
                 <p><label>CTA Title 1:</label><br><input type="text" name="project_cta_title_1" value="<?php echo esc_attr($cta_title_1); ?>" class="wide-input"></p>
