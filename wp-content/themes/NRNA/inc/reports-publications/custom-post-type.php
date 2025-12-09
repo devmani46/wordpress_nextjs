@@ -1,6 +1,7 @@
 <?php
 // Register Reports & Publications custom post type
-function nrna_register_reports_publications_cpt() {
+function nrna_register_reports_publications_cpt()
+{
     $labels = [
         'name'               => _x('Reports & Publications', 'Post Type General Name', 'nrna'),
         'singular_name'      => _x('Report & Publication', 'Post Type Singular Name', 'nrna'),
@@ -33,7 +34,8 @@ function nrna_register_reports_publications_cpt() {
 add_action('init', 'nrna_register_reports_publications_cpt');
 
 // Register Reports & Publications Category taxonomy
-function nrna_register_reports_publications_category_taxonomy() {
+function nrna_register_reports_publications_category_taxonomy()
+{
     $labels = [
         'name'              => _x('Reports & Publications Categories', 'taxonomy general name', 'nrna'),
         'singular_name'     => _x('Reports & Publications Category', 'taxonomy singular name', 'nrna'),
@@ -66,7 +68,8 @@ function nrna_register_reports_publications_category_taxonomy() {
 add_action('init', 'nrna_register_reports_publications_category_taxonomy');
 
 // Ensure the taxonomy meta box appears in Reports & Publications edit screen
-function nrna_add_reports_publications_category_metabox_back() {
+function nrna_add_reports_publications_category_metabox_back()
+{
     add_meta_box(
         'reports_publications_categorydiv',
         __('Reports & Publications Categories', 'nrna'),
@@ -78,3 +81,46 @@ function nrna_add_reports_publications_category_metabox_back() {
     );
 }
 add_action('add_meta_boxes_reports_publications', 'nrna_add_reports_publications_category_metabox_back');
+
+// Register custom REST API fields for Reports & Publications
+function nrna_register_reports_publications_rest_fields()
+{
+    register_rest_field('reports_publications', 'pdf_files', [
+        'get_callback' => function ($object) {
+            $files = get_post_meta($object['id'], 'reports_publications_files', true);
+            $pdf_files = [];
+
+            if (is_array($files)) {
+                foreach ($files as $file_id) {
+                    $url = wp_get_attachment_url($file_id);
+                    if ($url) {
+                        $pdf_files[] = [
+                            'title' => get_the_title($file_id),
+                            'url'   => $url,
+                        ];
+                    }
+                }
+            }
+            return $pdf_files;
+        },
+        'update_callback' => null,
+        'schema'          => null,
+    ]);
+
+    register_rest_field('reports_publications', 'category_titles', [
+        'get_callback' => function ($object) {
+            $terms = get_the_terms($object['id'], 'reports_publications_category');
+            $category_titles = [];
+
+            if ($terms && !is_wp_error($terms)) {
+                foreach ($terms as $term) {
+                    $category_titles[] = $term->name;
+                }
+            }
+            return $category_titles;
+        },
+        'update_callback' => null,
+        'schema'          => null,
+    ]);
+}
+add_action('rest_api_init', 'nrna_register_reports_publications_rest_fields');
