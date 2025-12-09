@@ -264,7 +264,55 @@ function nrna_add_nrna_area_menu()
         $terms_link
     );
 
-    // Remove the default "NRNA Area" submenu created by add_menu_page
     remove_submenu_page('nrna-area-menu', 'nrna-area-menu');
 }
 add_action('admin_menu', 'nrna_add_nrna_area_menu');
+
+
+// Move "Menus" to top-level
+function nrna_move_menus_to_top_level()
+{
+    remove_submenu_page('themes.php', 'nav-menus.php');
+    add_menu_page(
+        'Menus',
+        'Menus',
+        'edit_theme_options',
+        'nav-menus.php',
+        '',
+        'dashicons-menu',
+        60
+    );
+}
+add_action('admin_menu', 'nrna_move_menus_to_top_level');
+
+
+// Custom Menu Order
+function nrna_custom_menu_order($menu_ord)
+{
+    if (!$menu_ord) return true;
+
+    return array(
+        'index.php',
+        'edit.php',
+        'upload.php',
+        'edit.php?post_type=page',
+        'home-page-menu',
+        'about-us-menu',
+        'edit.php?post_type=resources',
+        'edit.php?post_type=reports_publications',
+        'news-events-menu',
+        'edit.php?post_type=projects',
+        'gallery-menu',
+        'nrna-area-menu',
+        'contact-submissions',
+        'nav-menus.php',
+        'themes.php',
+        'plugins.php',
+        'users.php',
+        'tools.php',
+        'options-general.php',
+        'separator-last',
+    );
+}
+add_filter('custom_menu_order', '__return_true');
+add_filter('menu_order', 'nrna_custom_menu_order');
