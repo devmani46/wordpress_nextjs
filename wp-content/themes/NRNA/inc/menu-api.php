@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Custom REST API endpoint for exposing WordPress menus
  */
@@ -6,7 +7,8 @@
 // Register the REST API endpoint
 add_action('rest_api_init', 'nrna_register_menu_api');
 
-function nrna_register_menu_api() {
+function nrna_register_menu_api()
+{
     register_rest_route('wp/v1', '/menu/(?P<location>[a-zA-Z0-9-_]+)', array(
         'methods' => 'GET',
         'callback' => 'nrna_get_menu_items',
@@ -14,16 +16,28 @@ function nrna_register_menu_api() {
     ));
 }
 
-function nrna_get_menu_items($request) {
+function nrna_get_menu_items($request)
+{
     $location = $request->get_param('location');
+    $menu_id = null;
 
-    // Get the menu assigned to the location
+    // Check if the parameter matches a registered theme location
     $menu_locations = get_nav_menu_locations();
-    if (!isset($menu_locations[$location])) {
-        return new WP_Error('menu_not_found', 'Menu location not found', array('status' => 404));
+    if (isset($menu_locations[$location])) {
+        $menu_id = $menu_locations[$location];
+    } else {
+        // Fallback: Try to find menu by slug, ID, or name
+        $menu_object = wp_get_nav_menu_object($location);
+        if ($menu_object) {
+            $menu_id = $menu_object->term_id;
+        }
     }
 
-    $menu_id = $menu_locations[$location];
+    // If no menu found, return error
+    if (!$menu_id) {
+        return new WP_Error('menu_not_found', 'Menu not found', array('status' => 404));
+    }
+
     $menu_items = wp_get_nav_menu_items($menu_id);
 
     if (!$menu_items) {
@@ -36,7 +50,8 @@ function nrna_get_menu_items($request) {
     return $menu_tree;
 }
 
-function nrna_build_menu_tree($menu_items) {
+function nrna_build_menu_tree($menu_items)
+{
     $tree = array();
     $menu_items_by_id = array();
 
