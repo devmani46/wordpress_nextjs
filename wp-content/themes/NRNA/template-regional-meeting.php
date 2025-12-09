@@ -1,15 +1,14 @@
 <?php
 
 /**
- * Template Name: Regional Meeting Page
+ * Template Name: Regional Meeting
  */
 
 get_header();
+?>
 
-if (have_posts()) :
-    while (have_posts()) : the_post();
-        the_content();
-    endwhile;
-endif;
+<main>
+    <p>This page is rendered by Next.js. Please view it through the Next.js frontend.</p>
+</main>
 
-get_footer();
+<?php get_footer(); ?>
