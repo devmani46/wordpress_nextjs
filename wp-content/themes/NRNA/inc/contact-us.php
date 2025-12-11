@@ -167,6 +167,22 @@ function nrna_contact_submissions_page()
     $action = isset($_GET['action']) ? $_GET['action'] : 'list';
     $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
+    // Handle Mark as Read Action
+    if ($action === 'mark_read' && $id > 0) {
+        check_admin_referer('mark_read_submission_' . $id);
+        $wpdb->update($table_name, ['status' => 'read'], ['id' => $id]);
+        echo '<script>window.location.href="admin.php?page=contact-submissions&message=marked_read";</script>';
+        exit;
+    }
+
+    // Handle Mark ALL as Read Action
+    if ($action === 'mark_all_read') {
+        check_admin_referer('mark_all_read_submissions');
+        $wpdb->update($table_name, ['status' => 'read'], ['status' => 'new']);
+        echo '<script>window.location.href="admin.php?page=contact-submissions&message=all_marked_read";</script>';
+        exit;
+    }
+
     // Handle Delete Action
     if ($action === 'delete' && $id > 0) {
         check_admin_referer('delete_submission_' . $id);
@@ -233,12 +249,23 @@ function nrna_contact_submissions_page()
     ?>
     <div class="wrap">
         <h1 class="wp-heading-inline">Contact Form Submissions</h1>
+        <a href="<?php echo wp_nonce_url('admin.php?page=contact-submissions&action=mark_all_read', 'mark_all_read_submissions'); ?>" class="page-title-action">Mark All as Read</a>
         <hr class="wp-header-end">
 
-        <?php if (isset($_GET['message']) && $_GET['message'] === 'deleted') : ?>
-            <div class="notice notice-success is-dismissible">
-                <p>Submission deleted successfully.</p>
-            </div>
+        <?php if (isset($_GET['message'])) : ?>
+            <?php if ($_GET['message'] === 'deleted') : ?>
+                <div class="notice notice-success is-dismissible">
+                    <p>Submission deleted successfully.</p>
+                </div>
+            <?php elseif ($_GET['message'] === 'marked_read') : ?>
+                <div class="notice notice-success is-dismissible">
+                    <p>Submission marked as read.</p>
+                </div>
+            <?php elseif ($_GET['message'] === 'all_marked_read') : ?>
+                <div class="notice notice-success is-dismissible">
+                    <p>All new submissions marked as read.</p>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
 
         <?php if (empty($submissions)) : ?>
@@ -249,7 +276,7 @@ function nrna_contact_submissions_page()
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th style="width: 5%;">ID</th>
+                        <th style="width: 5%;">S.N.</th>
                         <th style="width: 15%;">Name</th>
                         <th style="width: 20%;">Email</th>
                         <th style="width: 10%;">Status</th>
@@ -258,16 +285,21 @@ function nrna_contact_submissions_page()
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($submissions as $submission) :
+                    <?php
+                    $serial_number = 1;
+                    foreach ($submissions as $submission) :
                         $is_new = isset($submission->status) && $submission->status === 'new';
                         $row_activator = 'admin.php?page=contact-submissions&action=view&id=' . $submission->id;
                     ?>
                         <tr class="<?php echo $is_new ? 'updated' : ''; ?>">
-                            <td><?php echo esc_html($submission->id); ?></td>
+                            <td><?php echo $serial_number++; ?></td>
                             <td>
                                 <strong><a href="<?php echo $row_activator; ?>" class="row-title"><?php echo esc_html($submission->first_name . ' ' . $submission->last_name); ?></a></strong>
                                 <div class="row-actions">
                                     <span class="view"><a href="<?php echo $row_activator; ?>">View</a> | </span>
+                                    <?php if ($is_new) : ?>
+                                        <span class="mark-read"><a href="<?php echo wp_nonce_url('admin.php?page=contact-submissions&action=mark_read&id=' . $submission->id, 'mark_read_submission_' . $submission->id); ?>">Mark as Read</a> | </span>
+                                    <?php endif; ?>
                                     <span class="delete"><a href="<?php echo wp_nonce_url('admin.php?page=contact-submissions&action=delete&id=' . $submission->id, 'delete_submission_' . $submission->id); ?>" class="submitdelete" onclick="return confirm('Are you sure?')">Delete</a></span>
                                 </div>
                             </td>

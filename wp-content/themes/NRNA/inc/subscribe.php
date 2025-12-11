@@ -241,8 +241,7 @@ function nrna_subscribed_emails_page()
                         if ($is_active) $row_class .= ' active-subscription'; // optional visual aid for active
                     ?>
                         <tr class="<?php echo esc_attr($row_class); ?>">
-                            <td><?php echo $serial_number++; // Sequential Number 
-                                ?></td>
+                            <td><?php echo $serial_number++; ?></td>
                             <td>
                                 <strong><?php echo esc_html($subscription->email); ?></strong>
                                 <div class="row-actions">
