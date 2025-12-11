@@ -49,6 +49,7 @@ function nrna_handle_subscribe_submission($request)
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         email varchar(100) NOT NULL,
         status varchar(20) DEFAULT 'active' NOT NULL,
+        is_read tinyint(1) DEFAULT 0 NOT NULL,
         subscribed_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
         PRIMARY KEY  (id),
         UNIQUE KEY email (email)
@@ -111,7 +112,15 @@ function nrna_add_subscribed_emails_menu()
     // Count active subscriptions
     // Check if table exists first to avoid errors on fresh install
     if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) {
-        $count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 'active'");
+        // Count unread
+        // Check if is_read column exists first (to avoid errors on existing installs before migration)
+        $col_exists = $wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'is_read'");
+        if (!empty($col_exists)) {
+            $count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE is_read = 0");
+        } else {
+            // Fallback to active count or 0 if column missing
+            $count = 0;
+        }
     } else {
         $count = 0;
     }
@@ -145,6 +154,31 @@ function nrna_subscribed_emails_page()
     $action = isset($_GET['action']) ? $_GET['action'] : 'list';
     $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
+    // Schema Migration: Check if is_read column exists
+    $col_check = $wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'is_read'");
+    if (empty($col_check)) {
+        $sql = "ALTER TABLE $table_name ADD COLUMN is_read tinyint(1) DEFAULT 0 NOT NULL";
+        $wpdb->query($sql);
+        // Mark existing as read to avoid badge explosion
+        $wpdb->query("UPDATE $table_name SET is_read = 1");
+    }
+
+    // Handle Mark as Read Action
+    if ($action === 'mark_read' && $id > 0) {
+        check_admin_referer('mark_read_subscription_' . $id);
+        $wpdb->update($table_name, ['is_read' => 1], ['id' => $id]);
+        echo '<script>window.location.href="admin.php?page=subscribed-emails&message=marked_read";</script>';
+        exit;
+    }
+
+    // Handle Mark ALL as Read Action
+    if ($action === 'mark_all_read') {
+        check_admin_referer('mark_all_read_subscriptions');
+        $wpdb->query("UPDATE $table_name SET is_read = 1 WHERE is_read = 0");
+        echo '<script>window.location.href="admin.php?page=subscribed-emails&message=all_marked_read";</script>';
+        exit;
+    }
+
     // Handle Delete Action
     if ($action === 'delete' && $id > 0) {
         check_admin_referer('delete_subscription_' . $id);
@@ -164,12 +198,23 @@ function nrna_subscribed_emails_page()
 ?>
     <div class="wrap">
         <h1 class="wp-heading-inline">Subscribed Emails</h1>
+        <a href="<?php echo wp_nonce_url('admin.php?page=subscribed-emails&action=mark_all_read', 'mark_all_read_subscriptions'); ?>" class="page-title-action">Mark All as Read</a>
         <hr class="wp-header-end">
 
-        <?php if (isset($_GET['message']) && $_GET['message'] === 'deleted') : ?>
-            <div class="notice notice-success is-dismissible">
-                <p>Subscription deleted successfully.</p>
-            </div>
+        <?php if (isset($_GET['message'])) : ?>
+            <?php if ($_GET['message'] === 'deleted') : ?>
+                <div class="notice notice-success is-dismissible">
+                    <p>Subscription deleted successfully.</p>
+                </div>
+            <?php elseif ($_GET['message'] === 'marked_read') : ?>
+                <div class="notice notice-success is-dismissible">
+                    <p>Subscription marked as read.</p>
+                </div>
+            <?php elseif ($_GET['message'] === 'all_marked_read') : ?>
+                <div class="notice notice-success is-dismissible">
+                    <p>All subscriptions marked as read.</p>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
 
         <?php if (empty($subscriptions)) : ?>
@@ -187,14 +232,23 @@ function nrna_subscribed_emails_page()
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($subscriptions as $subscription) :
+                    <?php
+                    $serial_number = 1;
+                    foreach ($subscriptions as $subscription) :
                         $is_active = isset($subscription->status) && $subscription->status === 'active';
+                        $is_unread = isset($subscription->is_read) && $subscription->is_read == 0;
+                        $row_class = $is_unread ? 'updated' : '';
+                        if ($is_active) $row_class .= ' active-subscription'; // optional visual aid for active
                     ?>
-                        <tr class="<?php echo $is_active ? 'active-subscription' : ''; ?>">
-                            <td><?php echo esc_html($subscription->id); ?></td>
+                        <tr class="<?php echo esc_attr($row_class); ?>">
+                            <td><?php echo $serial_number++; // Sequential Number 
+                                ?></td>
                             <td>
                                 <strong><?php echo esc_html($subscription->email); ?></strong>
                                 <div class="row-actions">
+                                    <?php if ($is_unread) : ?>
+                                        <span class="mark-read"><a href="<?php echo wp_nonce_url('admin.php?page=subscribed-emails&action=mark_read&id=' . $subscription->id, 'mark_read_subscription_' . $subscription->id); ?>">Mark as Read</a> | </span>
+                                    <?php endif; ?>
                                     <span class="delete"><a href="<?php echo wp_nonce_url('admin.php?page=subscribed-emails&action=delete&id=' . $subscription->id, 'delete_subscription_' . $subscription->id); ?>" class="submitdelete" onclick="return confirm('Are you sure you want to delete this subscription?')">Delete</a></span>
                                 </div>
                             </td>
@@ -223,8 +277,13 @@ function nrna_subscribed_emails_page()
             padding: 10px;
         }
 
-        .active-subscription {
-            background-color: #f0f9ff !important;
+        .updated {
+            background-color: #f0f6fc !important;
+            font-weight: bold;
+        }
+
+        .updated td {
+            box-shadow: inset 2px 0 0 #3571b1;
         }
     </style>
 <?php
