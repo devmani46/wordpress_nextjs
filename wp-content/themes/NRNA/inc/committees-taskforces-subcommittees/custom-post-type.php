@@ -1,6 +1,7 @@
 <?php
 // Register meta fields for Committees page
-function nrna_register_committees_meta_fields() {
+function nrna_register_committees_meta_fields()
+{
     $fields = [
         'committees_hero_title' => ['type' => 'string'],
         'committees_hero_description' => ['type' => 'string'],
@@ -63,6 +64,8 @@ function nrna_register_committees_meta_fields() {
                 'name' => ['type' => 'string'],
                 'role' => ['type' => 'string'],
                 'email' => ['type' => 'string'],
+                'tenure_from' => ['type' => 'string'],
+                'tenure_to' => ['type' => 'string'],
             ],
         ],
         'show_in_rest' => true,
@@ -72,7 +75,8 @@ function nrna_register_committees_meta_fields() {
 add_action('init', 'nrna_register_committees_meta_fields');
 
 // Customize REST API response for Committees page
-function nrna_custom_committees_rest_response($response, $post, $request) {
+function nrna_custom_committees_rest_response($response, $post, $request)
+{
     if ($post->post_type === 'page' && get_post_meta($post->ID, '_wp_page_template', true) === 'template-committees-taskforces-subcommittees.php') {
         // Only override data for non-edit contexts to avoid breaking the editor
         if ($request->get_param('context') !== 'edit') {
