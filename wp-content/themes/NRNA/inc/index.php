@@ -25,6 +25,12 @@ require_once 'contact-meta-box.php';
 // Load nrna discount meta box
 require_once 'nrna-discount-meta-box.php';
 
+// Load our ncc page meta box
+require_once 'our-ncc-page-meta-box.php';
+
+// Load executive committee page meta box
+require_once 'executive-committee-page-meta-box.php';
+
 // Load projects includes
 require_once 'projects/index.php';
 

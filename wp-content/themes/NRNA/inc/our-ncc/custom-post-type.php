@@ -1,6 +1,7 @@
 <?php
 // Register NCC Committees custom post type
-function nrna_register_ncc_committees_cpt() {
+function nrna_register_ncc_committees_cpt()
+{
     $labels = [
         'name'               => _x('Our NCC', 'Post Type General Name', 'nrna'),
         'singular_name'      => _x('Our NCC', 'Post Type Singular Name', 'nrna'),
@@ -34,7 +35,8 @@ function nrna_register_ncc_committees_cpt() {
 add_action('init', 'nrna_register_ncc_committees_cpt');
 
 // Register meta fields for NCC Committees
-function nrna_register_ncc_committees_meta_fields() {
+function nrna_register_ncc_committees_meta_fields()
+{
     $fields = [
         'ncc_year_of_tenure' => ['type' => 'string'],
         'ncc_region' => ['type' => 'string'],
@@ -57,7 +59,8 @@ function nrna_register_ncc_committees_meta_fields() {
 add_action('init', 'nrna_register_ncc_committees_meta_fields');
 
 // Add custom columns to admin list
-function nrna_ncc_committees_columns($columns) {
+function nrna_ncc_committees_columns($columns)
+{
     $new_columns = [];
     foreach ($columns as $key => $value) {
         if ($key === 'title') {
@@ -77,7 +80,8 @@ function nrna_ncc_committees_columns($columns) {
 add_filter('manage_our_ncc_posts_columns', 'nrna_ncc_committees_columns');
 
 // Populate custom columns
-function nrna_ncc_committees_column_content($column, $post_id) {
+function nrna_ncc_committees_column_content($column, $post_id)
+{
     switch ($column) {
         case 'ncc_name':
             echo esc_html(get_post_meta($post_id, 'ncc_name', true));
@@ -105,7 +109,8 @@ function nrna_ncc_committees_column_content($column, $post_id) {
 add_action('manage_our_ncc_posts_custom_column', 'nrna_ncc_committees_column_content', 10, 2);
 
 // Make columns sortable
-function nrna_ncc_committees_sortable_columns($columns) {
+function nrna_ncc_committees_sortable_columns($columns)
+{
     $columns['ncc_name'] = 'ncc_name';
     $columns['ncc_region'] = 'ncc_region';
     $columns['ncc_country_name'] = 'ncc_country_name';
@@ -117,7 +122,8 @@ function nrna_ncc_committees_sortable_columns($columns) {
 add_filter('manage_edit-our_ncc_sortable_columns', 'nrna_ncc_committees_sortable_columns');
 
 // Handle sorting
-function nrna_ncc_committees_orderby($query) {
+function nrna_ncc_committees_orderby($query)
+{
     if (!is_admin() || !$query->is_main_query()) {
         return;
     }
@@ -156,7 +162,8 @@ function nrna_ncc_committees_orderby($query) {
 add_action('pre_get_posts', 'nrna_ncc_committees_orderby');
 
 // Prepare REST API response to include meta fields
-function nrna_prepare_ncc_committees_rest($response, $post, $request) {
+function nrna_prepare_ncc_committees_rest($response, $post, $request)
+{
     if ($post->post_type !== 'our_ncc') {
         return $response;
     }
@@ -184,7 +191,8 @@ function nrna_prepare_ncc_committees_rest($response, $post, $request) {
 add_filter('rest_prepare_our_ncc', 'nrna_prepare_ncc_committees_rest', 10, 3);
 
 // Set post title to ncc_name on save
-function nrna_set_ncc_committees_title($post_id) {
+function nrna_set_ncc_committees_title($post_id)
+{
     if (get_post_type($post_id) !== 'our_ncc') {
         return;
     }
