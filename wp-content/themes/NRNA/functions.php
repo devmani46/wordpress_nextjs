@@ -27,3 +27,6 @@ require_once $inc . 'parent-menus.php';
 
 // Load Contact Us
 require_once $inc . 'contact-us.php';
+
+// Load Subscribe
+require_once $inc . 'subscribe.php';
