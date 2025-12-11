@@ -1,6 +1,7 @@
 <?php
 // Register Executive Committee custom post type
-function nrna_register_executive_committee_cpt() {
+function nrna_register_executive_committee_cpt()
+{
     $labels = [
         'name'               => _x('Executive Committee', 'Post Type General Name', 'nrna'),
         'singular_name'      => _x('Committee Member', 'Post Type Singular Name', 'nrna'),
@@ -32,9 +33,10 @@ function nrna_register_executive_committee_cpt() {
 add_action('init', 'nrna_register_executive_committee_cpt');
 
 // Register meta fields for REST API
-function nrna_register_executive_committee_meta_rest() {
+function nrna_register_executive_committee_meta_rest()
+{
     register_rest_field('executive_committee', 'committee_role', [
-        'get_callback' => function($post) {
+        'get_callback' => function ($post) {
             return get_post_meta($post['id'], 'committee_role', true);
         },
         'schema' => [
@@ -44,7 +46,7 @@ function nrna_register_executive_committee_meta_rest() {
     ]);
 
     register_rest_field('executive_committee', 'committee_institution', [
-        'get_callback' => function($post) {
+        'get_callback' => function ($post) {
             return get_post_meta($post['id'], 'committee_institution', true);
         },
         'schema' => [
@@ -54,7 +56,7 @@ function nrna_register_executive_committee_meta_rest() {
     ]);
 
     register_rest_field('executive_committee', 'committee_country', [
-        'get_callback' => function($post) {
+        'get_callback' => function ($post) {
             return get_post_meta($post['id'], 'committee_country', true);
         },
         'schema' => [
@@ -64,12 +66,42 @@ function nrna_register_executive_committee_meta_rest() {
     ]);
 
     register_rest_field('executive_committee', 'hierarchy_order', [
-        'get_callback' => function($post) {
+        'get_callback' => function ($post) {
             return (int) get_post_meta($post['id'], 'hierarchy_order', true);
         },
         'schema' => [
             'type' => 'integer',
             'description' => 'Hierarchy order',
+        ],
+    ]);
+
+    register_rest_field('executive_committee', 'tenure_from', [
+        'get_callback' => function ($post) {
+            return get_post_meta($post['id'], 'tenure_from', true);
+        },
+        'schema' => [
+            'type' => 'string',
+            'description' => 'Tenure from year',
+        ],
+    ]);
+
+    register_rest_field('executive_committee', 'tenure_to', [
+        'get_callback' => function ($post) {
+            return get_post_meta($post['id'], 'tenure_to', true);
+        },
+        'schema' => [
+            'type' => 'string',
+            'description' => 'Tenure to year',
+        ],
+    ]);
+
+    register_rest_field('executive_committee', 'team_type', [
+        'get_callback' => function ($post) {
+            return get_post_meta($post['id'], 'team_type', true);
+        },
+        'schema' => [
+            'type' => 'string',
+            'description' => 'Team type',
         ],
     ]);
 }
