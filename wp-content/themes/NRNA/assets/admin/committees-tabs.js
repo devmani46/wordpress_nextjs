@@ -73,6 +73,8 @@ jQuery(document).ready(function($) {
             '<td><input type="text" name="committees_teams_members[' + rowCount + '][name]" class="wide-input"></td>' +
             '<td><input type="text" name="committees_teams_members[' + rowCount + '][role]" class="wide-input"></td>' +
             '<td><input type="email" name="committees_teams_members[' + rowCount + '][email]" class="wide-input"></td>' +
+            '<td><input type="text" name="committees_teams_members[' + rowCount + '][tenure_from]" class="wide-input" placeholder="e.g., 2022"></td>' +
+            '<td><input type="text" name="committees_teams_members[' + rowCount + '][tenure_to]" class="wide-input" placeholder="e.g., 2024"></td>' +
             '<td><button type="button" class="remove-teams button">Remove</button></td>' +
             '</tr>';
         tbody.append(newRow);
