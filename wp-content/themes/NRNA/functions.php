@@ -33,3 +33,6 @@ require_once $inc . 'subscribe.php';
 
 // Load Event Registrations
 require_once $inc . 'event-registrations.php';
+
+// Load Regional Meeting Registrations
+require_once $inc . 'regional-meeting-registrations.php';

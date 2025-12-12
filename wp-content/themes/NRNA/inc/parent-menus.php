@@ -307,6 +307,7 @@ function nrna_custom_menu_order($menu_ord)
         'contact-submissions',
         'subscribed-emails',
         'event-registrations',
+        'regional-meeting-registrations',
         'nav-menus.php',
         'themes.php',
         'plugins.php',
