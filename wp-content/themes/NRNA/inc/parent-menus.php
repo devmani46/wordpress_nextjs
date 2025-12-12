@@ -306,6 +306,7 @@ function nrna_custom_menu_order($menu_ord)
         'nrna-area-menu',
         'contact-submissions',
         'subscribed-emails',
+        'event-registrations',
         'nav-menus.php',
         'themes.php',
         'plugins.php',

@@ -30,3 +30,6 @@ require_once $inc . 'contact-us.php';
 
 // Load Subscribe
 require_once $inc . 'subscribe.php';
+
+// Load Event Registrations
+require_once $inc . 'event-registrations.php';
