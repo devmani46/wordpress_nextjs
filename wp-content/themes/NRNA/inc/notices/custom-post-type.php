@@ -1,6 +1,7 @@
 <?php
 // Register Notice custom post type
-function nrna_register_notice_cpt() {
+function nrna_register_notice_cpt()
+{
     $labels = [
         'name'               => _x('Notices', 'Post Type General Name', 'nrna'),
         'singular_name'      => _x('Notice', 'Post Type Singular Name', 'nrna'),
@@ -31,7 +32,8 @@ function nrna_register_notice_cpt() {
 add_action('init', 'nrna_register_notice_cpt');
 
 // Register Notice Category taxonomy
-function nrna_register_notice_category_taxonomy() {
+function nrna_register_notice_category_taxonomy()
+{
     $labels = [
         'name'              => _x('Notice Categories', 'taxonomy general name', 'nrna'),
         'singular_name'     => _x('Notice Category', 'taxonomy singular name', 'nrna'),
@@ -63,7 +65,8 @@ function nrna_register_notice_category_taxonomy() {
 add_action('init', 'nrna_register_notice_category_taxonomy');
 
 // Register meta fields for REST API
-function nrna_register_notices_meta_rest() {
+function nrna_register_notices_meta_rest()
+{
     register_meta('post', 'notice_content', array(
         'object_subtype' => 'notices',
         'type' => 'string',
@@ -90,7 +93,8 @@ function nrna_register_notices_meta_rest() {
 add_action('init', 'nrna_register_notices_meta_rest');
 
 // Prepare REST API response to include meta fields and categories
-function nrna_prepare_notices_rest($response, $post, $request) {
+function nrna_prepare_notices_rest($response, $post, $request)
+{
     $response->data['notice_content'] = get_post_meta($post->ID, 'notice_content', true);
     $response->data['notice_related'] = get_post_meta($post->ID, 'notice_related', false);
 
@@ -101,3 +105,20 @@ function nrna_prepare_notices_rest($response, $post, $request) {
     return $response;
 }
 add_filter('rest_prepare_notices', 'nrna_prepare_notices_rest', 10, 3);
+
+// Add "Manage Categories" button to Notices admin page
+function nrna_add_notice_category_button()
+{
+    global $current_screen;
+    if (!isset($current_screen) || 'notices' !== $current_screen->post_type) {
+        return;
+    }
+?>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('.page-title-action').after('<a href="<?php echo admin_url('edit-tags.php?taxonomy=notice_category&post_type=notices'); ?>" class="page-title-action">Manage Categories</a>');
+        });
+    </script>
+<?php
+}
+add_action('admin_head-edit.php', 'nrna_add_notice_category_button');
