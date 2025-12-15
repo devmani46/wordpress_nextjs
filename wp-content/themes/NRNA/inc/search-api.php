@@ -79,8 +79,8 @@ function nrna_handle_search($request)
 
             // For reports-publications, get the first category to use in URL
             $category_slug = '';
-            if ($post_type == 'reports-publications') {
-                $categories = get_the_terms(get_the_ID(), 'reports-category');
+            if ($post_type == 'reports-publications' || $post_type == 'reports_publications') {
+                $categories = get_the_terms(get_the_ID(), 'reports_publications_category');
                 if ($categories && !is_wp_error($categories)) {
                     $category_slug = $categories[0]->slug;
                 }
@@ -151,6 +151,7 @@ function nrna_convert_to_frontend_url($wp_url, $post_type, $category_slug = '')
             return $path;
 
         case 'reports-publications':
+        case 'reports_publications':
             // Link to category page if category slug is available
             if (!empty($category_slug)) {
                 return '/reports-publications-category/' . $category_slug;
