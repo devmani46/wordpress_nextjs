@@ -1,6 +1,7 @@
 <?php
 // Register Resources custom post type
-function nrna_register_resources_cpt() {
+function nrna_register_resources_cpt()
+{
     $labels = [
         'name'               => _x('Resources', 'Post Type General Name', 'nrna'),
         'singular_name'      => _x('Resource', 'Post Type Singular Name', 'nrna'),
@@ -32,7 +33,8 @@ function nrna_register_resources_cpt() {
 add_action('init', 'nrna_register_resources_cpt');
 
 // Register Resource Category taxonomy
-function nrna_register_resource_category_taxonomy() {
+function nrna_register_resource_category_taxonomy()
+{
     $labels = [
         'name'              => _x('Resource Categories', 'taxonomy general name', 'nrna'),
         'singular_name'     => _x('Resource Category', 'taxonomy singular name', 'nrna'),
@@ -65,7 +67,8 @@ function nrna_register_resource_category_taxonomy() {
 add_action('init', 'nrna_register_resource_category_taxonomy');
 
 // Ensure the taxonomy meta box appears in Resources edit screen
-function nrna_add_resource_category_metabox_back() {
+function nrna_add_resource_category_metabox_back()
+{
     add_meta_box(
         'resource_categorydiv',
         __('Resource Categories', 'nrna'),
@@ -79,17 +82,18 @@ function nrna_add_resource_category_metabox_back() {
 add_action('add_meta_boxes_resources', 'nrna_add_resource_category_metabox_back');
 
 // Register resource_files meta for REST API
-function nrna_register_resource_files_rest_field() {
-    register_rest_field( 'resources', 'resource_files', array(
-        'get_callback' => function( $post ) {
-            $files = get_post_meta( $post['id'], 'resource_files', true );
-            if ( ! is_array( $files ) ) {
+function nrna_register_resource_files_rest_field()
+{
+    register_rest_field('resources', 'resource_files', array(
+        'get_callback' => function ($post) {
+            $files = get_post_meta($post['id'], 'resource_files', true);
+            if (! is_array($files)) {
                 $files = [];
             }
             $file_data = [];
-            foreach ( $files as $file_id ) {
-                $file_url = wp_get_attachment_url( $file_id );
-                $file_name = basename( $file_url );
+            foreach ($files as $file_id) {
+                $file_url = wp_get_attachment_url($file_id);
+                $file_name = basename($file_url);
                 $file_data[] = array(
                     'id' => $file_id,
                     'url' => $file_url,
@@ -116,6 +120,22 @@ function nrna_register_resource_files_rest_field() {
                 ),
             ),
         ),
-    ) );
+    ));
+
+    register_rest_field('resources', 'category_titles', [
+        'get_callback' => function ($object) {
+            $terms = get_the_terms($object['id'], 'resource_category');
+            $category_titles = [];
+
+            if ($terms && !is_wp_error($terms)) {
+                foreach ($terms as $term) {
+                    $category_titles[] = $term->name;
+                }
+            }
+            return $category_titles;
+        },
+        'update_callback' => null,
+        'schema'          => null,
+    ]);
 }
-add_action( 'rest_api_init', 'nrna_register_resource_files_rest_field' );
+add_action('rest_api_init', 'nrna_register_resource_files_rest_field');
