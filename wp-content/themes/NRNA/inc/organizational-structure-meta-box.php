@@ -1,5 +1,6 @@
 <?php
-function nrna_register_organizational_structure_meta_fields() {
+function nrna_register_organizational_structure_meta_fields()
+{
     $fields = [
         'organizational_structure_title' => ['type' => 'string'],
         'organizational_structure_image' => ['type' => 'integer'],
@@ -16,7 +17,8 @@ function nrna_register_organizational_structure_meta_fields() {
 }
 add_action('init', 'nrna_register_organizational_structure_meta_fields');
 
-function nrna_add_organizational_structure_meta_box() {
+function nrna_add_organizational_structure_meta_box()
+{
     global $post;
     if ($post && $post->ID && get_page_template_slug($post->ID) !== 'template-organizational-structure.php') return;
 
@@ -31,7 +33,8 @@ function nrna_add_organizational_structure_meta_box() {
 }
 add_action('add_meta_boxes', 'nrna_add_organizational_structure_meta_box');
 
-function nrna_render_organizational_structure_meta_box($post) {
+function nrna_render_organizational_structure_meta_box($post)
+{
     if ($post->ID != 0 && get_page_template_slug($post->ID) !== 'template-organizational-structure.php') {
         echo '<p>Please select the "Organizational Structure Page" template to edit these fields.</p>';
         return;
@@ -43,24 +46,43 @@ function nrna_render_organizational_structure_meta_box($post) {
     $image = get_post_meta($post->ID, 'organizational_structure_image', true);
     $stat_title = get_post_meta($post->ID, 'organizational_structure_stat_title', true);
     $stat_description = get_post_meta($post->ID, 'organizational_structure_stat_description', true);
-    ?>
+?>
     <p><label>Title:</label><br>
-<?php wp_editor($title, 'organizational_structure_title', [
-        'media_buttons' => false,
-        'textarea_rows' => 10,
-        'teeny' => false,
-        'quicktags' => true,
-    ]); ?>
+        <?php wp_editor($title, 'organizational_structure_title', [
+            'media_buttons' => false,
+            'textarea_rows' => 3,
+            'teeny' => false,
+            'quicktags' => true,
+            'textarea_name' => 'organizational_structure_title',
+        ]); ?>
     <p><label>Image:</label><br>
-    <input type="hidden" name="organizational_structure_image" value="<?php echo esc_attr($image); ?>" class="image-id">
-    <img src="<?php echo $image ? esc_url(wp_get_attachment_image_url($image, 'medium')) : ''; ?>" class="image-preview <?php echo $image ? 'has-image' : ''; ?>" style="max-width: 200px; height: auto;">
-    <button type="button" class="upload-image button">Upload Image</button></p>
-    <p><label>Stat Title:</label><br><input type="text" name="organizational_structure_stat_title" value="<?php echo esc_attr($stat_title); ?>" class="wide-input"></p>
-    <p><label>Stat Description:</label><br><textarea name="organizational_structure_stat_description" rows="3" class="wide-textarea"><?php echo esc_textarea($stat_description); ?></textarea></p>
-    <?php
+        <input type="hidden" name="organizational_structure_image" value="<?php echo esc_attr($image); ?>" class="image-id">
+        <img src="<?php echo $image ? esc_url(wp_get_attachment_image_url($image, 'medium')) : ''; ?>" class="image-preview <?php echo $image ? 'has-image' : ''; ?>" style="max-width: 200px; height: auto;">
+        <button type="button" class="upload-image button">Upload Image</button>
+    </p>
+    <p><label>Stat Title:</label><br>
+        <?php wp_editor($stat_title, 'organizational_structure_stat_title', [
+            'media_buttons' => false,
+            'textarea_rows' => 3,
+            'teeny' => false,
+            'quicktags' => true,
+            'textarea_name' => 'organizational_structure_stat_title',
+        ]); ?>
+    </p>
+    <p><label>Stat Description:</label><br>
+        <?php wp_editor($stat_description, 'organizational_structure_stat_description', [
+            'media_buttons' => false,
+            'textarea_rows' => 3,
+            'teeny' => false,
+            'quicktags' => true,
+            'textarea_name' => 'organizational_structure_stat_description',
+        ]); ?>
+    </p>
+<?php
 }
 
-function nrna_save_organizational_structure_meta_box($post_id) {
+function nrna_save_organizational_structure_meta_box($post_id)
+{
     if (!isset($_POST['nrna_organizational_structure_meta_box_nonce']) || !wp_verify_nonce($_POST['nrna_organizational_structure_meta_box_nonce'], 'nrna_organizational_structure_meta_box')) return;
     if (!current_user_can('edit_post', $post_id)) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
@@ -68,8 +90,8 @@ function nrna_save_organizational_structure_meta_box($post_id) {
     $fields = [
         'organizational_structure_title' => 'wp_kses_post',
         'organizational_structure_image' => 'intval',
-        'organizational_structure_stat_title' => 'sanitize_text_field',
-        'organizational_structure_stat_description' => 'sanitize_textarea_field',
+        'organizational_structure_stat_title' => 'wp_kses_post',
+        'organizational_structure_stat_description' => 'wp_kses_post',
     ];
 
     foreach ($fields as $field => $sanitize) {
@@ -80,7 +102,8 @@ function nrna_save_organizational_structure_meta_box($post_id) {
 }
 add_action('save_post', 'nrna_save_organizational_structure_meta_box');
 
-function nrna_prepare_organizational_structure_page_rest_response($response, $post, $request) {
+function nrna_prepare_organizational_structure_page_rest_response($response, $post, $request)
+{
     if ($post->post_type !== 'page' || get_page_template_slug($post->ID) !== 'template-organizational-structure.php') {
         return $response;
     }

@@ -47,12 +47,21 @@ function nrna_render_committees_meta_box($post)
                 $images = get_post_meta($post->ID, 'committees_hero_images', true);
                 if (!is_array($images)) $images = [];
 ?>
-                <p><label>Title:</label><br><input type="text" name="committees_hero_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($title, 'committees_hero_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'committees_hero_title'
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_hero_description', [
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'committees_hero_description'
                                                     ]); ?></p>
                 <div class="repeater-container" data-repeater="committees_hero_images">
                     <?php foreach ($images as $index => $image): ?>
@@ -75,12 +84,21 @@ function nrna_render_committees_meta_box($post)
                 $description = get_post_meta($post->ID, 'committees_why_description', true);
                 $image = get_post_meta($post->ID, 'committees_why_image', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="committees_why_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($title, 'committees_why_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'committees_why_title'
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_why_description', [
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'committees_why_description'
                                                     ]); ?></p>
                 <p><label>Image:</label><br>
                     <input type="hidden" name="committees_why_image" value="<?php echo esc_attr($image); ?>" class="image-id">
@@ -95,12 +113,21 @@ function nrna_render_committees_meta_box($post)
                 $description = get_post_meta($post->ID, 'committees_how_description', true);
                 $image = get_post_meta($post->ID, 'committees_how_image', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="committees_how_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($title, 'committees_how_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'committees_how_title'
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_how_description', [
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'committees_how_description'
                                                     ]); ?></p>
                 <p><label>Image:</label><br>
                     <input type="hidden" name="committees_how_image" value="<?php echo esc_attr($image); ?>" class="image-id">
@@ -118,22 +145,39 @@ function nrna_render_committees_meta_box($post)
                 $stats = get_post_meta($post->ID, 'committees_banner1_stats', true);
                 if (!is_array($stats)) $stats = [];
             ?>
-                <p><label>Title:</label><br><input type="text" name="committees_banner1_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($title, 'committees_banner1_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'committees_banner1_title'
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_banner1_description', [
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'committees_banner1_description'
                                                     ]); ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="committees_banner1_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="committees_banner1_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
                 <div class="repeater-container" data-repeater="committees_banner1_stats">
                     <?php foreach ($stats as $index => $stat): ?>
                         <div class="repeater-item">
-                            <p><label>Title:</label><br><input type="text" name="committees_banner1_stats[<?php echo $index; ?>][title]" value="<?php echo esc_attr($stat['title'] ?? ''); ?>" class="wide-input"></p>
+                            <p><label>Title:</label><br>
+                                <?php wp_editor($stat['title'] ?? '', 'committees_banner1_stats_' . $index . '_title', [
+                                    'media_buttons' => false,
+                                    'textarea_rows' => 3,
+                                    'teeny' => false,
+                                    'quicktags' => true,
+                                    'textarea_name' => 'committees_banner1_stats[' . $index . '][title]',
+                                ]); ?>
+                            </p>
                             <p><label>Description:</label><br><?php wp_editor($stat['description'] ?? '', 'committees_banner1_stats_' . $index . '_description', [
-                                                                    'media_buttons' => true,
-                                                                    'textarea_rows' => 5,
+                                                                    'media_buttons' => false,
+                                                                    'textarea_rows' => 3,
                                                                     'teeny' => false,
                                                                     'quicktags' => true,
                                                                     'textarea_name' => 'committees_banner1_stats[' . $index . '][description]',
@@ -151,7 +195,15 @@ function nrna_render_committees_meta_box($post)
                 $members = get_post_meta($post->ID, 'committees_teams_members', true);
                 if (!is_array($members)) $members = [];
             ?>
-                <p><label>Title:</label><br><input type="text" name="committees_teams_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($title, 'committees_teams_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'committees_teams_title'
+                    ]); ?>
+                </p>
                 <div class="teams-table-container">
                     <table class="teams-table">
                         <thead>
@@ -190,12 +242,21 @@ function nrna_render_committees_meta_box($post)
                 $cta_link = get_post_meta($post->ID, 'committees_banner2_cta_link', true);
                 $cta_title = get_post_meta($post->ID, 'committees_banner2_cta_title', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="committees_banner2_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($title, 'committees_banner2_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'committees_banner2_title'
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_banner2_description', [
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'committees_banner2_description'
                                                     ]); ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="committees_banner2_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="committees_banner2_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
@@ -218,20 +279,20 @@ function nrna_save_committees_meta_box($post_id)
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
     $fields = [
-        'committees_hero_title' => 'sanitize_text_field',
+        'committees_hero_title' => 'wp_kses_post',
         'committees_hero_description' => 'wp_kses_post',
-        'committees_why_title' => 'sanitize_text_field',
+        'committees_why_title' => 'wp_kses_post',
         'committees_why_description' => 'wp_kses_post',
         'committees_why_image' => 'intval',
-        'committees_how_title' => 'sanitize_text_field',
+        'committees_how_title' => 'wp_kses_post',
         'committees_how_description' => 'wp_kses_post',
         'committees_how_image' => 'intval',
-        'committees_banner1_title' => 'sanitize_text_field',
+        'committees_banner1_title' => 'wp_kses_post',
         'committees_banner1_description' => 'wp_kses_post',
         'committees_banner1_cta_link' => 'esc_url_raw',
         'committees_banner1_cta_title' => 'sanitize_text_field',
-        'committees_teams_title' => 'sanitize_text_field',
-        'committees_banner2_title' => 'sanitize_text_field',
+        'committees_teams_title' => 'wp_kses_post',
+        'committees_banner2_title' => 'wp_kses_post',
         'committees_banner2_description' => 'wp_kses_post',
         'committees_banner2_cta_link' => 'esc_url_raw',
         'committees_banner2_cta_title' => 'sanitize_text_field',
@@ -261,10 +322,24 @@ function nrna_save_committees_meta_box($post_id)
                 if (!empty($clean)) $sanitized[] = $clean;
             }
         } elseif ($field === 'committees_banner1_stats') {
-            foreach ((array)$data as $item) {
+            foreach ((array)$data as $index => $item) { // Added index to loop
                 $clean = [];
-                if (isset($item['title'])) $clean['title'] = sanitize_text_field($item['title']);
-                if (isset($item['description'])) $clean['description'] = wp_kses_post($item['description']);
+                // Retrieve title from wp_editor post data
+                $title_key = 'committees_banner1_stats_' . $index . '_title';
+                if (isset($_POST[$title_key])) {
+                    $clean['title'] = wp_kses_post($_POST[$title_key]);
+                } elseif (isset($item['title'])) { // Fallback
+                    $clean['title'] = wp_kses_post($item['title']);
+                }
+
+                // Retrieve description from wp_editor post data
+                $desc_key = 'committees_banner1_stats_' . $index . '_description';
+                if (isset($_POST[$desc_key])) {
+                    $clean['description'] = wp_kses_post($_POST[$desc_key]);
+                } elseif (isset($item['description'])) { // Fallback
+                    $clean['description'] = wp_kses_post($item['description']);
+                }
+
                 if (!empty($clean)) $sanitized[] = $clean;
             }
         } elseif ($field === 'committees_teams_members') {

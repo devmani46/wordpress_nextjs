@@ -53,7 +53,15 @@ function nrna_render_regional_meetings_meta_box($post)
                 $cta_title = get_post_meta($post->ID, 'rm_cta_title', true);
                 $description = get_post_meta($post->ID, 'rm_description', true);
 ?>
-                <p><label>Hero Title:</label><br><input type="text" name="rm_hero_title" value="<?php echo esc_attr($hero_title); ?>" class="wide-input"></p>
+                <p><label>Hero Title:</label><br>
+                    <?php wp_editor($hero_title, 'rm_hero_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'rm_hero_title',
+                    ]); ?>
+                </p>
                 <p><label>Location:</label><br><input type="text" name="rm_location" value="<?php echo esc_attr($location); ?>" class="wide-input"></p>
                 <p><label>Start Date:</label><br><input type="date" name="rm_start_date" value="<?php echo esc_attr($start_date); ?>" class="wide-input"></p>
                 <p><label>End Date:</label><br><input type="date" name="rm_end_date" value="<?php echo esc_attr($end_date); ?>" class="wide-input"></p>
@@ -61,10 +69,11 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>CTA Title:</label><br><input type="text" name="rm_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'rm_description', true), 'rm_description', array(
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'rm_description',
                                                     ));
                                                     ?></p>
             <?php
@@ -74,13 +83,22 @@ function nrna_render_regional_meetings_meta_box($post)
                 $agenda_title = get_post_meta($post->ID, 'rm_agenda_title', true);
                 $agenda_description = get_post_meta($post->ID, 'rm_agenda_description', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="rm_agenda_title" value="<?php echo esc_attr($agenda_title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($agenda_title, 'rm_agenda_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'rm_agenda_title',
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'rm_agenda_description', true), 'rm_agenda_description', array(
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'rm_agenda_description',
                                                     ));
                                                     ?></p>
             <?php
@@ -90,13 +108,22 @@ function nrna_render_regional_meetings_meta_box($post)
                 $contact_title = get_post_meta($post->ID, 'rm_contact_title', true);
                 $contact_description = get_post_meta($post->ID, 'rm_contact_description', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="rm_contact_title" value="<?php echo esc_attr($contact_title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($contact_title, 'rm_contact_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'rm_contact_title',
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'rm_contact_description', true), 'rm_contact_description', array(
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'rm_contact_description',
                                                     ));
                                                     ?></p>
             <?php
@@ -108,13 +135,22 @@ function nrna_render_regional_meetings_meta_box($post)
                 $sponsorships = get_post_meta($post->ID, 'rm_sponsorships', true);
                 if (!is_array($sponsorships)) $sponsorships = [];
             ?>
-                <p><label>Title:</label><br><input type="text" name="rm_sponsorship_title" value="<?php echo esc_attr($sponsorship_title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($sponsorship_title, 'rm_sponsorship_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'rm_sponsorship_title',
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'rm_sponsorship_description', true), 'rm_sponsorship_description', array(
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'rm_sponsorship_description',
                                                     ));
                                                     ?></p>
                 <div class="sponsorship-table-container">
@@ -146,7 +182,15 @@ function nrna_render_regional_meetings_meta_box($post)
                 $organizing_committee = get_post_meta($post->ID, 'rm_organizing_committee', true);
                 if (!is_array($organizing_committee)) $organizing_committee = [];
             ?>
-                <p><label>Title:</label><br><input type="text" name="rm_organizing_committee_title" value="<?php echo esc_attr($organizing_committee_title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($organizing_committee_title, 'rm_organizing_committee_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'rm_organizing_committee_title',
+                    ]); ?>
+                </p>
                 <div class="committee-table-container">
                     <table class="committee-table">
                         <thead>
@@ -188,7 +232,15 @@ function nrna_render_regional_meetings_meta_box($post)
                 $sponsors = get_post_meta($post->ID, 'rm_sponsors', true);
                 if (!is_array($sponsors)) $sponsors = [];
             ?>
-                <p><label>Title:</label><br><input type="text" name="rm_sponsors_title" value="<?php echo esc_attr($sponsors_title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($sponsors_title, 'rm_sponsors_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'rm_sponsors_title',
+                    ]); ?>
+                </p>
                 <div class="sponsors-table-container">
                     <table class="sponsors-table">
                         <thead>
@@ -452,7 +504,7 @@ function nrna_render_regional_meetings_meta_box($post)
                     </table>
                     <button type="button" class="add-download button">Add Download</button>
                 </div>
-            <?php
+<?php
                 break;
         }
 
@@ -471,21 +523,21 @@ function nrna_save_regional_meetings_meta_box($post_id)
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
     $fields = [
-        'rm_hero_title' => 'sanitize_text_field',
+        'rm_hero_title' => 'wp_kses_post',
         'rm_location' => 'sanitize_text_field',
         'rm_start_date' => 'sanitize_text_field',
         'rm_end_date' => 'sanitize_text_field',
         'rm_cta_link' => 'esc_url_raw',
         'rm_cta_title' => 'sanitize_text_field',
         'rm_description' => 'wp_kses_post',
-        'rm_agenda_title' => 'sanitize_text_field',
+        'rm_agenda_title' => 'wp_kses_post',
         'rm_agenda_description' => 'wp_kses_post',
-        'rm_contact_title' => 'sanitize_text_field',
+        'rm_contact_title' => 'wp_kses_post',
         'rm_contact_description' => 'wp_kses_post',
-        'rm_sponsorship_title' => 'sanitize_text_field',
+        'rm_sponsorship_title' => 'wp_kses_post',
         'rm_sponsorship_description' => 'wp_kses_post',
-        'rm_organizing_committee_title' => 'sanitize_text_field',
-        'rm_sponsors_title' => 'sanitize_text_field',
+        'rm_organizing_committee_title' => 'wp_kses_post',
+        'rm_sponsors_title' => 'wp_kses_post',
     ];
 
     foreach ($fields as $field => $sanitize) {

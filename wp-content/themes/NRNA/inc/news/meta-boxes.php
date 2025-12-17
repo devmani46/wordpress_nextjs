@@ -1,6 +1,7 @@
 <?php
 // Add News meta boxes
-function nrna_add_news_meta_boxes() {
+function nrna_add_news_meta_boxes()
+{
     add_meta_box(
         'news_content_box',
         __('News Content', 'nrna'),
@@ -21,20 +22,22 @@ function nrna_add_news_meta_boxes() {
 add_action('add_meta_boxes', 'nrna_add_news_meta_boxes');
 
 // Render News Content meta box
-function nrna_render_news_content_meta_box($post) {
+function nrna_render_news_content_meta_box($post)
+{
     $content = get_post_meta($post->ID, 'news_content', true);
     echo '<label for="news_content" style="display:block; font-weight:bold; margin-bottom:8px;">Content:</label>';
     wp_editor($content, 'news_content', [
         'textarea_name' => 'news_content',
-        'media_buttons' => true,
-        'textarea_rows' => 10,
+        'media_buttons' => false,
+        'textarea_rows' => 3,
         'teeny' => false,
         'quicktags' => true,
     ]);
 }
 
 // Render Related News meta box
-function nrna_render_news_related_meta_box($post) {
+function nrna_render_news_related_meta_box($post)
+{
     $related_news = get_post_meta($post->ID, 'news_related', false);
     if (!is_array($related_news)) {
         $related_news = [];
@@ -63,7 +66,8 @@ function nrna_render_news_related_meta_box($post) {
 }
 
 // Save News meta
-function nrna_save_news_meta_boxes($post_id) {
+function nrna_save_news_meta_boxes($post_id)
+{
     if (array_key_exists('news_content', $_POST)) {
         update_post_meta($post_id, 'news_content', wp_kses_post($_POST['news_content']));
     }
@@ -78,7 +82,8 @@ function nrna_save_news_meta_boxes($post_id) {
 add_action('save_post', 'nrna_save_news_meta_boxes');
 
 // Clean up News admin screen
-function nrna_remove_news_meta_boxes() {
+function nrna_remove_news_meta_boxes()
+{
     remove_meta_box('slugdiv', 'news', 'normal');
     remove_meta_box('authordiv', 'news', 'normal');
     remove_meta_box('commentsdiv', 'news', 'normal');

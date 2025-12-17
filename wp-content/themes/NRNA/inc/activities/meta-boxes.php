@@ -1,6 +1,7 @@
 <?php
 // Add Activities meta boxes
-function nrna_add_activities_meta_boxes() {
+function nrna_add_activities_meta_boxes()
+{
     add_meta_box(
         'activities_content_box',
         __('Activity Content', 'nrna'),
@@ -17,27 +18,28 @@ function nrna_add_activities_meta_boxes() {
         'normal',
         'high'
     );
-
 }
 add_action('add_meta_boxes', 'nrna_add_activities_meta_boxes');
 
 
 
 // Render Activity Content meta box
-function nrna_render_activities_content_meta_box($post) {
+function nrna_render_activities_content_meta_box($post)
+{
     $content = get_post_meta($post->ID, 'activity_content', true);
     echo '<label for="activity_content" style="display:block; font-weight:bold; margin-bottom:8px;">Content:</label>';
     wp_editor($content, 'activity_content', [
         'textarea_name' => 'activity_content',
-        'media_buttons' => true,
-        'textarea_rows' => 10,
+        'media_buttons' => false,
+        'textarea_rows' => 3,
         'teeny' => false,
         'quicktags' => true,
     ]);
 }
 
 // Render Related Activities meta box
-function nrna_render_activities_related_activities_meta_box($post) {
+function nrna_render_activities_related_activities_meta_box($post)
+{
     $related_activities = get_post_meta($post->ID, 'activity_related_activities', false);
     if (!is_array($related_activities)) {
         $related_activities = [];
@@ -68,7 +70,8 @@ function nrna_render_activities_related_activities_meta_box($post) {
 
 
 // Save Activities meta
-function nrna_save_activities_meta_boxes($post_id) {
+function nrna_save_activities_meta_boxes($post_id)
+{
     if (array_key_exists('activity_content', $_POST)) {
         update_post_meta($post_id, 'activity_content', wp_kses_post($_POST['activity_content']));
     }
@@ -86,12 +89,11 @@ add_action('save_post', 'nrna_save_activities_meta_boxes');
 
 
 // Clean up Activities admin screen
-function nrna_remove_activities_meta_boxes() {
+function nrna_remove_activities_meta_boxes()
+{
     remove_meta_box('slugdiv', 'activities', 'normal');
     remove_meta_box('authordiv', 'activities', 'normal');
     remove_meta_box('commentsdiv', 'activities', 'normal');
     remove_meta_box('revisionsdiv', 'activities', 'normal');
 }
 add_action('admin_menu', 'nrna_remove_activities_meta_boxes');
-
-

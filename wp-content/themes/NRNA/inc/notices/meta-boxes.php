@@ -1,6 +1,7 @@
 <?php
 // Add Notice meta boxes
-function nrna_add_notice_meta_boxes() {
+function nrna_add_notice_meta_boxes()
+{
     add_meta_box(
         'notice_content_box',
         __('Notice Content', 'nrna'),
@@ -21,20 +22,22 @@ function nrna_add_notice_meta_boxes() {
 add_action('add_meta_boxes', 'nrna_add_notice_meta_boxes');
 
 // Render Notice Content meta box
-function nrna_render_notice_content_meta_box($post) {
+function nrna_render_notice_content_meta_box($post)
+{
     $content = get_post_meta($post->ID, 'notice_content', true);
     echo '<label for="notice_content" style="display:block; font-weight:bold; margin-bottom:8px;">Content:</label>';
     wp_editor($content, 'notice_content', [
         'textarea_name' => 'notice_content',
-        'media_buttons' => true,
-        'textarea_rows' => 10,
+        'media_buttons' => false,
+        'textarea_rows' => 3,
         'teeny' => false,
         'quicktags' => true,
     ]);
 }
 
 // Render Related Notices meta box
-function nrna_render_notice_related_meta_box($post) {
+function nrna_render_notice_related_meta_box($post)
+{
     $related_notices = get_post_meta($post->ID, 'notice_related', false);
     if (!is_array($related_notices)) {
         $related_notices = [];
@@ -43,7 +46,7 @@ function nrna_render_notice_related_meta_box($post) {
     $notices_query = new WP_Query([
         'post_type' => 'notices',
         'posts_per_page' => -1,
-        'post__not_in' => [$post->ID], 
+        'post__not_in' => [$post->ID],
         'orderby' => 'title',
         'order' => 'ASC',
     ]);
@@ -63,7 +66,8 @@ function nrna_render_notice_related_meta_box($post) {
 }
 
 // Save Notice meta
-function nrna_save_notice_meta_boxes($post_id) {
+function nrna_save_notice_meta_boxes($post_id)
+{
     if (array_key_exists('notice_content', $_POST)) {
         update_post_meta($post_id, 'notice_content', wp_kses_post($_POST['notice_content']));
     }
@@ -78,7 +82,8 @@ function nrna_save_notice_meta_boxes($post_id) {
 add_action('save_post', 'nrna_save_notice_meta_boxes');
 
 // Clean up Notice admin screen
-function nrna_remove_notice_meta_boxes() {
+function nrna_remove_notice_meta_boxes()
+{
     remove_meta_box('slugdiv', 'notices', 'normal');
     remove_meta_box('authordiv', 'notices', 'normal');
     remove_meta_box('commentsdiv', 'notices', 'normal');

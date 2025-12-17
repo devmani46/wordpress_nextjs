@@ -51,7 +51,15 @@ function nrna_render_projects_meta_box($post)
                 $description = get_post_meta($post->ID, 'project_description', true);
 
 ?>
-                <p><label>Title:</label><br><input type="text" name="project_hero_title" value="<?php echo esc_attr($hero_title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($hero_title, 'project_hero_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'project_hero_title',
+                    ]); ?>
+                </p>
                 <p><label>Date:</label><br><input type="date" name="project_date" value="<?php echo esc_attr($date); ?>" class="wide-input"></p>
                 <p><label>Sub Title:</label><br><input type="text" name="project_sub_title" value="<?php echo esc_attr($sub_title); ?>" class="wide-input"></p>
                 <p><label>CTA Title 1:</label><br><input type="text" name="project_cta_title_1" value="<?php echo esc_attr($cta_title_1); ?>" class="wide-input"></p>
@@ -62,10 +70,11 @@ function nrna_render_projects_meta_box($post)
 
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'project_description', true), 'project_description', array(
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'project_description',
                                                     ));
                                                     ?></p>
             <?php
@@ -74,13 +83,22 @@ function nrna_render_projects_meta_box($post)
             case 'objectives':
                 $obj_title = get_post_meta($post->ID, 'project_objective_title', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="project_objective_title" value="<?php echo esc_attr($obj_title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($obj_title, 'project_objective_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'project_objective_title',
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'project_objective_description', true), 'project_objective_description', array(
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'project_objective_description',
                                                     ));
                                                     ?></p>
             <?php
@@ -96,7 +114,15 @@ function nrna_render_projects_meta_box($post)
                             <p><label>Place:</label><br><input type="text" name="project_locations[<?php echo $index; ?>][place]" value="<?php echo esc_attr($location['place'] ?? ''); ?>" class="wide-input"></p>
                             <p><label>Date:</label><br><input type="text" name="project_locations[<?php echo $index; ?>][date]" value="<?php echo esc_attr($location['date'] ?? ''); ?>" class="wide-input"></p>
                             <p><label>Description:</label><br>
-                                <textarea name="project_locations[<?php echo $index; ?>][description]" rows="5" class="wide-textarea"><?php echo esc_textarea($location['description'] ?? ''); ?></textarea>
+                                <?php
+                                wp_editor($location['description'] ?? '', "project_locations_{$index}_description", array(
+                                    'media_buttons' => false,
+                                    'textarea_rows' => 3,
+                                    'teeny' => false,
+                                    'quicktags' => true,
+                                    'textarea_name' => "project_locations[{$index}][description]",
+                                ));
+                                ?>
                             </p>
                             <p><label>CTA Link:</label><br><input type="url" name="project_locations[<?php echo $index; ?>][cta_link]" value="<?php echo esc_attr($location['cta_link'] ?? ''); ?>" class="wide-input"></p>
                             <p><label>CTA Title:</label><br><input type="text" name="project_locations[<?php echo $index; ?>][cta_title]" value="<?php echo esc_attr($location['cta_title'] ?? ''); ?>" class="wide-input"></p>
@@ -113,13 +139,22 @@ function nrna_render_projects_meta_box($post)
                 $banner_cta_link = get_post_meta($post->ID, 'project_banner_cta_link', true);
                 $banner_cta_title = get_post_meta($post->ID, 'project_banner_cta_title', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="project_banner_title" value="<?php echo esc_attr($banner_title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($banner_title, 'project_banner_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'project_banner_title',
+                    ]); ?>
+                </p>
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'project_banner_description', true), 'project_banner_description', array(
-                                                        'media_buttons' => true,
-                                                        'textarea_rows' => 10,
+                                                        'media_buttons' => false,
+                                                        'textarea_rows' => 3,
                                                         'teeny' => false,
                                                         'quicktags' => true,
+                                                        'textarea_name' => 'project_banner_description',
                                                     ));
                                                     ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="project_banner_cta_link" value="<?php echo esc_attr($banner_cta_link); ?>" class="wide-input"></p>
@@ -202,7 +237,7 @@ function nrna_save_projects_meta_box($post_id)
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
     $fields = [
-        'project_hero_title' => 'sanitize_text_field',
+        'project_hero_title' => 'wp_kses_post',
         'project_date' => 'sanitize_text_field',
         'project_sub_title' => 'sanitize_text_field',
         'project_cta_link_1' => 'esc_url_raw',
@@ -210,9 +245,9 @@ function nrna_save_projects_meta_box($post_id)
         'project_cta_link_2' => 'esc_url_raw',
         'project_cta_title_2' => 'sanitize_text_field',
         'project_description' => 'wp_kses_post',
-        'project_objective_title' => 'sanitize_text_field',
+        'project_objective_title' => 'wp_kses_post',
         'project_objective_description' => 'wp_kses_post',
-        'project_banner_title' => 'sanitize_text_field',
+        'project_banner_title' => 'wp_kses_post',
         'project_banner_description' => 'wp_kses_post',
         'project_banner_cta_link' => 'esc_url_raw',
         'project_banner_cta_title' => 'sanitize_text_field',
@@ -228,11 +263,19 @@ function nrna_save_projects_meta_box($post_id)
     if (isset($_POST['project_locations'])) {
         $locations = $_POST['project_locations'];
         $sanitized_locations = [];
-        foreach ((array)$locations as $location) {
+        foreach ((array)$locations as $index => $location) {
             $clean = [];
             if (isset($location['place'])) $clean['place'] = sanitize_text_field($location['place']);
             if (isset($location['date'])) $clean['date'] = sanitize_text_field($location['date']);
-            if (isset($location['description'])) $clean['description'] = wp_kses_post($location['description']);
+            if (isset($location['date'])) $clean['date'] = sanitize_text_field($location['date']);
+
+            // Handle wp_editor content for description
+            $location_desc_key = 'project_locations_' . $index . '_description';
+            if (isset($_POST[$location_desc_key])) {
+                $clean['description'] = wp_kses_post($_POST[$location_desc_key]);
+            } elseif (isset($location['description'])) {
+                $clean['description'] = wp_kses_post($location['description']);
+            }
             if (isset($location['cta_link'])) $clean['cta_link'] = esc_url_raw($location['cta_link']);
             if (isset($location['cta_title'])) $clean['cta_title'] = sanitize_text_field($location['cta_title']);
             if (!empty($clean)) $sanitized_locations[] = $clean;
