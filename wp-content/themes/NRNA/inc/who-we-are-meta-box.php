@@ -472,15 +472,13 @@ function nrna_save_about_meta_box($post_id)
 
         foreach ((array)$slider_data as $index => $item) {
             $clean = [];
-            // Get title from wp_editor field
-            $title_key = 'who_we_are_slider_items_' . $index . '_title';
-            if (isset($_POST[$title_key])) {
-                $clean['title'] = wp_kses_post($_POST[$title_key]);
+            // Get title from wp_editor field (which is submitted as part of the array)
+            if (isset($item['title'])) {
+                $clean['title'] = wp_kses_post($item['title']);
             }
-            // Get description from wp_editor field
-            $desc_key = 'who_we_are_slider_items_' . $index . '_description';
-            if (isset($_POST[$desc_key])) {
-                $clean['description'] = wp_kses_post($_POST[$desc_key]);
+            // Get description
+            if (isset($item['description'])) {
+                $clean['description'] = wp_kses_post($item['description']);
             }
             if (isset($item['image'])) $clean['image'] = intval($item['image']);
             if (!empty($clean)) $sanitized_slider[] = $clean;
@@ -508,21 +506,17 @@ function nrna_save_about_meta_box($post_id)
 
             // Handle join_points
             if ($field === 'who_we_are_join_points') {
-                $title_key = 'who_we_are_join_points_' . $index . '_title';
-                if (isset($_POST[$title_key])) {
-                    $clean['title'] = wp_kses_post($_POST[$title_key]);
+                if (isset($item['title'])) {
+                    $clean['title'] = wp_kses_post($item['title']);
                 }
             }
             // Handle join_stats
             elseif ($field === 'who_we_are_join_stats') {
-                $title_key = 'who_we_are_join_stats_' . $index . '_title';
-                $desc_key = 'who_we_are_join_stats_' . $index . '_description';
-
-                if (isset($_POST[$title_key])) {
-                    $clean['title'] = wp_kses_post($_POST[$title_key]);
+                if (isset($item['title'])) {
+                    $clean['title'] = wp_kses_post($item['title']);
                 }
-                if (isset($_POST[$desc_key])) {
-                    $clean['description'] = wp_kses_post($_POST[$desc_key]);
+                if (isset($item['description'])) {
+                    $clean['description'] = wp_kses_post($item['description']);
                 }
             } else {
                 // Fallback for any other future array fields
