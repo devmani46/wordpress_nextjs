@@ -60,8 +60,24 @@ function nrna_render_terms_and_conditions_meta_box($post)
     <div class="repeater-container" data-repeater="terms_items">
         <?php foreach ($terms_items as $index => $item): ?>
             <div class="repeater-item">
-                <p><label>Title:</label><br><input type="text" name="terms_items[<?php echo $index; ?>][title]" value="<?php echo esc_attr($item['title'] ?? ''); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="terms_items[<?php echo $index; ?>][description]" rows="6" class="wide-textarea"><?php echo esc_textarea($item['description'] ?? ''); ?></textarea></p>
+                <p><label>Title:</label><br>
+                    <?php wp_editor($item['title'] ?? '', 'terms_items_' . $index . '_title', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'terms_items[' . $index . '][title]',
+                    ]); ?>
+                </p>
+                <p><label>Description:</label><br>
+                    <?php wp_editor($item['description'] ?? '', 'terms_items_' . $index . '_description', [
+                        'media_buttons' => false,
+                        'textarea_rows' => 3,
+                        'teeny' => false,
+                        'quicktags' => true,
+                        'textarea_name' => 'terms_items[' . $index . '][description]',
+                    ]); ?>
+                </p>
                 <button type="button" class="remove-item button">Remove</button>
             </div>
         <?php endforeach; ?>
@@ -87,7 +103,7 @@ function nrna_save_terms_and_conditions_meta_box($post_id)
     $data = $_POST['terms_items'];
     $sanitized = array_filter(array_map(function ($item) {
         $clean = [];
-        if (isset($item['title'])) $clean['title'] = sanitize_text_field($item['title']);
+        if (isset($item['title'])) $clean['title'] = wp_kses_post($item['title']);
         if (isset($item['description'])) $clean['description'] = wp_kses_post($item['description']);
         return !empty($clean) ? $clean : null;
     }, (array)$data));

@@ -71,7 +71,7 @@ function nrna_render_faq_answer_meta_box($post)
     echo '<label for="answer" style="display:block; font-weight:bold; margin-bottom:8px;">Answer:</label>';
     wp_editor($answer, 'answer', [
         'textarea_name' => 'answer',
-        'media_buttons' => true,
+        'media_buttons' => false,
         'textarea_rows' => 10,
         'teeny' => false,
         'quicktags' => true,
