@@ -156,6 +156,13 @@ function nrna_render_home_meta_box($post)
         'join-the-journey' => 'Join the Journey'
     ];
 
+    $editor_settings = [
+        'media_buttons' => false,
+        'textarea_rows' => 3,
+        'teeny' => false,
+        'quicktags' => true,
+    ];
+
     echo '<div class="home-meta-tabs">';
     echo '<div class="tab-buttons">';
     foreach ($tabs as $key => $label) {
@@ -176,8 +183,8 @@ function nrna_render_home_meta_box($post)
                 $cta_link = get_post_meta($post->ID, 'hero_cta_link', true);
                 $cta_title = get_post_meta($post->ID, 'hero_cta_title', true);
 ?>
-                <p><label>Title:</label><br><input type="text" name="hero_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="hero_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+                <p><label>Title:</label><br><?php wp_editor($title, 'hero_title', array_merge($editor_settings, ['textarea_name' => 'hero_title'])); ?></p>
+                <p><label>Description:</label><br><?php wp_editor($description, 'hero_description', array_merge($editor_settings, ['textarea_name' => 'hero_description'])); ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="hero_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="hero_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
             <?php
@@ -190,7 +197,7 @@ function nrna_render_home_meta_box($post)
                 <div class="repeater-container" data-repeater="slider_items">
                     <?php foreach ($slider_items as $index => $item): ?>
                         <div class="repeater-item">
-                            <p><label>Title:</label><br><input type="text" name="slider_items[<?php echo $index; ?>][title]" value="<?php echo esc_attr($item['title'] ?? ''); ?>" class="wide-input"></p>
+                            <p><label>Title:</label><br><?php wp_editor($item['title'] ?? '', 'slider_items_title_' . $index, array_merge($editor_settings, ['textarea_name' => "slider_items[$index][title]"])); ?></p>
                             <p><label>Image:</label><br>
                                 <input type="hidden" name="slider_items[<?php echo $index; ?>][image]" value="<?php echo esc_attr($item['image'] ?? ''); ?>" class="image-id">
                                 <img src="<?php echo ($item['image'] ?? '') ? esc_url(wp_get_attachment_image_url($item['image'], 'medium')) : ''; ?>" class="image-preview <?php echo ($item['image'] ?? '') ? 'has-image' : ''; ?>">
@@ -210,8 +217,8 @@ function nrna_render_home_meta_box($post)
                 $cta_link = get_post_meta($post->ID, 'banner_cta_link', true);
                 $cta_title = get_post_meta($post->ID, 'banner_cta_title', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="banner_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="banner_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+                <p><label>Title:</label><br><?php wp_editor($title, 'banner_title', array_merge($editor_settings, ['textarea_name' => 'banner_title'])); ?></p>
+                <p><label>Description:</label><br><?php wp_editor($description, 'banner_description', array_merge($editor_settings, ['textarea_name' => 'banner_description'])); ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="banner_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="banner_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
             <?php
@@ -227,7 +234,7 @@ function nrna_render_home_meta_box($post)
                 $stats = get_post_meta($post->ID, 'about_stats', true);
                 if (!is_array($stats)) $stats = [];
             ?>
-                <p><label>Title:</label><br><input type="text" name="about_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
+                <p><label>Title:</label><br><?php wp_editor($title, 'about_title', array_merge($editor_settings, ['textarea_name' => 'about_title'])); ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="about_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="about_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
                 <p><label>Image 1:</label><br>
@@ -248,8 +255,8 @@ function nrna_render_home_meta_box($post)
                 <div class="repeater-container" data-repeater="about_stats">
                     <?php foreach ($stats as $index => $stat): ?>
                         <div class="repeater-item">
-                            <p><label>Stat Title:</label><br><input type="text" name="about_stats[<?php echo $index; ?>][title]" value="<?php echo esc_attr($stat['title'] ?? ''); ?>" class="wide-input"></p>
-                            <p><label>Stat Description:</label><br><textarea name="about_stats[<?php echo $index; ?>][description]" rows="3" class="wide-textarea"><?php echo esc_textarea($stat['description'] ?? ''); ?></textarea></p>
+                            <p><label>Stat Title:</label><br><?php wp_editor($stat['title'] ?? '', 'about_stats_title_' . $index, array_merge($editor_settings, ['textarea_name' => "about_stats[$index][title]"])); ?></p>
+                            <p><label>Stat Description:</label><br><?php wp_editor($stat['description'] ?? '', 'about_stats_description_' . $index, array_merge($editor_settings, ['textarea_name' => "about_stats[$index][description]"])); ?></p>
                             <button type="button" class="remove-item button">Remove</button>
                         </div>
                     <?php endforeach; ?>
@@ -270,8 +277,8 @@ function nrna_render_home_meta_box($post)
                 $video_link = get_post_meta($post->ID, 'why_video_link', true);
                 $years = get_post_meta($post->ID, 'why_years_of_services', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="why_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="why_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+                <p><label>Title:</label><br><?php wp_editor($title, 'why_title', array_merge($editor_settings, ['textarea_name' => 'why_title'])); ?></p>
+                <p><label>Description:</label><br><?php wp_editor($description, 'why_description', array_merge($editor_settings, ['textarea_name' => 'why_description'])); ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="why_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="why_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
                 <h4>Images (exactly 5):</h4>
@@ -285,8 +292,8 @@ function nrna_render_home_meta_box($post)
                 <div class="repeater-container" data-repeater="why_features">
                     <?php foreach ($features as $index => $feature): ?>
                         <div class="repeater-item">
-                            <p><label>Feature Title:</label><br><input type="text" name="why_features[<?php echo $index; ?>][title]" value="<?php echo esc_attr($feature['title'] ?? ''); ?>" class="wide-input"></p>
-                            <p><label>Feature Description:</label><br><textarea name="why_features[<?php echo $index; ?>][description]" rows="3" class="wide-textarea"><?php echo esc_textarea($feature['description'] ?? ''); ?></textarea></p>
+                            <p><label>Feature Title:</label><br><?php wp_editor($feature['title'] ?? '', 'why_features_title_' . $index, array_merge($editor_settings, ['textarea_name' => "why_features[$index][title]"])); ?></p>
+                            <p><label>Feature Description:</label><br><?php wp_editor($feature['description'] ?? '', 'why_features_description_' . $index, array_merge($editor_settings, ['textarea_name' => "why_features[$index][description]"])); ?></p>
                             <button type="button" class="remove-item button">Remove</button>
                         </div>
                     <?php endforeach; ?>
@@ -303,13 +310,13 @@ function nrna_render_home_meta_box($post)
                 $actions = get_post_meta($post->ID, 'involved_actions', true);
                 if (!is_array($actions)) $actions = array_fill(0, 3, ['title' => '', 'description' => '', 'cta_link' => '', 'cta_title' => '']);
             ?>
-                <p><label>Title:</label><br><input type="text" name="involved_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="involved_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+                <p><label>Title:</label><br><?php wp_editor($title, 'involved_title', array_merge($editor_settings, ['textarea_name' => 'involved_title'])); ?></p>
+                <p><label>Description:</label><br><?php wp_editor($description, 'involved_description', array_merge($editor_settings, ['textarea_name' => 'involved_description'])); ?></p>
                 <h4>Actions (3 fixed):</h4>
                 <?php for ($i = 0; $i < 3; $i++): ?>
                     <div class="action-item">
-                        <p><label>Action <?php echo $i + 1; ?> Title:</label><br><input type="text" name="involved_actions[<?php echo $i; ?>][title]" value="<?php echo esc_attr($actions[$i]['title']); ?>" class="wide-input"></p>
-                        <p><label>Description:</label><br><textarea name="involved_actions[<?php echo $i; ?>][description]" rows="3" class="wide-textarea"><?php echo esc_textarea($actions[$i]['description']); ?></textarea></p>
+                        <p><label>Action <?php echo $i + 1; ?> Title:</label><br><?php wp_editor($actions[$i]['title'], 'involved_actions_title_' . $i, array_merge($editor_settings, ['textarea_name' => "involved_actions[$i][title]"])); ?></p>
+                        <p><label>Description:</label><br><?php wp_editor($actions[$i]['description'], 'involved_actions_description_' . $i, array_merge($editor_settings, ['textarea_name' => "involved_actions[$i][description]"])); ?></p>
                         <p><label>CTA Link:</label><br><input type="url" name="involved_actions[<?php echo $i; ?>][cta_link]" value="<?php echo esc_attr($actions[$i]['cta_link']); ?>" class="wide-input"></p>
                         <p><label>CTA Title:</label><br><input type="text" name="involved_actions[<?php echo $i; ?>][cta_title]" value="<?php echo esc_attr($actions[$i]['cta_title']); ?>" class="wide-input"></p>
                     </div>
@@ -334,8 +341,8 @@ function nrna_render_home_meta_box($post)
                 $cta_link2 = get_post_meta($post->ID, 'stay_updated_cta_link2', true);
                 $cta_title2 = get_post_meta($post->ID, 'stay_updated_cta_title2', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="stay_updated_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="stay_updated_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+                <p><label>Title:</label><br><?php wp_editor($title, 'stay_updated_title', array_merge($editor_settings, ['textarea_name' => 'stay_updated_title'])); ?></p>
+                <p><label>Description:</label><br><?php wp_editor($description, 'stay_updated_description', array_merge($editor_settings, ['textarea_name' => 'stay_updated_description'])); ?></p>
                 <p><label>CTA Link 1:</label><br><input type="url" name="stay_updated_cta_link1" value="<?php echo esc_attr($cta_link1); ?>" class="wide-input"></p>
                 <p><label>CTA Title 1:</label><br><input type="text" name="stay_updated_cta_title1" value="<?php echo esc_attr($cta_title1); ?>" class="wide-input"></p>
                 <p><label>CTA Link 2:</label><br><input type="url" name="stay_updated_cta_link2" value="<?php echo esc_attr($cta_link2); ?>" class="wide-input"></p>
@@ -351,8 +358,8 @@ function nrna_render_home_meta_box($post)
                 $cta_link = get_post_meta($post->ID, $prefix . '_cta_link', true);
                 $cta_title = get_post_meta($post->ID, $prefix . '_cta_title', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="<?php echo $prefix; ?>_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="<?php echo $prefix; ?>_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+                <p><label>Title:</label><br><?php wp_editor($title, $prefix . '_title', array_merge($editor_settings, ['textarea_name' => $prefix . '_title'])); ?></p>
+                <p><label>Description:</label><br><?php wp_editor($description, $prefix . '_description', array_merge($editor_settings, ['textarea_name' => $prefix . '_description'])); ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="<?php echo $prefix; ?>_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="<?php echo $prefix; ?>_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
             <?php
@@ -364,8 +371,8 @@ function nrna_render_home_meta_box($post)
                 $cta_link = get_post_meta($post->ID, 'journey_cta_link', true);
                 $cta_title = get_post_meta($post->ID, 'journey_cta_title', true);
             ?>
-                <p><label>Title:</label><br><input type="text" name="journey_title" value="<?php echo esc_attr($title); ?>" class="wide-input"></p>
-                <p><label>Description:</label><br><textarea name="journey_description" rows="4" class="wide-textarea"><?php echo esc_textarea($description); ?></textarea></p>
+                <p><label>Title:</label><br><?php wp_editor($title, 'journey_title', array_merge($editor_settings, ['textarea_name' => 'journey_title'])); ?></p>
+                <p><label>Description:</label><br><?php wp_editor($description, 'journey_description', array_merge($editor_settings, ['textarea_name' => 'journey_description'])); ?></p>
                 <p><label>CTA Link:</label><br><input type="url" name="journey_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="journey_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
 <?php
@@ -385,45 +392,45 @@ function nrna_save_home_meta_box($post_id)
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
     $fields = [
-        'hero_title' => 'sanitize_text_field',
+        'hero_title' => 'wp_kses_post',
         'hero_description' => 'wp_kses_post',
         'hero_cta_link' => 'esc_url_raw',
         'hero_cta_title' => 'sanitize_text_field',
-        'banner_title' => 'sanitize_text_field',
+        'banner_title' => 'wp_kses_post',
         'banner_description' => 'wp_kses_post',
         'banner_cta_link' => 'esc_url_raw',
         'banner_cta_title' => 'sanitize_text_field',
-        'about_title' => 'sanitize_text_field',
+        'about_title' => 'wp_kses_post',
         'about_cta_link' => 'esc_url_raw',
         'about_cta_title' => 'sanitize_text_field',
         'about_image_1' => 'intval',
         'about_image_2' => 'intval',
         'about_image_3' => 'intval',
-        'why_title' => 'sanitize_text_field',
+        'why_title' => 'wp_kses_post',
         'why_description' => 'wp_kses_post',
         'why_cta_link' => 'esc_url_raw',
         'why_cta_title' => 'sanitize_text_field',
         'why_video_link' => 'esc_url_raw',
         'why_years_of_services' => 'intval',
-        'involved_title' => 'sanitize_text_field',
+        'involved_title' => 'wp_kses_post',
         'involved_description' => 'wp_kses_post',
-        'stay_updated_title' => 'sanitize_text_field',
+        'stay_updated_title' => 'wp_kses_post',
         'stay_updated_description' => 'wp_kses_post',
         'stay_updated_cta_link1' => 'esc_url_raw',
         'stay_updated_cta_title1' => 'sanitize_text_field',
         'stay_updated_cta_link2' => 'esc_url_raw',
         'stay_updated_cta_title2' => 'sanitize_text_field',
-        'latest_news_title' => 'sanitize_text_field',
+        'latest_news_title' => 'wp_kses_post',
         'latest_news_description' => 'wp_kses_post',
         'latest_news_cta_link' => 'esc_url_raw',
         'latest_news_cta_title' => 'sanitize_text_field',
-        'our_initiatives_title' => 'sanitize_text_field',
+        'our_initiatives_title' => 'wp_kses_post',
         'our_initiatives_description' => 'wp_kses_post',
         'our_initiatives_cta_link' => 'esc_url_raw',
         'our_initiatives_cta_title' => 'sanitize_text_field',
         'message_cta_link' => 'esc_url_raw',
         'message_cta_title' => 'sanitize_text_field',
-        'journey_title' => 'sanitize_text_field',
+        'journey_title' => 'wp_kses_post',
         'journey_description' => 'wp_kses_post',
         'journey_cta_link' => 'esc_url_raw',
         'journey_cta_title' => 'sanitize_text_field',
@@ -446,7 +453,7 @@ function nrna_save_home_meta_box($post_id)
         } elseif ($field === 'involved_actions') {
             $sanitized = array_map(function ($item) {
                 return [
-                    'title' => sanitize_text_field($item['title'] ?? ''),
+                    'title' => wp_kses_post($item['title'] ?? ''),
                     'description' => wp_kses_post($item['description'] ?? ''),
                     'cta_link' => esc_url_raw($item['cta_link'] ?? ''),
                     'cta_title' => sanitize_text_field($item['cta_title'] ?? ''),
@@ -455,7 +462,7 @@ function nrna_save_home_meta_box($post_id)
         } else {
             $sanitized = array_filter(array_map(function ($item) {
                 $clean = [];
-                if (isset($item['title'])) $clean['title'] = sanitize_text_field($item['title']);
+                if (isset($item['title'])) $clean['title'] = wp_kses_post($item['title']);
                 if (isset($item['description'])) $clean['description'] = wp_kses_post($item['description']);
                 if (isset($item['image'])) $clean['image'] = intval($item['image']);
                 return !empty($clean) ? $clean : null;
