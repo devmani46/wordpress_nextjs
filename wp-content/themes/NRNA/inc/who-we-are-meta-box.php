@@ -137,7 +137,7 @@ function nrna_render_about_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'who_we_are_hero_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'who_we_are_hero_title',
@@ -145,7 +145,7 @@ function nrna_render_about_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_hero_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 7,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'who_we_are_hero_description',
@@ -163,7 +163,7 @@ function nrna_render_about_meta_box($post)
                             <p><label>Title:</label><br>
                                 <?php wp_editor($item['title'] ?? '', 'who_we_are_slider_items_' . $index . '_title', [
                                     'media_buttons' => false,
-                                    'textarea_rows' => 3,
+                                    'textarea_rows' => 1,
                                     'teeny' => false,
                                     'quicktags' => true,
                                     'textarea_name' => 'who_we_are_slider_items[' . $index . '][title]',
@@ -171,7 +171,7 @@ function nrna_render_about_meta_box($post)
                             </p>
                             <p><label>Description:</label><br><?php wp_editor($item['description'] ?? '', 'who_we_are_slider_items_' . $index . '_description', [
                                                                     'media_buttons' => false,
-                                                                    'textarea_rows' => 3,
+                                                                    'textarea_rows' => 2,
                                                                     'teeny' => false,
                                                                     'quicktags' => true,
                                                                     'textarea_name' => 'who_we_are_slider_items[' . $index . '][description]',
@@ -197,7 +197,7 @@ function nrna_render_about_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'who_we_are_vision_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'who_we_are_vision_title',
@@ -205,7 +205,7 @@ function nrna_render_about_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_vision_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'who_we_are_vision_description',
@@ -226,7 +226,7 @@ function nrna_render_about_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'who_we_are_goals_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'who_we_are_goals_title',
@@ -234,7 +234,7 @@ function nrna_render_about_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_goals_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'who_we_are_goals_description',
@@ -255,7 +255,7 @@ function nrna_render_about_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'who_we_are_certificate_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'who_we_are_certificate_title',
@@ -263,7 +263,7 @@ function nrna_render_about_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_certificate_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'who_we_are_certificate_description',
@@ -286,7 +286,7 @@ function nrna_render_about_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'who_we_are_message_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'who_we_are_message_title',
@@ -294,7 +294,7 @@ function nrna_render_about_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_message_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'who_we_are_message_description',
@@ -319,7 +319,7 @@ function nrna_render_about_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'who_we_are_team_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'who_we_are_team_title',
@@ -327,7 +327,7 @@ function nrna_render_about_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_team_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'who_we_are_team_description',
@@ -355,7 +355,7 @@ function nrna_render_about_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'who_we_are_join_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'who_we_are_join_title',
@@ -364,7 +364,7 @@ function nrna_render_about_meta_box($post)
                 <p><label>Description:</label><br>
                     <?php wp_editor($description, 'who_we_are_join_description', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 5,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'who_we_are_join_description',
@@ -395,7 +395,7 @@ function nrna_render_about_meta_box($post)
                             <p><label>Stat Title:</label><br>
                                 <?php wp_editor($stat['title'] ?? '', 'who_we_are_join_stats_' . $index . '_title', [
                                     'media_buttons' => false,
-                                    'textarea_rows' => 3,
+                                    'textarea_rows' => 1,
                                     'teeny' => false,
                                     'quicktags' => true,
                                     'textarea_name' => 'who_we_are_join_stats[' . $index . '][title]',
@@ -404,7 +404,7 @@ function nrna_render_about_meta_box($post)
                             <p><label>Stat Description:</label><br>
                                 <?php wp_editor($stat['description'] ?? '', 'who_we_are_join_stats_' . $index . '_description', [
                                     'media_buttons' => false,
-                                    'textarea_rows' => 3,
+                                    'textarea_rows' => 1,
                                     'teeny' => false,
                                     'quicktags' => true,
                                     'textarea_name' => 'who_we_are_join_stats[' . $index . '][description]',

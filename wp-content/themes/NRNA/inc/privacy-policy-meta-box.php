@@ -63,7 +63,7 @@ function nrna_render_privacy_policy_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($item['title'] ?? '', 'policy_items_' . $index . '_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'policy_items[' . $index . '][title]',
@@ -72,7 +72,7 @@ function nrna_render_privacy_policy_meta_box($post)
                 <p><label>Description:</label><br>
                     <?php wp_editor($item['description'] ?? '', 'policy_items_' . $index . '_description', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 5,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'policy_items[' . $index . '][description]',

@@ -50,7 +50,7 @@ function nrna_render_committees_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'committees_hero_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'committees_hero_title'
@@ -58,7 +58,7 @@ function nrna_render_committees_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_hero_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'committees_hero_description'
@@ -87,7 +87,7 @@ function nrna_render_committees_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'committees_why_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'committees_why_title'
@@ -95,7 +95,7 @@ function nrna_render_committees_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_why_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'committees_why_description'
@@ -116,7 +116,7 @@ function nrna_render_committees_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'committees_how_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'committees_how_title'
@@ -124,7 +124,7 @@ function nrna_render_committees_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_how_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'committees_how_description'
@@ -148,7 +148,7 @@ function nrna_render_committees_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'committees_banner1_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'committees_banner1_title'
@@ -156,7 +156,7 @@ function nrna_render_committees_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_banner1_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'committees_banner1_description'
@@ -169,7 +169,7 @@ function nrna_render_committees_meta_box($post)
                             <p><label>Title:</label><br>
                                 <?php wp_editor($stat['title'] ?? '', 'committees_banner1_stats_' . $index . '_title', [
                                     'media_buttons' => false,
-                                    'textarea_rows' => 3,
+                                    'textarea_rows' => 2,
                                     'teeny' => false,
                                     'quicktags' => true,
                                     'textarea_name' => 'committees_banner1_stats[' . $index . '][title]',
@@ -177,7 +177,7 @@ function nrna_render_committees_meta_box($post)
                             </p>
                             <p><label>Description:</label><br><?php wp_editor($stat['description'] ?? '', 'committees_banner1_stats_' . $index . '_description', [
                                                                     'media_buttons' => false,
-                                                                    'textarea_rows' => 3,
+                                                                    'textarea_rows' => 5,
                                                                     'teeny' => false,
                                                                     'quicktags' => true,
                                                                     'textarea_name' => 'committees_banner1_stats[' . $index . '][description]',
@@ -198,7 +198,7 @@ function nrna_render_committees_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'committees_teams_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'committees_teams_title'
@@ -245,7 +245,7 @@ function nrna_render_committees_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'committees_banner2_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'committees_banner2_title'
@@ -253,7 +253,7 @@ function nrna_render_committees_meta_box($post)
                 </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'committees_banner2_description', [
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'committees_banner2_description'

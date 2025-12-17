@@ -175,7 +175,7 @@ function nrna_render_discount_meta_box($post)
                 <p><label>Description:</label><br>
                     <?php wp_editor($description, 'discount_hero_description', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 7,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'discount_hero_description',
@@ -203,7 +203,7 @@ function nrna_render_discount_meta_box($post)
                 <p><label>Banner Title:</label><br>
                     <?php wp_editor($banner_title, 'discount_hero_banner_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 5,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'discount_hero_banner_title',
@@ -212,7 +212,7 @@ function nrna_render_discount_meta_box($post)
                 <p><label>Banner Description:</label><br>
                     <?php wp_editor($banner_description, 'discount_hero_banner_description', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 5,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'discount_hero_banner_description',
@@ -224,7 +224,7 @@ function nrna_render_discount_meta_box($post)
                             <p><label>Stat Title:</label><br>
                                 <?php wp_editor($stat['title'] ?? '', 'discount_hero_stats_' . $index . '_title', [
                                     'media_buttons' => false,
-                                    'textarea_rows' => 3,
+                                    'textarea_rows' => 2,
                                     'teeny' => false,
                                     'quicktags' => true,
                                     'textarea_name' => 'discount_hero_stats[' . $index . '][title]',
@@ -256,7 +256,7 @@ function nrna_render_discount_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'discount_how_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'discount_how_title',
@@ -265,7 +265,7 @@ function nrna_render_discount_meta_box($post)
                 <p><label>Description:</label><br>
                     <?php wp_editor($description, 'discount_how_description', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'discount_how_description',
@@ -312,7 +312,7 @@ function nrna_render_discount_meta_box($post)
                             <p><label>Name:</label><br>
                                 <?php wp_editor($partner['name'] ?? '', 'discount_partners_' . $index . '_name', [
                                     'media_buttons' => false,
-                                    'textarea_rows' => 3,
+                                    'textarea_rows' => 2,
                                     'teeny' => false,
                                     'quicktags' => true,
                                     'textarea_name' => 'discount_partners[' . $index . '][name]',
@@ -321,7 +321,7 @@ function nrna_render_discount_meta_box($post)
                             <p><label>Description:</label><br>
                                 <?php wp_editor($partner['description'] ?? '', 'discount_partners_' . $index . '_description', [
                                     'media_buttons' => false,
-                                    'textarea_rows' => 3,
+                                    'textarea_rows' => 2,
                                     'teeny' => false,
                                     'quicktags' => true,
                                     'textarea_name' => 'discount_partners[' . $index . '][description]',
@@ -362,7 +362,7 @@ function nrna_render_discount_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($title, 'discount_join_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'discount_join_title',
@@ -371,7 +371,7 @@ function nrna_render_discount_meta_box($post)
                 <p><label>Description:</label><br>
                     <?php wp_editor($description, 'discount_join_description', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'discount_join_description',
@@ -384,7 +384,7 @@ function nrna_render_discount_meta_box($post)
                                 <p><label>Title:</label><br>
                                     <?php wp_editor($point['title'] ?? '', 'discount_join_points_' . $index . '_title', [
                                         'media_buttons' => false,
-                                        'textarea_rows' => 3,
+                                        'textarea_rows' => 2,
                                         'teeny' => false,
                                         'quicktags' => true,
                                         'textarea_name' => 'discount_join_points[' . $index . '][title]',
@@ -404,7 +404,7 @@ function nrna_render_discount_meta_box($post)
                                         <p><label>Stat Title:</label><br>
                                             <?php wp_editor($stat['title'] ?? '', 'discount_join_stats_' . $index . '_title', [
                                                 'media_buttons' => false,
-                                                'textarea_rows' => 3,
+                                                'textarea_rows' => 1,
                                                 'teeny' => false,
                                                 'quicktags' => true,
                                                 'textarea_name' => 'discount_join_stats[' . $index . '][title]',
@@ -413,7 +413,7 @@ function nrna_render_discount_meta_box($post)
                                         <p><label>Stat Description:</label><br>
                                             <?php wp_editor($stat['description'] ?? '', 'discount_join_stats_' . $index . '_description', [
                                                 'media_buttons' => false,
-                                                'textarea_rows' => 3,
+                                                'textarea_rows' => 1,
                                                 'teeny' => false,
                                                 'quicktags' => true,
                                                 'textarea_name' => 'discount_join_stats[' . $index . '][description]',

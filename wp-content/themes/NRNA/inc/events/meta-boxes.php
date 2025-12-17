@@ -60,7 +60,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Hero Title:</label><br>
                     <?php wp_editor($hero_title, 'event_hero_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'event_hero_title',
@@ -75,7 +75,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'event_description', true), 'event_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'event_description',
@@ -93,7 +93,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($obj_title, 'event_objective_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'event_objective_title',
@@ -102,7 +102,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'event_objective_description', true), 'event_objective_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'event_objective_description',
@@ -120,7 +120,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($overview_title, 'event_overview_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'event_overview_title',
@@ -129,7 +129,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'event_overview_description', true), 'event_overview_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'event_overview_description',
@@ -147,7 +147,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($schedule_title, 'event_schedule_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'event_schedule_title',
@@ -156,7 +156,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'event_schedule_description', true), 'event_schedule_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'event_schedule_description',
@@ -177,7 +177,7 @@ function nrna_render_events_meta_box($post)
                                             <p><label>Title:</label><br>
                                                 <?php wp_editor($session['title'] ?? '', "event_schedule_dates_{$date_index}_sessions_{$session_index}_title", [
                                                     'media_buttons' => false,
-                                                    'textarea_rows' => 3,
+                                                    'textarea_rows' => 1,
                                                     'teeny' => false,
                                                     'quicktags' => true,
                                                     'textarea_name' => "event_schedule_dates[{$date_index}][sessions][{$session_index}][title]",
@@ -186,7 +186,7 @@ function nrna_render_events_meta_box($post)
                                             <p><label>Description:</label><br><?php
                                                                                 wp_editor($session['description'] ?? '', "event_schedule_dates_{$date_index}_sessions_{$session_index}_description", array(
                                                                                     'media_buttons' => false,
-                                                                                    'textarea_rows' => 3,
+                                                                                    'textarea_rows' => 2,
                                                                                     'teeny' => false,
                                                                                     'quicktags' => true,
                                                                                     'textarea_name' => "event_schedule_dates[{$date_index}][sessions][{$session_index}][description]",
@@ -215,7 +215,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($sponsorship_title, 'event_sponsorship_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'event_sponsorship_title',
@@ -224,7 +224,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'event_sponsorship_description', true), 'event_sponsorship_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'event_sponsorship_description',
@@ -264,7 +264,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($venue_title, 'event_venue_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'event_venue_title',
@@ -273,7 +273,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'event_venue_description', true), 'event_venue_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'event_venue_description',
@@ -288,7 +288,7 @@ function nrna_render_events_meta_box($post)
                                 <p><label>Title:</label><br>
                                     <?php wp_editor($detail['title'] ?? '', "event_venue_details_{$index}_title", [
                                         'media_buttons' => false,
-                                        'textarea_rows' => 3,
+                                        'textarea_rows' => 2,
                                         'teeny' => false,
                                         'quicktags' => true,
                                         'textarea_name' => "event_venue_details[{$index}][title]",
@@ -297,7 +297,7 @@ function nrna_render_events_meta_box($post)
                                 <p><label>Description:</label><br><?php
                                                                     wp_editor($detail['description'] ?? '', "event_venue_details_{$index}_description", array(
                                                                         'media_buttons' => false,
-                                                                        'textarea_rows' => 3,
+                                                                        'textarea_rows' => 5,
                                                                         'teeny' => false,
                                                                         'quicktags' => true,
                                                                         'textarea_name' => "event_venue_details[{$index}][description]",
@@ -320,7 +320,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($organizing_committee_title, 'event_organizing_committee_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 5,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'event_organizing_committee_title',
@@ -370,7 +370,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($sponsors_title, 'event_sponsors_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 5,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'event_sponsors_title',
@@ -611,7 +611,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($banner_title, 'event_banner_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'event_banner_title',
@@ -620,7 +620,7 @@ function nrna_render_events_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'event_banner_description', true), 'event_banner_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'event_banner_description',

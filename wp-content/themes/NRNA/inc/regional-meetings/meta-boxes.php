@@ -56,7 +56,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Hero Title:</label><br>
                     <?php wp_editor($hero_title, 'rm_hero_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'rm_hero_title',
@@ -70,7 +70,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'rm_description', true), 'rm_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'rm_description',
@@ -86,7 +86,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($agenda_title, 'rm_agenda_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'rm_agenda_title',
@@ -95,7 +95,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'rm_agenda_description', true), 'rm_agenda_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'rm_agenda_description',
@@ -111,7 +111,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($contact_title, 'rm_contact_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'rm_contact_title',
@@ -120,7 +120,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'rm_contact_description', true), 'rm_contact_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'rm_contact_description',
@@ -138,7 +138,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($sponsorship_title, 'rm_sponsorship_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'rm_sponsorship_title',
@@ -147,7 +147,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'rm_sponsorship_description', true), 'rm_sponsorship_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'rm_sponsorship_description',
@@ -185,7 +185,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($organizing_committee_title, 'rm_organizing_committee_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 5,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'rm_organizing_committee_title',
@@ -235,7 +235,7 @@ function nrna_render_regional_meetings_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($sponsors_title, 'rm_sponsors_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 5,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'rm_sponsors_title',

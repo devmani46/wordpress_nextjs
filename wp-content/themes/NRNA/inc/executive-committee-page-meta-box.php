@@ -49,7 +49,7 @@ function nrna_render_executive_committee_page_meta_box($post)
     <p><label>Banner Title:</label><br>
         <?php wp_editor($banner_title, 'executive_committee_banner_title', [
             'media_buttons' => false,
-            'textarea_rows' => 3,
+            'textarea_rows' => 10,
             'teeny' => false,
             'quicktags' => true,
         ]); ?>

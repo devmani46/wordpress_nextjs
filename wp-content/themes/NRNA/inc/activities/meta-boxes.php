@@ -31,7 +31,7 @@ function nrna_render_activities_content_meta_box($post)
     wp_editor($content, 'activity_content', [
         'textarea_name' => 'activity_content',
         'media_buttons' => false,
-        'textarea_rows' => 3,
+        'textarea_rows' => 10,
         'teeny' => false,
         'quicktags' => true,
     ]);

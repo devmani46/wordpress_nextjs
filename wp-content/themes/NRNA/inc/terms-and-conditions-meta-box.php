@@ -63,7 +63,7 @@ function nrna_render_terms_and_conditions_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($item['title'] ?? '', 'terms_items_' . $index . '_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'terms_items[' . $index . '][title]',
@@ -72,7 +72,7 @@ function nrna_render_terms_and_conditions_meta_box($post)
                 <p><label>Description:</label><br>
                     <?php wp_editor($item['description'] ?? '', 'terms_items_' . $index . '_description', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 5,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'terms_items[' . $index . '][description]',

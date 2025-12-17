@@ -50,7 +50,7 @@ function nrna_render_organizational_structure_meta_box($post)
     <p><label>Title:</label><br>
         <?php wp_editor($title, 'organizational_structure_title', [
             'media_buttons' => false,
-            'textarea_rows' => 3,
+            'textarea_rows' => 1,
             'teeny' => false,
             'quicktags' => true,
             'textarea_name' => 'organizational_structure_title',
@@ -63,7 +63,7 @@ function nrna_render_organizational_structure_meta_box($post)
     <p><label>Stat Title:</label><br>
         <?php wp_editor($stat_title, 'organizational_structure_stat_title', [
             'media_buttons' => false,
-            'textarea_rows' => 3,
+            'textarea_rows' => 1,
             'teeny' => false,
             'quicktags' => true,
             'textarea_name' => 'organizational_structure_stat_title',
@@ -72,7 +72,7 @@ function nrna_render_organizational_structure_meta_box($post)
     <p><label>Stat Description:</label><br>
         <?php wp_editor($stat_description, 'organizational_structure_stat_description', [
             'media_buttons' => false,
-            'textarea_rows' => 3,
+            'textarea_rows' => 1,
             'teeny' => false,
             'quicktags' => true,
             'textarea_name' => 'organizational_structure_stat_description',

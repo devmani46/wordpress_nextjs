@@ -54,7 +54,7 @@ function nrna_render_projects_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($hero_title, 'project_hero_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'project_hero_title',
@@ -71,7 +71,7 @@ function nrna_render_projects_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'project_description', true), 'project_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'project_description',
@@ -86,7 +86,7 @@ function nrna_render_projects_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($obj_title, 'project_objective_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'project_objective_title',
@@ -95,7 +95,7 @@ function nrna_render_projects_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'project_objective_description', true), 'project_objective_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'project_objective_description',
@@ -117,7 +117,7 @@ function nrna_render_projects_meta_box($post)
                                 <?php
                                 wp_editor($location['description'] ?? '', "project_locations_{$index}_description", array(
                                     'media_buttons' => false,
-                                    'textarea_rows' => 3,
+                                    'textarea_rows' => 5,
                                     'teeny' => false,
                                     'quicktags' => true,
                                     'textarea_name' => "project_locations[{$index}][description]",
@@ -142,7 +142,7 @@ function nrna_render_projects_meta_box($post)
                 <p><label>Title:</label><br>
                     <?php wp_editor($banner_title, 'project_banner_title', [
                         'media_buttons' => false,
-                        'textarea_rows' => 3,
+                        'textarea_rows' => 2,
                         'teeny' => false,
                         'quicktags' => true,
                         'textarea_name' => 'project_banner_title',
@@ -151,7 +151,7 @@ function nrna_render_projects_meta_box($post)
                 <p><label>Description:</label><br><?php
                                                     wp_editor(get_post_meta($post->ID, 'project_banner_description', true), 'project_banner_description', array(
                                                         'media_buttons' => false,
-                                                        'textarea_rows' => 3,
+                                                        'textarea_rows' => 5,
                                                         'teeny' => false,
                                                         'quicktags' => true,
                                                         'textarea_name' => 'project_banner_description',

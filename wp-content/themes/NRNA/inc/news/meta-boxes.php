@@ -29,7 +29,7 @@ function nrna_render_news_content_meta_box($post)
     wp_editor($content, 'news_content', [
         'textarea_name' => 'news_content',
         'media_buttons' => false,
-        'textarea_rows' => 3,
+        'textarea_rows' => 10,
         'teeny' => false,
         'quicktags' => true,
     ]);
