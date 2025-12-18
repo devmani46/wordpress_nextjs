@@ -39,3 +39,6 @@ require_once $inc . 'regional-meeting-registrations.php';
 
 // Load Search API
 require_once $inc . 'search-api.php';
+
+// Load Project Inquiries
+require_once $inc . 'project-inquiries.php';
