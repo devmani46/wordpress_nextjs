@@ -30,7 +30,7 @@ function nrna_render_activities_content_meta_box($post)
     echo '<label for="activity_content" style="display:block; font-weight:bold; margin-bottom:8px;">Content:</label>';
     wp_editor($content, 'activity_content', [
         'textarea_name' => 'activity_content',
-        'media_buttons' => false,
+        'media_buttons' => true,
         'textarea_rows' => 10,
         'teeny' => false,
         'quicktags' => true,
