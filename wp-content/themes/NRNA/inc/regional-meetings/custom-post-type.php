@@ -37,7 +37,6 @@ function nrna_register_regional_meetings_meta_fields()
 {
     $fields = [
         // Hero Section
-        'rm_hero_title' => ['type' => 'string'],
         'rm_location' => ['type' => 'string'],
         'rm_start_date' => ['type' => 'string'],
         'rm_end_date' => ['type' => 'string'],
@@ -175,7 +174,6 @@ function nrna_prepare_regional_meetings_rest($response, $post, $request)
     $data = $response->get_data();
 
     $meta_fields = [
-        'rm_hero_title',
         'rm_location',
         'rm_start_date',
         'rm_end_date',

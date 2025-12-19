@@ -36,7 +36,6 @@ add_action('init', 'nrna_register_events_cpt');
 function nrna_register_events_meta_fields()
 {
     $fields = [
-        'event_hero_title' => ['type' => 'string'],
         'event_location' => ['type' => 'string'],
         'event_start_date' => ['type' => 'string'],
         'event_end_date' => ['type' => 'string'],
@@ -210,7 +209,6 @@ function nrna_prepare_events_rest($response, $post, $request)
     $data = $response->get_data();
 
     $meta_fields = [
-        'event_hero_title',
         'event_location',
         'event_start_date',
         'event_end_date',

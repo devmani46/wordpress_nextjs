@@ -45,7 +45,6 @@ function nrna_render_regional_meetings_meta_box($post)
 
         switch ($key) {
             case 'hero':
-                $hero_title = get_post_meta($post->ID, 'rm_hero_title', true);
                 $location = get_post_meta($post->ID, 'rm_location', true);
                 $start_date = get_post_meta($post->ID, 'rm_start_date', true);
                 $end_date = get_post_meta($post->ID, 'rm_end_date', true);
@@ -53,15 +52,6 @@ function nrna_render_regional_meetings_meta_box($post)
                 $cta_title = get_post_meta($post->ID, 'rm_cta_title', true);
                 $description = get_post_meta($post->ID, 'rm_description', true);
 ?>
-                <p><label>Hero Title:</label><br>
-                    <?php wp_editor($hero_title, 'rm_hero_title', [
-                        'media_buttons' => false,
-                        'textarea_rows' => 2,
-                        'teeny' => false,
-                        'quicktags' => true,
-                        'textarea_name' => 'rm_hero_title',
-                    ]); ?>
-                </p>
                 <p><label>Location:</label><br><input type="text" name="rm_location" value="<?php echo esc_attr($location); ?>" class="wide-input"></p>
                 <p><label>Start Date:</label><br><input type="date" name="rm_start_date" value="<?php echo esc_attr($start_date); ?>" class="wide-input"></p>
                 <p><label>End Date:</label><br><input type="date" name="rm_end_date" value="<?php echo esc_attr($end_date); ?>" class="wide-input"></p>
@@ -522,8 +512,7 @@ function nrna_save_regional_meetings_meta_box($post_id)
     if (!current_user_can('edit_post', $post_id)) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
-    $fields = [
-        'rm_hero_title' => 'wp_kses_post',
+    $fields = [ 
         'rm_location' => 'sanitize_text_field',
         'rm_start_date' => 'sanitize_text_field',
         'rm_end_date' => 'sanitize_text_field',
