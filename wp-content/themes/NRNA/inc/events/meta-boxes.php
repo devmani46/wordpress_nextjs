@@ -57,8 +57,8 @@ function nrna_render_events_meta_box($post)
                 $description = get_post_meta($post->ID, 'event_description', true);
 ?>
                 <p><label>Location:</label><br><input type="text" name="event_location" value="<?php echo esc_attr($location); ?>" class="wide-input"></p>
-                <p><label>Start Date:</label><br><input type="date" name="event_start_date" value="<?php echo esc_attr($start_date); ?>" class="wide-input"></p>
-                <p><label>End Date:</label><br><input type="date" name="event_end_date" value="<?php echo esc_attr($end_date); ?>" class="wide-input"></p>
+                <p><label>Start Date: <span style="color:red">*</span></label><br><input type="date" name="event_start_date" value="<?php echo esc_attr($start_date); ?>" class="wide-input" required></p>
+                <p><label>End Date: <span style="color:red">*</span></label><br><input type="date" name="event_end_date" value="<?php echo esc_attr($end_date); ?>" class="wide-input" required></p>
                 <p><label>Sub Title:</label><br><input type="text" name="event_sub_title" value="<?php echo esc_attr($sub_title); ?>" class="wide-input"></p>
                 <p><label>CTA Link:</label><br><input type="url" name="event_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="event_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>

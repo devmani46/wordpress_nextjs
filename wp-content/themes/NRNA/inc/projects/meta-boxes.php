@@ -60,7 +60,7 @@ function nrna_render_projects_meta_box($post)
                         'textarea_name' => 'project_hero_title',
                     ]); ?>
                 </p>
-                <p><label>Date:</label><br><input type="date" name="project_date" value="<?php echo esc_attr($date); ?>" class="wide-input"></p>
+                <p><label>Date: <span style="color:red">*</span></label><br><input type="date" name="project_date" value="<?php echo esc_attr($date); ?>" class="wide-input" required></p>
                 <p><label>Sub Title:</label><br><input type="text" name="project_sub_title" value="<?php echo esc_attr($sub_title); ?>" class="wide-input"></p>
                 <p><label>CTA Title 1:</label><br><input type="text" name="project_cta_title_1" value="<?php echo esc_attr($cta_title_1); ?>" class="wide-input"></p>
                 <p><label>CTA Link 1:</label><br><input type="url" name="project_cta_link_1" value="<?php echo esc_attr($cta_link_1); ?>" class="wide-input"></p>

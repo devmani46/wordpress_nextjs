@@ -53,8 +53,8 @@ function nrna_render_regional_meetings_meta_box($post)
                 $description = get_post_meta($post->ID, 'rm_description', true);
 ?>
                 <p><label>Location:</label><br><input type="text" name="rm_location" value="<?php echo esc_attr($location); ?>" class="wide-input"></p>
-                <p><label>Start Date:</label><br><input type="date" name="rm_start_date" value="<?php echo esc_attr($start_date); ?>" class="wide-input"></p>
-                <p><label>End Date:</label><br><input type="date" name="rm_end_date" value="<?php echo esc_attr($end_date); ?>" class="wide-input"></p>
+                <p><label>Start Date: <span style="color:red">*</span></label><br><input type="date" name="rm_start_date" value="<?php echo esc_attr($start_date); ?>" class="wide-input" required></p>
+                <p><label>End Date: <span style="color:red">*</span></label><br><input type="date" name="rm_end_date" value="<?php echo esc_attr($end_date); ?>" class="wide-input" required></p>
                 <p><label>CTA Link:</label><br><input type="url" name="rm_cta_link" value="<?php echo esc_attr($cta_link); ?>" class="wide-input"></p>
                 <p><label>CTA Title:</label><br><input type="text" name="rm_cta_title" value="<?php echo esc_attr($cta_title); ?>" class="wide-input"></p>
                 <p><label>Description:</label><br><?php
@@ -512,7 +512,7 @@ function nrna_save_regional_meetings_meta_box($post_id)
     if (!current_user_can('edit_post', $post_id)) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
-    $fields = [ 
+    $fields = [
         'rm_location' => 'sanitize_text_field',
         'rm_start_date' => 'sanitize_text_field',
         'rm_end_date' => 'sanitize_text_field',

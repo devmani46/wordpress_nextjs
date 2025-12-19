@@ -10,6 +10,9 @@ require_once 'enqueue-scripts.php';
 // Load menu-api meta box
 require_once 'menu-api.php';
 
+// Load date validation
+require_once 'date-validation.php';
+
 // Load home meta box
 require_once 'home-meta-box.php';
 
