@@ -49,6 +49,7 @@ function nrna_register_projects_meta_fields()
         'project_banner_description' => ['type' => 'string'],
         'project_banner_cta_link' => ['type' => 'string'],
         'project_banner_cta_title' => ['type' => 'string'],
+        'project_donate_enabled' => ['type' => 'string'],
     ];
 
     foreach ($fields as $key => $args) {
@@ -113,6 +114,7 @@ function nrna_prepare_projects_rest($response, $post, $request)
         'project_banner_description',
         'project_banner_cta_link',
         'project_banner_cta_title',
+        'project_donate_enabled',
     ];
 
     foreach ($meta_fields as $field) {

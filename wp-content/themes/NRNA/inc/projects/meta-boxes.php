@@ -49,6 +49,7 @@ function nrna_render_projects_meta_box($post)
                 $cta_link_2 = get_post_meta($post->ID, 'project_cta_link_2', true);
                 $cta_title_2 = get_post_meta($post->ID, 'project_cta_title_2', true);
                 $description = get_post_meta($post->ID, 'project_description', true);
+                $donate_enabled = get_post_meta($post->ID, 'project_donate_enabled', true);
 
 ?>
                 <p><label>Title:</label><br>
@@ -66,6 +67,12 @@ function nrna_render_projects_meta_box($post)
                 <p><label>CTA Link 1:</label><br><input type="url" name="project_cta_link_1" value="<?php echo esc_attr($cta_link_1); ?>" class="wide-input"></p>
                 <p><label>CTA Title 2:</label><br><input type="text" name="project_cta_title_2" value="<?php echo esc_attr($cta_title_2); ?>" class="wide-input"></p>
                 <p><label>CTA Link 2:</label><br><input type="url" name="project_cta_link_2" value="<?php echo esc_attr($cta_link_2); ?>" class="wide-input"></p>
+                <p>
+                    <label>
+                        <input type="checkbox" name="project_donate_enabled" value="1" <?php checked($donate_enabled, '1'); ?>>
+                        Generic Donate
+                    </label>
+                </p>
 
 
                 <p><label>Description:</label><br><?php
@@ -250,7 +257,9 @@ function nrna_save_projects_meta_box($post_id)
         'project_banner_title' => 'wp_kses_post',
         'project_banner_description' => 'wp_kses_post',
         'project_banner_cta_link' => 'esc_url_raw',
+        'project_banner_cta_link' => 'esc_url_raw',
         'project_banner_cta_title' => 'sanitize_text_field',
+        'project_donate_enabled' => 'sanitize_text_field',
     ];
 
     foreach ($fields as $field => $sanitize) {

@@ -110,4 +110,4 @@ function nrna_auto_update_slug($data, $postarr)
     }
     return $data;
 }
-add_filter('wp_insert_post_data', 'nrna_auto_update_slug', 99, 2);
+// add_filter('wp_insert_post_data', 'nrna_auto_update_slug', 99, 2);

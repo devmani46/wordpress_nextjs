@@ -80,7 +80,9 @@ function nrna_custom_committees_rest_response($response, $post, $request)
     if ($post->post_type === 'page' && get_post_meta($post->ID, '_wp_page_template', true) === 'template-committees-taskforces-subcommittees.php') {
         // Only override data for non-edit contexts to avoid breaking the editor
         if ($request->get_param('context') !== 'edit') {
-            $data = [
+            $data = $response->get_data();
+
+            $custom_data = [
                 'hero' => [
                     'title' => get_post_meta($post->ID, 'committees_hero_title', true),
                     'description' => get_post_meta($post->ID, 'committees_hero_description', true),
@@ -115,7 +117,7 @@ function nrna_custom_committees_rest_response($response, $post, $request)
                 ],
             ];
 
-            $response->set_data($data);
+            $response->set_data(array_merge($data, $custom_data));
         }
     }
 
