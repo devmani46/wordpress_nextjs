@@ -28,7 +28,7 @@ function nrna_render_news_content_meta_box($post)
     echo '<label for="news_content" style="display:block; font-weight:bold; margin-bottom:8px;">Content:</label>';
     wp_editor($content, 'news_content', [
         'textarea_name' => 'news_content',
-        'media_buttons' => false,
+        'media_buttons' => true,
         'textarea_rows' => 10,
         'teeny' => false,
         'quicktags' => true,
