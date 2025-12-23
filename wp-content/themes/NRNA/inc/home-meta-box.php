@@ -25,7 +25,6 @@ function nrna_register_home_meta_fields()
         'involved_title' => ['type' => 'string'],
         'involved_description' => ['type' => 'string'],
         'stay_updated_title' => ['type' => 'string'],
-        'stay_updated_description' => ['type' => 'string'],
         'stay_updated_cta_link1' => ['type' => 'string'],
         'stay_updated_cta_title1' => ['type' => 'string'],
         'stay_updated_cta_link2' => ['type' => 'string'],
@@ -335,14 +334,12 @@ function nrna_render_home_meta_box($post)
 
             case 'stay-updated':
                 $title = get_post_meta($post->ID, 'stay_updated_title', true);
-                $description = get_post_meta($post->ID, 'stay_updated_description', true);
                 $cta_link1 = get_post_meta($post->ID, 'stay_updated_cta_link1', true);
                 $cta_title1 = get_post_meta($post->ID, 'stay_updated_cta_title1', true);
                 $cta_link2 = get_post_meta($post->ID, 'stay_updated_cta_link2', true);
                 $cta_title2 = get_post_meta($post->ID, 'stay_updated_cta_title2', true);
             ?>
                 <p><label>Title:</label><br><?php wp_editor($title, 'stay_updated_title', array_merge($editor_settings, ['textarea_name' => 'stay_updated_title'])); ?></p>
-                <p><label>Description:</label><br><?php wp_editor($description, 'stay_updated_description', array_merge($editor_settings, ['textarea_name' => 'stay_updated_description'])); ?></p>
                 <p><label>CTA Link 1:</label><br><input type="url" name="stay_updated_cta_link1" value="<?php echo esc_attr($cta_link1); ?>" class="wide-input"></p>
                 <p><label>CTA Title 1:</label><br><input type="text" name="stay_updated_cta_title1" value="<?php echo esc_attr($cta_title1); ?>" class="wide-input"></p>
                 <p><label>CTA Link 2:</label><br><input type="url" name="stay_updated_cta_link2" value="<?php echo esc_attr($cta_link2); ?>" class="wide-input"></p>
@@ -415,7 +412,6 @@ function nrna_save_home_meta_box($post_id)
         'involved_title' => 'wp_kses_post',
         'involved_description' => 'wp_kses_post',
         'stay_updated_title' => 'wp_kses_post',
-        'stay_updated_description' => 'wp_kses_post',
         'stay_updated_cta_link1' => 'esc_url_raw',
         'stay_updated_cta_title1' => 'sanitize_text_field',
         'stay_updated_cta_link2' => 'esc_url_raw',
@@ -505,7 +501,6 @@ function nrna_prepare_page_rest_response($response, $post, $request)
         'involved_title',
         'involved_description',
         'stay_updated_title',
-        'stay_updated_description',
         'stay_updated_cta_link1',
         'stay_updated_cta_title1',
         'stay_updated_cta_link2',
