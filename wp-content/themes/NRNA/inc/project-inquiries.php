@@ -20,14 +20,14 @@ function nrna_handle_project_inquiry_submission($request)
 {
     // Get parameters from request
     $project_slug = sanitize_text_field($request->get_param('project_slug'));
-    $first_name = sanitize_text_field($request->get_param('first_name'));
-    $last_name = sanitize_text_field($request->get_param('last_name'));
+    $name = sanitize_text_field($request->get_param('name'));
     $email = sanitize_email($request->get_param('email'));
     $phone = sanitize_text_field($request->get_param('phone'));
+    $address = sanitize_text_field($request->get_param('address'));
     $message = sanitize_textarea_field($request->get_param('message'));
 
     // Validate required fields
-    if (empty($first_name) || empty($last_name) || empty($email) || empty($phone)) {
+    if (empty($name) || empty($email) || empty($phone)) {
         return new WP_Error(
             'missing_fields',
             'Please fill in all required fields.',
@@ -46,13 +46,14 @@ function nrna_handle_project_inquiry_submission($request)
 
     // Prepare email content
     $to = get_option('admin_email'); // Send to site admin email
-    $subject = 'New Project Inquiry: ' . $project_slug . ' - ' . $first_name . ' ' . $last_name;
+    $subject = 'New Project Inquiry: ' . $project_slug . ' - ' . $name;
 
     $email_message = "You have received a new project inquiry:\n\n";
     $email_message .= "Project: " . ($project_slug ? $project_slug : 'N/A') . "\n";
-    $email_message .= "Name: " . $first_name . " " . $last_name . "\n";
+    $email_message .= "Name: " . $name . "\n";
     $email_message .= "Email: " . $email . "\n";
     $email_message .= "Phone: " . $phone . "\n";
+    $email_message .= "Address: " . ($address ? $address : 'N/A') . "\n";
     $email_message .= "Message: " . ($message ? $message : 'No message') . "\n";
 
     $headers = ['Content-Type: text/plain; charset=UTF-8'];
@@ -69,10 +70,12 @@ function nrna_handle_project_inquiry_submission($request)
     $sql = "CREATE TABLE $table_name (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         project_slug varchar(255) NOT NULL,
-        first_name varchar(100) NOT NULL,
-        last_name varchar(100) NOT NULL,
+        name varchar(255) NOT NULL,
+        first_name varchar(100) DEFAULT '' NOT NULL,
+        last_name varchar(100) DEFAULT '' NOT NULL,
         email varchar(100) NOT NULL,
         phone varchar(50) NOT NULL,
+        address varchar(255) DEFAULT '',
         message text,
         status varchar(20) DEFAULT 'new' NOT NULL,
         submitted_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -87,10 +90,10 @@ function nrna_handle_project_inquiry_submission($request)
         $table_name,
         [
             'project_slug' => $project_slug,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
+            'name' => $name,
             'email' => $email,
             'phone' => $phone,
+            'address' => $address,
             'message' => $message,
             'status' => 'new'
         ],
@@ -197,11 +200,15 @@ function nrna_project_inquiries_page()
             <hr class="wp-header-end">
 
             <div class="card" style="max-width: 800px; margin-top: 20px; padding: 20px;">
-                <h2 style="margin-top: 0;"><?php echo esc_html($submission->first_name . ' ' . $submission->last_name); ?></h2>
+                <?php
+                $display_name = !empty($submission->name) ? $submission->name : $submission->first_name . ' ' . $submission->last_name;
+                ?>
+                <h2 style="margin-top: 0;"><?php echo esc_html($display_name); ?></h2>
                 <p>
                     <strong>Project:</strong> <?php echo esc_html($submission->project_slug ?: 'N/A'); ?><br>
                     <strong>Email:</strong> <a href="mailto:<?php echo esc_attr($submission->email); ?>"><?php echo esc_html($submission->email); ?></a><br>
                     <strong>Phone:</strong> <?php echo esc_html($submission->phone); ?><br>
+                    <strong>Address:</strong> <?php echo esc_html(!empty($submission->address) ? $submission->address : 'N/A'); ?><br>
                     <strong>Message:</strong> <?php echo nl2br(esc_html($submission->message ?: 'No message')); ?><br>
                     <strong>Date:</strong> <?php echo esc_html(date('F j, Y g:i A', strtotime($submission->submitted_at))); ?>
                 </p>
@@ -262,12 +269,13 @@ function nrna_project_inquiries_page()
                     foreach ($submissions as $sub) :
                         $is_new = $sub->status === 'new';
                         $view_url = 'admin.php?page=project-inquiries&action=view&id=' . $sub->id;
+                        $display_name_list = !empty($sub->name) ? $sub->name : $sub->first_name . ' ' . $sub->last_name;
                     ?>
                         <tr class="<?php echo $is_new ? 'updated' : ''; ?>">
                             <td><?php echo $sn++; ?></td>
                             <td><strong><?php echo esc_html($sub->project_slug ?: 'N/A'); ?></strong></td>
                             <td>
-                                <strong><a class="row-title" href="<?php echo $view_url; ?>"><?php echo esc_html($sub->first_name . ' ' . $sub->last_name); ?></a></strong>
+                                <strong><a class="row-title" href="<?php echo $view_url; ?>"><?php echo esc_html($display_name_list); ?></a></strong>
                                 <div class="row-actions">
                                     <span class="view"><a href="<?php echo $view_url; ?>">View</a> | </span>
                                     <span class="delete"><a href="<?php echo wp_nonce_url('admin.php?page=project-inquiries&action=delete&id=' . $sub->id, 'delete_inquiry_' . $sub->id); ?>" class="submitdelete" onclick="return confirm('Are you sure?')">Delete</a></span>
