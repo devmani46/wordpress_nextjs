@@ -13,7 +13,6 @@ function nrna_register_about_meta_fields()
         'who_we_are_certificate_title' => ['type' => 'string'],
         'who_we_are_certificate_description' => ['type' => 'string'],
         'who_we_are_certificate_image' => ['type' => 'integer'],
-        'who_we_are_message_title' => ['type' => 'string'],
         'who_we_are_message_description' => ['type' => 'string'],
         'who_we_are_message_image' => ['type' => 'integer'],
         'who_we_are_message_representative_name' => ['type' => 'string'],
@@ -277,21 +276,11 @@ function nrna_render_about_meta_box($post)
                 break;
 
             case 'message':
-                $title = get_post_meta($post->ID, 'who_we_are_message_title', true);
                 $description = get_post_meta($post->ID, 'who_we_are_message_description', true);
                 $image = get_post_meta($post->ID, 'who_we_are_message_image', true);
                 $name = get_post_meta($post->ID, 'who_we_are_message_representative_name', true);
                 $role = get_post_meta($post->ID, 'who_we_are_message_representative_role', true);
             ?>
-                <p><label>Title:</label><br>
-                    <?php wp_editor($title, 'who_we_are_message_title', [
-                        'media_buttons' => false,
-                        'textarea_rows' => 2,
-                        'teeny' => false,
-                        'quicktags' => true,
-                        'textarea_name' => 'who_we_are_message_title',
-                    ]); ?>
-                </p>
                 <p><label>Description:</label><br><?php wp_editor($description, 'who_we_are_message_description', [
                                                         'media_buttons' => false,
                                                         'textarea_rows' => 5,
@@ -443,7 +432,6 @@ function nrna_save_about_meta_box($post_id)
         'who_we_are_certificate_title' => 'wp_kses_post',
         'who_we_are_certificate_description' => 'wp_kses_post',
         'who_we_are_certificate_image' => 'intval',
-        'who_we_are_message_title' => 'wp_kses_post',
         'who_we_are_message_description' => 'wp_kses_post',
         'who_we_are_message_image' => 'intval',
         'who_we_are_message_representative_name' => 'sanitize_text_field',
