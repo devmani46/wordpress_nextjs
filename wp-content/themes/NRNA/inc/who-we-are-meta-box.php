@@ -25,6 +25,7 @@ function nrna_register_about_meta_fields()
         'who_we_are_join_title' => ['type' => 'string'],
         'who_we_are_join_description' => ['type' => 'string'],
         'who_we_are_join_cta_link' => ['type' => 'string'],
+        'who_we_are_join_cta_title' => ['type' => 'string'],
     ];
 
     foreach ($fields as $key => $args) {
