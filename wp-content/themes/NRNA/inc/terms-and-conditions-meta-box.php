@@ -37,11 +37,7 @@ function nrna_add_terms_and_conditions_meta_box()
             'high'
         );
         // Remove default meta boxes for cleaner UI
-        remove_meta_box('postdivrich', 'page', 'normal');
-        remove_meta_box('slugdiv', 'page', 'normal');
-        remove_meta_box('authordiv', 'page', 'normal');
-        remove_meta_box('commentsdiv', 'page', 'normal');
-        remove_meta_box('revisionsdiv', 'page', 'normal');
+
     }
 }
 add_action('add_meta_boxes', 'nrna_add_terms_and_conditions_meta_box');
